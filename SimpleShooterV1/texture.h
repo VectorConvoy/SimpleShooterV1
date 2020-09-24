@@ -16,7 +16,13 @@ public:
 	int GetTextureWidth();
 	int GetTextureHeight();
 
+	Vector2 ScaledDimensions();
+
+	SDL_Rect GetRenderRect();
+	SDL_Rect GetClippedRect();
+
 	void SetClipped(int x, int y, int w, int h);
+	void UpdatePosition(int x, int y);
 
 	virtual void Render();
 

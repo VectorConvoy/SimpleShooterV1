@@ -1,4 +1,6 @@
 #include "Bullet.h"
+#include "BoxCollider.h"
+#include "PhysicsManager.h"
 
 Bullet::Bullet()
 {
@@ -16,6 +18,8 @@ Bullet::Bullet()
 	ShipDirection = VEC2_UP;
 
 	Reload();
+
+
 }
 
 Bullet::~Bullet()
@@ -68,6 +72,7 @@ void Bullet::Render()
 	if (GetActive())
 	{
 		mTexture->Render();
+		PhysicEntity::Render();
 	}
 }
 
@@ -84,4 +89,11 @@ void Bullet::SetBulletDirection(Vector2 vec)
 void Bullet::SetShipDirection(Vector2 vec)
 {
 	ShipDirection = vec;
+}
+
+
+void Bullet::RegisterPlayerBullets()
+{
+	AddCollider(new BoxCollider(mTexture->ScaledDimensions()));
+	mId = PhysicsManager::Instance()->RegisterEntity(this, PhysicsManager::CollisionLayers::FriendlyProjectiles);
 }

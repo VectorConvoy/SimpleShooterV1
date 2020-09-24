@@ -12,6 +12,18 @@ GameEntity::GameEntity(float x, float y)
 	mScale = VEC2_ONE;
 }
 
+GameEntity::GameEntity(Vector2 position)
+{
+	mPosition.x = position.x;
+	mPosition.y = position.y;
+
+	mRotation = 0.0f;
+	mActive = true;
+	mParent = nullptr;
+
+	mScale = VEC2_ONE;
+}
+
 GameEntity::~GameEntity()
 {
 	mParent = NULL;

@@ -15,6 +15,8 @@ public:
 	static const int SCREEN_WIDTH = 1024;
 	static const int SCREEN_HEIGHT = 720;
 
+	const char* WINDOW_TITLE = "CIS 693 Project";
+
 	static Graphics* Instance();
 	static void Release(); //Clear any static memory allocation
 

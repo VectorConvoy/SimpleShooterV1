@@ -16,6 +16,9 @@ public:
 
 	void WrapMode(WRAP_MODE mode);
 
+	void ResetAnimation();
+	bool IsAnimating();
+
 	void Update();
 
 private:

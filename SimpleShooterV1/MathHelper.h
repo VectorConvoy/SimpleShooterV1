@@ -68,6 +68,23 @@ inline Vector2 operator *(const Vector2& leftHandSide, const float& rightHandSid
 	return Vector2(leftHandSide.x * rightHandSide, leftHandSide.y *rightHandSide);
 }
 
+inline Vector2 operator *(const float& leftHandSide, const Vector2& rightHandSide)
+{
+	return Vector2(leftHandSide * rightHandSide.x, leftHandSide * rightHandSide.y);
+}
+
+inline Vector2 operator /(const Vector2& leftHandSide, const float& rightHandSide)
+{
+	return Vector2(leftHandSide.x / rightHandSide, leftHandSide.y / rightHandSide);
+}
+
+inline Vector2 operator /(const float& leftHandSide, const Vector2& rightHandSide)
+{
+	return Vector2(leftHandSide / rightHandSide.x, leftHandSide / rightHandSide.y);
+}
+
+
+
 inline Vector2 RotateVector(Vector2& vec, float angle)
 {
 	float angleInRadians = (float)(angle * DEG_TO_RAD);

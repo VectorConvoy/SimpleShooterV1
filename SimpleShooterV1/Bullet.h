@@ -1,9 +1,10 @@
 #pragma once
 #define _BULLET_H
 
-#include "texture.h"
+#include "PhysicEntity.h"
 #include "timer.h"
-class Bullet : public GameEntity
+
+class Bullet : public PhysicEntity
 {
 public:
 	
@@ -17,6 +18,7 @@ public:
 	
 	void SetBulletDirection(Vector2 vec);
 	void SetShipDirection(Vector2 vec);
+	void RegisterPlayerBullets();
 
 	void Update();
 	void Render();

@@ -1,4 +1,6 @@
 #include "Player.h"
+#include "BoxCollider.h"
+#include "PhysicsManager.h"
 
 Player::Player()
 {
@@ -8,17 +10,25 @@ Player::Player()
 	mVisible = true;
 	mAnimating = false;
 	animationDone = true;
+	mWasHit = false;
 	currentDirection = DIRECTION::up;
 	newDirection = DIRECTION::up;
 
 	mMoveSpeed = 200.0f;
 	mMoveBounds = Vector2(Graphics::SCREEN_WIDTH, Graphics::SCREEN_HEIGHT);
 
+	mDeathAnimation = new AnimatedTexture(DeathAnimation, 0, 0, 64, 64, 4, 1.0f, AnimatedTexture::ANIMATED_DIRECTION::vertical);
+	mDeathAnimation->SetParent(this);
+	mDeathAnimation->SetPosition(VEC2_ZERO);
+	mDeathAnimation->WrapMode(AnimatedTexture::WRAP_MODE::once);
+
 	initializeBullets();
 
-	LoadSpriteSheet("SpriteSheet.png");
+	LoadSpriteSheet(ShipName);
 
+	AddCollider(new BoxCollider(mShip->ScaledDimensions()));
 
+	mId = PhysicsManager::Instance()->RegisterEntity(this, PhysicsManager::CollisionLayers::Friendly);
 }
 
 Player::Player(std::string filename)
@@ -30,6 +40,7 @@ Player::Player(std::string filename)
 	mVisible = true;
 	mAnimating = false;
 	animationDone = true;
+	mWasHit = false;
 	currentDirection = DIRECTION::up;
 	newDirection = DIRECTION::up;
 	currentIndex = 0;
@@ -38,9 +49,20 @@ Player::Player(std::string filename)
 	mMoveSpeed = 200.0f;
 	mMoveBounds = Vector2(Graphics::SCREEN_WIDTH, Graphics::SCREEN_HEIGHT);
 
+	mDeathAnimation = new AnimatedTexture(DeathAnimation, 0, 0, 64, 64, 4, 0.5f, AnimatedTexture::ANIMATED_DIRECTION::vertical);
+	mDeathAnimation->SetParent(this);
+	mDeathAnimation->SetPosition(VEC2_ZERO);
+	mDeathAnimation->WrapMode(AnimatedTexture::WRAP_MODE::once);
+
 	initializeBullets();
 
 	LoadSpriteSheet(filename);
+
+	AddCollider(new BoxCollider(mShip->ScaledDimensions()));
+
+	mId = PhysicsManager::Instance()->RegisterEntity(this, PhysicsManager::CollisionLayers::Friendly);
+
+
 }
 
 Player::~Player()
@@ -62,6 +84,30 @@ Player::~Player()
 void Player::Visible(bool visible)
 {
 	mVisible = visible;
+}
+
+void Player::Hit(PhysicEntity* other)
+{	
+
+	//Death animation and handling here
+	mWasHit = true;
+	
+	if (!mAnimating && GetActive())
+	{
+		SetActive(false);
+		mDeathAnimation->ResetAnimation();
+		mAnimating = true;
+		
+	}
+
+	//Play Death Audio
+
+}
+
+bool Player::WasHit()
+{
+
+	return mWasHit;
 }
 
 void Player::LoadSpriteSheet(std::string filename)
@@ -95,6 +141,11 @@ bool Player::IsAnimating()
 	return mAnimating;
 }
 
+Texture* Player::GetTexture()
+{
+	return mShip;
+}
+
 void Player::SetAnimationSpeed(float speed)
 {
 	animationSpeed = speed;
@@ -104,7 +155,7 @@ void Player::SetDirection(DIRECTION direction)
 {
 	newDirection = direction;
 
-	mAnimating = true;
+	isAnimatingMovement = true;
 
 	if (newDirection == DIRECTION::up && currentDirection == DIRECTION::left)
 	{
@@ -121,7 +172,7 @@ void Player::SetDirection(DIRECTION direction)
 	else if (currentDirection == newDirection)
 	{
 		indexDelta = 0;
-		mAnimating = false ;
+		isAnimatingMovement = false;
 	}
 	else
 	{
@@ -165,7 +216,19 @@ void Player::SetBulletDirection(DIRECTION direction)
 	}
 }
 
-void Player::HandleAnimation()
+void Player::RespawnPlayer()
+{
+	if (!GetActive())
+	{
+		SetActive(true);
+
+		SetPosition(Vector2(Graphics::SCREEN_WIDTH/2, Graphics::SCREEN_HEIGHT/2));
+
+		mVisible = true;
+	}
+}
+
+void Player::HandleMovementAnimation()
 {
 	int newIndex = currentIndex + indexDelta;
 
@@ -181,32 +244,41 @@ void Player::HandleAnimation()
 	mShip->SetClipped(rectCoordinates.at(newIndex).first, rectCoordinates.at(newIndex).second, frameWidth, frameHeight);
 
 	currentIndex = newIndex;
+
+	if (currentIndex == goalIndex)
+	{
+		isAnimatingMovement = false;
+	}
 }
 
 void Player::Update()
 {
 	if (mAnimating)
 	{
-
-		animationTimer += mTimer->DeltaTime();
-
-		if (animationTimer >= animationSpeed && currentIndex == goalIndex)
+		if (mWasHit)
 		{
-			currentDirection = newDirection;
-			animationDone = true;
-			mAnimating = false;
-			animationTimer = animationSpeed - timePerFrame;	
-		}
-		else
-		{
-			HandleAnimation();
+			mWasHit = false;
 		}
 
+		mDeathAnimation->Update();
+		mAnimating = mDeathAnimation->IsAnimating();
 	}
 	else
 	{
-		HandleMovement();
-		HandleFiring();
+		if (GetActive())
+		{
+			if (!isAnimatingMovement)
+			{
+				currentDirection = newDirection;
+				HandleMovement();
+			}
+			else
+			{
+				HandleMovementAnimation();
+			}
+
+			HandleFiring();
+		}
 	}
 
 	for (int i = 0; i < MAX_BULLETS; i++)
@@ -217,13 +289,31 @@ void Player::Update()
 
 void Player::Render()
 {
-	mShip->Render();
+	if (mVisible)
+	{
+		if (mAnimating)
+		{
+			mDeathAnimation->Render();
+		}
+		else
+		{
+			if (GetActive())
+			{
+				mShip->Render();
+			}
+			else
+			{
+				//If the ship is not active, do not render it and set it's visibility to be false
+				mVisible = false;
+			}
+		}
+	}
 
 	for (int i = 0; i < MAX_BULLETS; i++)
 	{
 		mBullets[i]->Render();
 	}
-	
+	PhysicEntity::Render();
 }
 
 void Player::initializeBullets()
@@ -231,6 +321,7 @@ void Player::initializeBullets()
 	for (int i = 0; i < MAX_BULLETS; i++)
 	{
 		mBullets[i] = new Bullet();
+		mBullets[i]->RegisterPlayerBullets();
 	}
 }
 
@@ -283,7 +374,7 @@ void Player::HandleMovement()
 	}
 
 	SetPosition(position);
-
+	mShip->UpdatePosition((int) position.x, (int) position.y);
 
 }
 

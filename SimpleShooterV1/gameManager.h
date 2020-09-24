@@ -10,6 +10,9 @@
 #include "AudioManager.h"
 #include "ShipAnimation.h"
 #include "PlayScreen.h"
+#include "Enemy.h"
+#include "PhysicsManager.h"
+#include "ScreenManager.h"
 
 class GameManager 
 {
@@ -25,18 +28,23 @@ private:
 	const int FRAME_RATE = 60;
 
 	bool mQuit;
+	bool mPlayerHit;
+
 	Graphics* mGraphics;
 	Timer* mTimer;
 	AnimatedTexture* mTexture;
 	Texture* nTexture;
+
+	ScreenManager* mScreenManager;
 	PlayScreen* mPlayScreen;
+
 	Player* mPlayer;
+	Enemy* mEnemy;
 
 	AssetManager* mAssetManager;
-
 	InputManager* mInputManager;
-
 	AudioManager* mAudioManager;
+	PhysicsManager* mPhysicsManager;
 
 	ShipAnimation* shipSprites;
 
@@ -51,6 +59,8 @@ private:
 
 	void checkKeyPress();
 	void checkKeyRelease();
+
+	void HandleCollision();
 
 	void Render();
 };

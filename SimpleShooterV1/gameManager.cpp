@@ -44,41 +44,28 @@ void GameManager::Run()
 
 GameManager::GameManager()
 {
+    //mPlayerHit = false;
     mQuit = false;
     mGraphics = Graphics::Instance();
+    mScreenManager = ScreenManager::Instance();
+
 
     if (!Graphics::Initialized())
     {
         mQuit = true;
     }
 
-    mAssetManager = AssetManager::Instance();
 
     mInputManager = InputManager::Instance();
-
-    mAudioManager = AudioManager::Instance();
-
     mTimer = Timer::Instance();
-
-    //shipSprites = new ShipAnimation("SpriteSheet.png", 0.1f);
-
-    //nTexture = shipSprites->GetCurrentTexture();
-    //nTexture->SetPosition(Vector2(Graphics::SCREEN_WIDTH * 0.5f, Graphics::SCREEN_HEIGHT * 0.5f));
-    //shipSprites->UpdatePositionForAllTextures(nTexture->GetPosition());
-
-    //mTexture = new AnimatedTexture("SpriteSheet.png", 0, 0, 64, 64, 12, 2.0f, AnimatedTexture::vertical);
-    
-    //nTexture->SetPosition(Vector2(400,200));
-
-    mPlayer = new Player("SpriteSheet.png");
-
-    mPlayer->SetPosition(Vector2(Graphics::SCREEN_WIDTH / 2, Graphics::SCREEN_HEIGHT / 2));
-    mPlayer->SetAnimationSpeed(0.1f);
 
 }
 
 GameManager::~GameManager()
 {
+    ScreenManager::Release();
+    mScreenManager = NULL;
+
     AssetManager::Release();
     mAssetManager = NULL;  
     
@@ -91,17 +78,14 @@ GameManager::~GameManager()
     AudioManager::Release();
     mAudioManager = NULL;
 
+    PhysicsManager::Release();
+    mPhysicsManager = nullptr;
+
     Timer::Release();
     mTimer = NULL;
 
     delete mTexture;
     mTexture = NULL;
-
-    delete mPlayScreen;
-    mPlayScreen = NULL;
-
-    delete mPlayer;
-    mPlayer = NULL;
 }
 
 void GameManager::EarlyUpdate()
@@ -112,16 +96,7 @@ void GameManager::EarlyUpdate()
 void GameManager::Update()
 {
     checkKeyPress();
-    //if (shipSprites->GetShipMoving() && shipSprites->GetAnimationDone())
-    //{
-    //    nTexture->SetPosition(shipSprites->newPosition());
-    //}
-    //shipSprites->Update();
-    //nTexture = shipSprites->GetCurrentTexture();
-    //nTexture->Update();
-    //mTexture->Rotate(10 * mTimer->DeltaTime());
-
-    mPlayer->Update();
+    mScreenManager->Update();
 }
 
 void GameManager::LateUpdate()
@@ -133,50 +108,41 @@ void GameManager::LateUpdate()
 
 void GameManager::checkKeyPress()
 {
+    mPlayScreen = mScreenManager->GetPlayScreen();
     if (mInputManager->KeyPressed(SDL_SCANCODE_D))
     {
-        //mAudioManager->PlaySFX("8bit_hit_13.wav", 0, 0);
-        //shipSprites->SetShipMoving(true, ShipAnimation::DIRECTION::right);
-        //shipSprites->SetAnimationDone(false);
-        //shipSprites->SetDeltaPosition(1, 0);
         printf("Pressed D Key\n");
 
-        mPlayer->SetDirection(Player::DIRECTION::right);
+        mPlayScreen->GetPlayer()->SetDirection(Player::DIRECTION::right);
     }
     else if (mInputManager->KeyPressed(SDL_SCANCODE_W))
     {
-        //mAudioManager->PlaySFX("8bit_hit_13.wav", 0, 0);
-        //shipSprites->SetShipMoving(true, ShipAnimation::DIRECTION::up);
-        //shipSprites->SetAnimationDone(false);
-        //shipSprites->SetDeltaPosition(0, -1);
         printf("Pressed W Key\n");
 
-        mPlayer->SetDirection(Player::DIRECTION::up);
-
-
+        mPlayScreen->GetPlayer()->SetDirection(Player::DIRECTION::up);
     }
     else if (mInputManager->KeyPressed(SDL_SCANCODE_A))
     {
-        //shipSprites->SetShipMoving(true, ShipAnimation::DIRECTION::left);
-        //shipSprites->SetAnimationDone(false);
-        //shipSprites->SetDeltaPosition(-1, 0);
         printf("Pressed A Key\n");
-
-
-        mPlayer->SetDirection(Player::DIRECTION::left);
-
-
+        mPlayScreen->GetPlayer()->SetDirection(Player::DIRECTION::left);
     }
     else if (mInputManager->KeyPressed(SDL_SCANCODE_S))
     {
-        //shipSprites->SetShipMoving(true, ShipAnimation::DIRECTION::down);
-        //shipSprites->SetAnimationDone(false);
-        //shipSprites->SetDeltaPosition(0, 1);
         printf("Pressed S Key\n");
+        mPlayScreen->GetPlayer()->SetDirection(Player::DIRECTION::down);
+    }
+    else if (mInputManager->KeyPressed(SDL_SCANCODE_X))
+    {
+        printf("Pressed X key\n");
+        mPlayScreen->GetPlayer()->RespawnPlayer();
+        //Respawn Player;
+    }
+    else if (mInputManager->KeyPressed(SDL_SCANCODE_C))
+    {
+        printf("Pressed C Key\n");
 
-
-        mPlayer->SetDirection(Player::DIRECTION::down);
-
+        mPlayScreen->GetEnemy()->RespawnEnemy();
+        //Respawn Enemy
     }
 }
 
@@ -208,6 +174,18 @@ void GameManager::checkKeyRelease()
     //}
 }
 
+void GameManager::HandleCollision()
+{
+    if (!mPlayerHit)
+    {
+        if (mPlayer->WasHit())
+        {
+            mPlayerHit = true;
+
+        }
+    }
+}
+
 
 
 void GameManager::Render()
@@ -216,7 +194,8 @@ void GameManager::Render()
 
     //Draw calls here
     //nTexture->Render();
-    mPlayer->Render();
+    
+    mScreenManager->Render();
     mGraphics->Render();
 
 }

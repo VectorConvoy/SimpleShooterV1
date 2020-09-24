@@ -124,7 +124,7 @@ bool Graphics::Init()
 		return successful;
 	}
 
-	mWindow = SDL_CreateWindow("SDL Tutorial by Ather Omar", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+	mWindow = SDL_CreateWindow("CIS 693 Project", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
 
 	if (mWindow == NULL)
 	{
@@ -140,7 +140,7 @@ bool Graphics::Init()
 		successful = false;
 	}
 
-	SDL_SetRenderDrawColor(mRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
+	SDL_SetRenderDrawColor(mRenderer, 0x00, 0x00, 0x00, 0xFF);
 
 	int flags = IMG_INIT_PNG;
 	if (!IMG_Init(flags) & flags)

@@ -11,6 +11,7 @@ public:
 	enum class SPACE { local = 0, world = 1 };
 
 	GameEntity(float x = 0.0f, float y = 0.0f);
+	GameEntity(Vector2 position);
 	~GameEntity();
 
 	void SetPosition(Vector2 pos);
