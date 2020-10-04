@@ -19,7 +19,7 @@ struct Vector2
 		return x * x + y * y;
 	}
 
-	float Magnitude()
+	float Magnitude() const
 	{
 		return (float)sqrt(x * x + y * y);
 	}
@@ -28,7 +28,14 @@ struct Vector2
 	{
 		float mag = Magnitude();
 
-		return Vector2(x / mag, y / mag);
+		if (mag > 0.0f)
+		{
+			return Vector2(x / mag, y / mag);
+		}
+		else
+		{
+			return Vector2();
+		}
 	}
 
 	Vector2& operator +=(const Vector2& rightHandSide)
@@ -51,6 +58,12 @@ struct Vector2
 	{
 		return Vector2(-x, -y);
 	}
+
+	//Vector2& operator *=(float scalar)
+	//{
+	//	x *= scalar;
+	//	y *= scalar;
+	//}
 };
 
 inline Vector2 operator +(const Vector2& leftHandSide, const Vector2& rightHandSide)
@@ -83,13 +96,51 @@ inline Vector2 operator /(const float& leftHandSide, const Vector2& rightHandSid
 	return Vector2(leftHandSide / rightHandSide.x, leftHandSide / rightHandSide.y);
 }
 
+inline bool operator ==(const Vector2& leftHandSide, const Vector2& rightHandSide)
+{
+	return (leftHandSide.x == rightHandSide.x) && (leftHandSide.y == rightHandSide.y);
+}
 
+inline bool operator !=(const Vector2& leftHandSide, const Vector2& rightHandSide)
+{
+	return !(leftHandSide == rightHandSide);
+}
+
+inline Vector2 Truncate(const Vector2& leftHandSide, const float& rightHandSide)
+{
+	Vector2 truncated = Vector2(leftHandSide.x, leftHandSide.y);
+
+	if (leftHandSide.Magnitude() > rightHandSide)
+	{
+		truncated = truncated.Normalized() * rightHandSide;
+	}
+	
+	return truncated;
+}
 
 inline Vector2 RotateVector(Vector2& vec, float angle)
 {
 	float angleInRadians = (float)(angle * DEG_TO_RAD);
 
 	return Vector2((float)(vec.x * cos(angleInRadians) - vec.y * sin(angleInRadians)), (float)(vec.x * sin(angleInRadians) + vec.y * cos(angleInRadians)));
+}
+
+static inline float DotProduct(const Vector2& leftHandSide, const Vector2& rightHandSide)
+{
+	return (leftHandSide.x * rightHandSide.x) + (leftHandSide.y * rightHandSide.y);
+}
+
+static inline float Distance(Vector2 start, Vector2 end)
+{
+	Vector2 tempVector = start - end;
+
+	return tempVector.Magnitude();
+}
+
+static inline float DistanceSquared(Vector2 start, Vector2 end)
+{
+	Vector2 tempVector = start - end;
+	return tempVector.MagnitudeSquared();
 }
 
 const Vector2 VEC2_ZERO = { 0.0f, 0.0f };

@@ -5,13 +5,15 @@
 #include <vector>
 #include "Bullet.h"
 #include "PhysicEntity.h"
+#include "Sequence.h"
 
 class Enemy : public PhysicEntity
 {
 public:
-	enum class DIRECTION { up = 0, right, down, left };
+	enum class DIRECTION { up = 0, right = 90, down = 180, left = 270 };
 	enum class ANIMATIONDIRECTION { forward = 1, backward = -1 };
 
+	static const int ROTATION_SPEED = 5; //In degrees
 	static const int MAX_BULLETS = 10;
 	const std::string ShipName = "enemy1.png";
 	const std::string DeathAnimation = "ship_explosion.png";
@@ -24,13 +26,22 @@ public:
 	bool WasHit();
 	Texture* GetTexture();
 
+	Sequence* root;
+	
+	DIRECTION GetCurrentDirection();
+
 	void SetAnimationSpeed(float speed = 0.5f);
 	void SetMovementSpeed(float speed = 50.0f);
 	void SetDirection(DIRECTION direction);
 	void SetBulletDirection(DIRECTION direction);
 
+	void InitializeBullets();
+
 	void Hit(PhysicEntity* other);
 	void RespawnEnemy();
+
+	void Fire();
+	void Move();
 
 	void Update();
 	void Render();
@@ -51,9 +62,9 @@ private:
 	int frameHeight;
 
 	int mFrameCount;
-	int currentIndex;
-	int goalIndex;
-	int indexDelta;
+	int currentAngle;
+	int goalAngle;
+	int angleDelta;
 
 	std::vector<SDL_Rect> allAnimationSpritesClipped;
 	std::vector< std::pair<int, int> > rectCoordinates;
@@ -70,7 +81,6 @@ private:
 
 	Bullet* mBullets[MAX_BULLETS];
 
-	void initializeBullets();
 	void setSpeedValues();
 
 	void HandleMovementAnimation();

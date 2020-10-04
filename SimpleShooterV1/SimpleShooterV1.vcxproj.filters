@@ -28,12 +28,24 @@
     <Filter Include="Header Files\Managers">
       <UniqueIdentifier>{d9f01c2f-a286-43f8-98f3-349ecd9cc5b5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Commands">
+      <UniqueIdentifier>{237c8bcf-b4fa-4581-a765-2c95b58628a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Command">
+      <UniqueIdentifier>{43130006-f632-4fbb-9984-f95721dee296}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Behavior Tree">
+      <UniqueIdentifier>{e002b2ea-2b14-498a-a55a-c280a71ee155}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Behavior Tree\Decorators">
+      <UniqueIdentifier>{a580a6d0-a391-471d-a5f4-2d2461305204}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Managers">
+      <UniqueIdentifier>{7464c4af-6bb5-4e0b-be17-adc9432f5cf5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="graphics.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="gameManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
@@ -42,22 +54,13 @@
     <ClCompile Include="timer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="AssetManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="GameEntity.cpp">
       <Filter>Source Files\Entities</Filter>
     </ClCompile>
     <ClCompile Include="texture.cpp">
       <Filter>Source Files\Entities</Filter>
     </ClCompile>
-    <ClCompile Include="InputManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="AnimatedTexture.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="AudioManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ShipAnimation.cpp">
@@ -90,8 +93,35 @@
     <ClCompile Include="CircleCollider.cpp">
       <Filter>Source Files\Physics</Filter>
     </ClCompile>
-    <ClCompile Include="ScreenManager.cpp">
+    <ClCompile Include="Command.cpp">
+      <Filter>Source Files\Command</Filter>
+    </ClCompile>
+    <ClCompile Include="MoveCommand.cpp">
+      <Filter>Source Files\Command</Filter>
+    </ClCompile>
+    <ClCompile Include="PositionStatus.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="VisibilityStatus.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AIEngine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AssetManager.cpp">
+      <Filter>Source Files\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="AudioManager.cpp">
+      <Filter>Source Files\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="gameManager.cpp">
+      <Filter>Source Files\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="InputManager.cpp">
+      <Filter>Source Files\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="ScreenManager.cpp">
+      <Filter>Source Files\Managers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -159,7 +189,46 @@
       <Filter>Header Files\Managers</Filter>
     </ClInclude>
     <ClInclude Include="ScreenManager.h">
+      <Filter>Header Files\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Behavior.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AIEngine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Command.h">
+      <Filter>Header Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="FireCommand.h">
+      <Filter>Header Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveCommand.h">
+      <Filter>Header Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectionCommand.h">
+      <Filter>Header Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="Node.h">
+      <Filter>Header Files\Behavior Tree</Filter>
+    </ClInclude>
+    <ClInclude Include="Selector.h">
+      <Filter>Header Files\Behavior Tree</Filter>
+    </ClInclude>
+    <ClInclude Include="CompositeNode.h">
+      <Filter>Header Files\Behavior Tree</Filter>
+    </ClInclude>
+    <ClInclude Include="Sequence.h">
+      <Filter>Header Files\Behavior Tree</Filter>
+    </ClInclude>
+    <ClInclude Include="HealthStatus.h">
+      <Filter>Header Files\Behavior Tree\Decorators</Filter>
+    </ClInclude>
+    <ClInclude Include="PositionStatus.h">
+      <Filter>Header Files\Behavior Tree\Decorators</Filter>
+    </ClInclude>
+    <ClInclude Include="VisibilityStatus.h">
+      <Filter>Header Files\Behavior Tree\Decorators</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
