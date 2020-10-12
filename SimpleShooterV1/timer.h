@@ -13,7 +13,7 @@ public:
 	static void Release();
 
 	void Reset();
-	float DeltaTime();
+	float DeltaTime(); //Amount of time that has passed since the timer started in seconds
 
 	void SetTimeScale(float time);
 	float GetTimeScale();

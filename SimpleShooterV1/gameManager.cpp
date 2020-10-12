@@ -48,17 +48,23 @@ GameManager::GameManager()
     mQuit = false;
     mGraphics = Graphics::Instance();
     mScreenManager = ScreenManager::Instance();
-
+    mPlayScreen = mScreenManager->GetPlayScreen();
 
     if (!Graphics::Initialized())
     {
         mQuit = true;
     }
 
-
     mInputManager = InputManager::Instance();
     mTimer = Timer::Instance();
 
+    mAssetManager = AssetManager::Instance();
+    mAudioManager = AudioManager::Instance();
+
+
+    mPlayerHit = false;
+
+    //mAIManager = AIEngine::Instance();
 }
 
 GameManager::~GameManager()
@@ -95,7 +101,17 @@ void GameManager::EarlyUpdate()
 
 void GameManager::Update()
 {
-    checkKeyPress();
+    if (mPlayScreen)
+    {
+        if (mPlayScreen->GetGameStarted())
+        {
+            mPlayScreen->checkKeyPress();
+            mPlayScreen->checkKeyRelease();
+        }
+
+    }
+
+
     mScreenManager->Update();
 }
 
@@ -108,84 +124,151 @@ void GameManager::LateUpdate()
 
 void GameManager::checkKeyPress()
 {
+    
     mPlayScreen = mScreenManager->GetPlayScreen();
+
     if (mInputManager->KeyPressed(SDL_SCANCODE_D))
     {
-        printf("Pressed D Key\n");
+        if (mInputManager->KeyDown(SDL_SCANCODE_S))
+        {
+            mPlayScreen->GetPlayer()->SetPlayerDirection(DOWNRIGHT);
+        }
+        else if (mInputManager->KeyDown(SDL_SCANCODE_W))
+        {
+            mPlayScreen->GetPlayer()->SetPlayerDirection(UPRIGHT);
+        }
+        else
+        {
+            mPlayScreen->GetPlayer()->SetPlayerDirection(RIGHT);
+        }
 
-        mPlayScreen->GetPlayer()->SetDirection(Player::DIRECTION::right);
     }
     else if (mInputManager->KeyPressed(SDL_SCANCODE_W))
     {
-        printf("Pressed W Key\n");
-
-        mPlayScreen->GetPlayer()->SetDirection(Player::DIRECTION::up);
+        if (mInputManager->KeyDown(SDL_SCANCODE_A))
+        {
+            mPlayScreen->GetPlayer()->SetPlayerDirection(UPLEFT);
+        }
+        else if (mInputManager->KeyDown(SDL_SCANCODE_D))
+        {
+            mPlayScreen->GetPlayer()->SetPlayerDirection(UPRIGHT);
+        }
+        else
+        {
+            mPlayScreen->GetPlayer()->SetPlayerDirection(UP);
+        }
     }
     else if (mInputManager->KeyPressed(SDL_SCANCODE_A))
     {
-        printf("Pressed A Key\n");
-        mPlayScreen->GetPlayer()->SetDirection(Player::DIRECTION::left);
+        if (mInputManager->KeyDown(SDL_SCANCODE_W))
+        {
+            mPlayScreen->GetPlayer()->SetPlayerDirection(UPLEFT);
+        }
+        else if (mInputManager->KeyDown(SDL_SCANCODE_S))
+        {
+            mPlayScreen->GetPlayer()->SetPlayerDirection(DOWNLEFT);
+        }
+        else
+        {
+            mPlayScreen->GetPlayer()->SetPlayerDirection(LEFT);
+        }
+
     }
     else if (mInputManager->KeyPressed(SDL_SCANCODE_S))
     {
-        printf("Pressed S Key\n");
-        mPlayScreen->GetPlayer()->SetDirection(Player::DIRECTION::down);
+        if (mInputManager->KeyDown(SDL_SCANCODE_D))
+        {
+            mPlayScreen->GetPlayer()->SetPlayerDirection(DOWNRIGHT);
+        }
+        else if (mInputManager->KeyDown(SDL_SCANCODE_A))
+        {
+            mPlayScreen->GetPlayer()->SetPlayerDirection(DOWNLEFT);
+        }
+        else
+        {
+            mPlayScreen->GetPlayer()->SetPlayerDirection(DOWN);
+        }
     }
     else if (mInputManager->KeyPressed(SDL_SCANCODE_X))
     {
-        printf("Pressed X key\n");
-        mPlayScreen->GetPlayer()->RespawnPlayer();
-        //Respawn Player;
+        if (mPlayScreen->GetActive())
+        {
+            mPlayScreen->GetPlayer()->RespawnPlayer();
+            //Respawn Player;
+        }
     }
     else if (mInputManager->KeyPressed(SDL_SCANCODE_C))
     {
-        printf("Pressed C Key\n");
-
-        mPlayScreen->GetEnemy()->RespawnEnemy();
-        //Respawn Enemy
+        if (mPlayScreen->GetActive())
+        {
+            mPlayScreen->GetEnemy()->RespawnEnemy();
+            //Respawn Enemy
+        }
+    }
+    else
+    {
+        mPlayScreen->GetPlayer()->SetPlayerDirection(STOP);
     }
 }
 
 void GameManager::checkKeyRelease()
 {
-    //if (mInputManager->KeyReleased(SDL_SCANCODE_D))
-    //{
-    //    //mAudioManager->PlaySFX("8bit_hit_13.wav", 0, 0);
-    //    shipSprites->SetShipMoving(false, ShipAnimation::DIRECTION::right);
-    //    printf("Released D Key\n");
-    //}
-    //else if (mInputManager->KeyReleased(SDL_SCANCODE_W))
-    //{
-    //    //mAudioManager->PlaySFX("8bit_hit_13.wav", 0, 0);
-    //    shipSprites->SetShipMoving(false, ShipAnimation::DIRECTION::up);
-    //    printf("Released W Key\n");
-
-    //}
-    //else if (mInputManager->KeyReleased(SDL_SCANCODE_A))
-    //{
-    //    shipSprites->SetShipMoving(false, ShipAnimation::DIRECTION::left);
-    //    printf("Released A Key\n");
-
-    //}
-    //else if (mInputManager->KeyReleased(SDL_SCANCODE_S))
-    //{
-    //    shipSprites->SetShipMoving(false, ShipAnimation::DIRECTION::down);
-    //   printf("Released S Key\n");
-    //}
+    if (mInputManager->KeyReleased(SDL_SCANCODE_D))
+    {
+        if (mInputManager->KeyDown(SDL_SCANCODE_S))
+        {
+            mPlayScreen->GetPlayer()->SetPlayerDirection(DOWN);
+        }
+        else if (mInputManager->KeyDown(SDL_SCANCODE_W))
+        {
+            mPlayScreen->GetPlayer()->SetPlayerDirection(UP);
+        }
+    }
+    else if (mInputManager->KeyReleased(SDL_SCANCODE_W))
+    {
+        if (mInputManager->KeyDown(SDL_SCANCODE_A))
+        {
+            mPlayScreen->GetPlayer()->SetPlayerDirection(LEFT);
+        }
+        else if (mInputManager->KeyDown(SDL_SCANCODE_D))
+        {
+            mPlayScreen->GetPlayer()->SetPlayerDirection(RIGHT);
+        }
+    }
+    else if (mInputManager->KeyReleased(SDL_SCANCODE_A))
+    {
+        if (mInputManager->KeyDown(SDL_SCANCODE_W))
+        {
+            mPlayScreen->GetPlayer()->SetPlayerDirection(UP);
+        }
+        else if (mInputManager->KeyDown(SDL_SCANCODE_S))
+        {
+            mPlayScreen->GetPlayer()->SetPlayerDirection(DOWN);
+        }
+    }
+    else if (mInputManager->KeyReleased(SDL_SCANCODE_S))
+    {
+        if (mInputManager->KeyDown(SDL_SCANCODE_D))
+        {
+            mPlayScreen->GetPlayer()->SetPlayerDirection(RIGHT);
+        }
+        else if (mInputManager->KeyDown(SDL_SCANCODE_A))
+        {
+            mPlayScreen->GetPlayer()->SetPlayerDirection(LEFT);
+        }
+    }
 }
 
 void GameManager::HandleCollision()
 {
     if (!mPlayerHit)
     {
-        if (mPlayer->WasHit())
+        if (mPlayer->GetHit())
         {
             mPlayerHit = true;
-
         }
     }
 }
-
 
 
 void GameManager::Render()

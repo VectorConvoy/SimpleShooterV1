@@ -13,6 +13,7 @@
 #include "Enemy.h"
 #include "PhysicsManager.h"
 #include "ScreenManager.h"
+#include "AIEngine.h"
 
 class GameManager 
 {
@@ -45,6 +46,7 @@ private:
 	InputManager* mInputManager;
 	AudioManager* mAudioManager;
 	PhysicsManager* mPhysicsManager;
+	//AIEngine* mAIManager;
 
 	ShipAnimation* shipSprites;
 

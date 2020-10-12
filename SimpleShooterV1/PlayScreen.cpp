@@ -1,4 +1,5 @@
 #include "PlayScreen.h"
+#include "AIEngine.h"
 
 
 PlayScreen::PlayScreen()
@@ -7,6 +8,7 @@ PlayScreen::PlayScreen()
 	mInputManager = InputManager::Instance();
 	mAudioManager = AudioManager::Instance();
 	mPhysicsManager = PhysicsManager::Instance();
+	mAIManager = AIEngine::Instance();
 
 	SetupPhysics();
 
@@ -23,6 +25,7 @@ PlayScreen::~PlayScreen()
 	mInputManager = NULL;
 	mAudioManager = NULL;
 	mPhysicsManager = NULL;
+	mAIManager = NULL;
 
 	if (mPlayer)
 	{
@@ -42,7 +45,7 @@ PlayScreen::~PlayScreen()
 
 void PlayScreen::StartNewGame()
 {
-	mGameStarted = false;
+	mActive = false;
 	mPlayerHit = false;
 
 	delete mPlayer;
@@ -51,9 +54,10 @@ void PlayScreen::StartNewGame()
 		delete mPlayer;
 	}
 
-	mPlayer = new Player(PlayerShipName);
+	mPlayer = new Player();
+	mPlayer->SetShipFileName(PlayerShipName);
 	mPlayer->SetPosition(Vector2(Graphics::SCREEN_WIDTH / 2, Graphics::SCREEN_HEIGHT / 2));
-
+	mPlayer->SetActive(true);
 	//Spawn enemies
 
 	if (mEnemy)
@@ -61,22 +65,24 @@ void PlayScreen::StartNewGame()
 		delete mEnemy;
 	}
 	
-	mEnemy = new Enemy(EnemyShipName);
+	mEnemy = new Enemy();
 	mEnemy->SetPosition(Vector2(Graphics::SCREEN_WIDTH / 2, Graphics::SCREEN_HEIGHT / 4));
-	//mEnemy->SetRotation(180);
+	mEnemy->SetRotation(180);
 
-	
+	mAIManager->SetPlayer(mPlayer);
+	mAIManager->AddEnemy(mEnemy);
+	mAIManager->ActivateAI();
 
 }
 
 void PlayScreen::SetGameStarted(bool started)
 {
-	mGameStarted = started;
+	mActive = started;
 }
 
 bool PlayScreen::GetGameStarted()
 {
-	return mGameStarted;
+	return mActive;
 }
 
 Player* PlayScreen::GetPlayer()
@@ -89,13 +95,160 @@ Enemy* PlayScreen::GetEnemy()
 	return mEnemy;
 }
 
+void PlayScreen::checkKeyPress()
+{
+	if (mInputManager->KeyPressed(SDL_SCANCODE_D))
+	{
+		if (mInputManager->KeyDown(SDL_SCANCODE_S))
+		{
+			mPlayer->SetPlayerDirection(DOWNRIGHT);
+		}
+		else if (mInputManager->KeyDown(SDL_SCANCODE_W))
+		{
+			mPlayer->SetPlayerDirection(UPRIGHT);
+		}
+		else
+		{
+			mPlayer->SetPlayerDirection(RIGHT);
+		}
+
+	}
+	else if (mInputManager->KeyPressed(SDL_SCANCODE_W))
+	{
+		if (mInputManager->KeyDown(SDL_SCANCODE_A))
+		{
+			mPlayer->SetPlayerDirection(UPLEFT);
+		}
+		else if (mInputManager->KeyDown(SDL_SCANCODE_D))
+		{
+			mPlayer->SetPlayerDirection(UPRIGHT);
+		}
+		else
+		{
+			mPlayer->SetPlayerDirection(UP);
+		}
+	}
+	else if (mInputManager->KeyPressed(SDL_SCANCODE_A))
+	{
+		if (mInputManager->KeyDown(SDL_SCANCODE_W))
+		{
+			mPlayer->SetPlayerDirection(UPLEFT);
+		}
+		else if (mInputManager->KeyDown(SDL_SCANCODE_S))
+		{
+			mPlayer->SetPlayerDirection(DOWNLEFT);
+		}
+		else
+		{
+			mPlayer->SetPlayerDirection(LEFT);
+		}
+	}
+	else if (mInputManager->KeyPressed(SDL_SCANCODE_S))
+	{
+		if (mInputManager->KeyDown(SDL_SCANCODE_D))
+		{
+			mPlayer->SetPlayerDirection(DOWNRIGHT);
+		}
+		else if (mInputManager->KeyDown(SDL_SCANCODE_A))
+		{
+			mPlayer->SetPlayerDirection(DOWNLEFT);
+		}
+		else
+		{
+			mPlayer->SetPlayerDirection(DOWN);
+		}
+	}
+	else if (mInputManager->KeyPressed(SDL_SCANCODE_X))
+	{
+		mPlayer->RespawnPlayer();
+		//Respawn Player;
+	}
+	else if (mInputManager->KeyPressed(SDL_SCANCODE_C))
+	{
+		mEnemy->RespawnEnemy();
+		//Respawn Enemy
+	}
+}
+
+void PlayScreen::checkKeyRelease()
+{
+	if (mInputManager->KeyReleased(SDL_SCANCODE_D))
+	{
+		if (mInputManager->KeyDown(SDL_SCANCODE_S))
+		{
+			mPlayer->SetPlayerDirection(DOWN);
+		}
+		else if (mInputManager->KeyDown(SDL_SCANCODE_W))
+		{
+			mPlayer->SetPlayerDirection(UP);
+		}
+		else
+		{
+			mPlayer->SetPlayerDirection(STOP);
+		}
+	}
+	else if (mInputManager->KeyReleased(SDL_SCANCODE_W))
+	{
+		if (mInputManager->KeyDown(SDL_SCANCODE_A))
+		{
+			mPlayer->SetPlayerDirection(LEFT);
+		}
+		else if (mInputManager->KeyDown(SDL_SCANCODE_D))
+		{
+			mPlayer->SetPlayerDirection(RIGHT);
+		}
+		else
+		{
+			mPlayer->SetPlayerDirection(STOP);
+		}
+	}
+	else if (mInputManager->KeyReleased(SDL_SCANCODE_A))
+	{
+		if (mInputManager->KeyDown(SDL_SCANCODE_W))
+		{
+			mPlayer->SetPlayerDirection(UP);
+		}
+		else if (mInputManager->KeyDown(SDL_SCANCODE_S))
+		{
+			mPlayer->SetPlayerDirection(DOWN);
+		}
+		else
+		{
+			mPlayer->SetPlayerDirection(STOP);
+		}
+	}
+	else if (mInputManager->KeyReleased(SDL_SCANCODE_S))
+	{
+		if (mInputManager->KeyDown(SDL_SCANCODE_D))
+		{
+			mPlayer->SetPlayerDirection(RIGHT);
+		}
+		else if (mInputManager->KeyDown(SDL_SCANCODE_A))
+		{
+			mPlayer->SetPlayerDirection(LEFT);
+		}
+		else
+		{
+			mPlayer->SetPlayerDirection(STOP);
+		}
+	}
+}
+
 void PlayScreen::Update()
 {
-	if (mGameStarted)
+	if (mActive)
 	{
-		mPlayer->Update();
-		mEnemy->Update();
+		if (mPlayer)
+		{
+			mPlayer->Update();
+		}
+
+		if (mEnemy)
+		{
+			mEnemy->Update();
+		}
 		mPhysicsManager->Update();
+		mAIManager->Update();
 
 	}
 	else
@@ -108,10 +261,17 @@ void PlayScreen::Render()
 {
 	//mPlayer->Render();
 	mBackground->Render();
-	if (mGameStarted)
+	if (mActive)
 	{
-		mPlayer->Render();
-		mEnemy->Render();
+		if (mPlayer)
+		{
+			mPlayer->Render();
+		}
+
+		if (mEnemy)
+		{
+			mEnemy->Render();
+		}
 	}
 
 }

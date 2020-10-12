@@ -7,6 +7,7 @@
 #include "Enemy.h"
 #include "AudioManager.h"
 #include "PhysicsManager.h"
+#include "AIEngine.h"
 
 class PlayScreen : public GameEntity
 {
@@ -26,13 +27,16 @@ public:
 
 	Player* GetPlayer();
 	Enemy* GetEnemy();
+
+	void checkKeyPress();
+	void checkKeyRelease();
 		
 	void Update();
 	void Render();
 
 private:
 
-	bool mGameStarted;
+	bool mActive;
 	//bool mLevelStarted;
 	//int mCurrentStage;
 
@@ -40,6 +44,7 @@ private:
 	InputManager* mInputManager;
 	AudioManager* mAudioManager;
 	PhysicsManager* mPhysicsManager;
+	AIEngine* mAIManager;
 
 	Texture* mBackground;
 

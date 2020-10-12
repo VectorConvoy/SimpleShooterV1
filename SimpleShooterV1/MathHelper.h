@@ -6,6 +6,7 @@
 
 #define PI 3.14159265
 #define DEG_TO_RAD PI / 180.0f
+#define RAD_TO_DEG 180.0f / PI
 
 struct Vector2
 {
@@ -149,5 +150,21 @@ const Vector2 VEC2_UP = { 0.0f, -1.0f };
 const Vector2 VEC2_DOWN = { 0.0f, 1.0f };
 const Vector2 VEC2_RIGHT = { 1.0f, 0.0f };
 const Vector2 VEC2_LEFT = { -1.0f, 0.0f };
+
+const Vector2 VEC2_UPRIGHT = { 0.75f, -0.75f };
+const Vector2 VEC2_DOWNRIGHT = { 0.75f, 0.75f };
+const Vector2 VEC2_DOWNLEFT = { -0.75f, 0.75f };
+const Vector2 VEC2_UPLEFT = { -0.75f, -0.75f };
+
+const float STOP = -1;
+const float UP = 0;
+const float UPRIGHT = 0.5;
+const float RIGHT = 1;
+const float DOWNRIGHT = 1.5;
+const float DOWN = 2;
+const float DOWNLEFT = 2.5;
+const float LEFT = 3;
+const float UPLEFT = 3.5;
+
 
 #endif // !_MATHHELPER_H
