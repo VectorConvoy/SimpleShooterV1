@@ -5,12 +5,8 @@
 
 //Singleton
 
-#include "AnimatedTexture.h"
-#include "InputManager.h"
 #include "AudioManager.h"
-#include "ShipAnimation.h"
 #include "PlayScreen.h"
-#include "Enemy.h"
 #include "PhysicsManager.h"
 #include "ScreenManager.h"
 #include "AIEngine.h"
@@ -37,6 +33,7 @@ private:
 	Texture* nTexture;
 
 	ScreenManager* mScreenManager;
+	StartScreen* mStartScreen;
 	PlayScreen* mPlayScreen;
 
 	Player* mPlayer;
@@ -48,7 +45,7 @@ private:
 	PhysicsManager* mPhysicsManager;
 	//AIEngine* mAIManager;
 
-	ShipAnimation* shipSprites;
+	//ShipAnimation* shipSprites;
 
 	SDL_Event mEvents;
 

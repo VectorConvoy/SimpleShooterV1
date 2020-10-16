@@ -8,9 +8,10 @@ Player::Player()
 	sTimerInstance = Timer::Instance();
 	mInputManager = InputManager::Instance();
 
-	mVisible = false;
+	mVisible = true;
 	mAnimating = false;
 	mWasHit = false;
+	isPlayer = true;
 	currentDirection = UP;
 	destinationDirection = UP;
 	spriteAngle = 0;
@@ -30,7 +31,7 @@ Player::Player()
 
 	mId = PhysicsManager::Instance()->RegisterEntity(this, PhysicsManager::CollisionLayers::Friendly);
 
-	mActive = false;
+	mActive = true;
 
 }
 
@@ -43,6 +44,7 @@ void Player::InitializeBullets()
 	for (int i = 0; i < MAX_BULLETS; i++)
 	{
 		mBullets[i] = new Bullet();
+		mBullets[i]->SetActive(false);
 		mBullets[i]->RegisterPlayerBullets();
 	}
 }
@@ -97,19 +99,17 @@ void Player::SetBulletDirection(float nextDirection)
 
 void Player::FireBullet()
 {
-	if (mInputManager->KeyDown(SDL_SCANCODE_SPACE))
+	for (int i = 0; i < MAX_BULLETS; i++)
 	{
-		for (int i = 0; i < MAX_BULLETS; i++)
+		if (!mBullets[i]->GetActive())
 		{
-			if (!mBullets[i]->GetActive())
-			{
-				mBullets[i]->Fire(GetPosition());
-				//Play audio here
-				break;
+			mBullets[i]->Fire(GetPosition());
+			//Play audio here
+			break;
 
-			}
 		}
 	}
+	
 }
 
 void Player::CustomUpdate()
@@ -117,13 +117,45 @@ void Player::CustomUpdate()
 	//Update base ship class here
 	//Add any additional updates here
 	this->Update();
-	FireBullet();
-	
+
+	if (mWasHit && mActive)
+	{
+		invincible = true;
+	}
+
+	if (invincible)
+	{
+		mInvincibleTimer += sTimerInstance->DeltaTime();
+		InvinicibilityFlash();
+		if (mInvincibleTimer >= INVINCIBILITY_TIME)
+		{
+			mInvincibleTimer = 0.0f;
+			invincible = false;
+			mWasHit = false;
+		}
+	}
+
+	for (int i = 0; i < MAX_BULLETS; i++)
+	{
+		if (mBullets[i]->GetActive())
+		{
+			mBullets[i]->Update();
+		}
+	}
 }
 
 void Player::CustomRender()
 {
-	this->Render();
+	if (mVisible)
+	{
+		this->Render();
+	}
+	for (int i = 0; i < MAX_BULLETS; i++)
+	{
+		mBullets[i]->Render();
+	}
+	PhysicEntity::Render();
+
 }
 
 void Player::RespawnPlayer()
@@ -211,6 +243,11 @@ void Player::SetPlayerDirection(float direct)
 {
 	destinationDirection = direct;
 
+	if (direct != STOP)
+	{
+		SetBulletDirection(direct);
+	}
+
 	Vector2 tempVector;
 
 	if (direct == UP)
@@ -257,11 +294,19 @@ void Player::SetPlayerDirection(float direct)
 		tempVector = VEC2_ZERO;
 	}
 
-
 	SetDestVector(tempVector);
 
+}
 
-
-
+void Player::InvinicibilityFlash()
+{
+	if (fmod(mInvincibleTimer, 0.5)> 0.25f)
+	{
+		mVisible = false;
+	}
+	else
+	{
+		mVisible = true;
+	}
 }
 

@@ -48,6 +48,7 @@ GameManager::GameManager()
     mQuit = false;
     mGraphics = Graphics::Instance();
     mScreenManager = ScreenManager::Instance();
+    mStartScreen = mScreenManager->GetStartScreen();
     mPlayScreen = mScreenManager->GetPlayScreen();
 
     if (!Graphics::Initialized())
@@ -89,6 +90,9 @@ GameManager::~GameManager()
 
     Timer::Release();
     mTimer = NULL;
+
+    delete mStartScreen;
+    mStartScreen = NULL;
 
     delete mTexture;
     mTexture = NULL;
@@ -201,7 +205,7 @@ void GameManager::checkKeyPress()
     {
         if (mPlayScreen->GetActive())
         {
-            mPlayScreen->GetEnemy()->RespawnEnemy();
+            //mPlayScreen->GetEnemy()->RespawnEnemy();
             //Respawn Enemy
         }
     }

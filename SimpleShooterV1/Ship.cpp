@@ -3,17 +3,39 @@
 Ship::Ship()
 {
 	animationSpeed = DEFAULT_SPEED;
+	invincible = false;
+	Health = PLAYER_HEALTH;
+	currentRotations = 0;
+	futureRotations = 0;
+	fullRotation = false;
 }
 
 Ship::~Ship()
 {
+	mActive = false;
+	delete shipTexture;
+	shipTexture = NULL;
+	
+	delete mDeathAnimation;
+	mDeathAnimation = NULL;
 }
 
 void Ship::MoveAnimation()
 {
-	float angleDelta = (float)(animationTimer / (animationSpeed / (goalAngle - spriteAngle)));
+	float tempAngle = goalAngle;
+
+	if (futureRotations < currentRotations)
+	{
+		tempAngle = 360 - goalAngle;
+	}
+	else if (futureRotations > currentRotations)
+	{
+		tempAngle += 360;
+	}
 	
-	int rotationDirection = (goalAngle - spriteAngle);
+	float angleDelta = (float)(animationTimer / (animationSpeed / (tempAngle - spriteAngle)));
+	
+	int rotationDirection = (tempAngle - spriteAngle);
 	
 	if (rotationDirection != 0)
 	{
@@ -22,26 +44,37 @@ void Ship::MoveAnimation()
 
 	angleDelta *= rotationDirection;
 
+
 	spriteAngle += angleDelta;
 
 	//TO-DO
 	//Look into figuring out how to reduce the angle delta so that it starts off small and increases. Currently, it works when the animation timer is low enough
-
-	//printf("***********************************************\nANGLE DELTA BEFORE MULTIPLIED: %f\n***********************************************\n", (float)angleDelta);
-
-	//printf("***********************************************\nANIMATION TIMER: %f\n***********************************************\n", (float)animationTimer);
-
-	//printf("***********************************************\nROTATION DIRECTION: %f\n***********************************************\n", (float)rotationDirection);
+	//Issue is when the angle shifts from 359 to 360/0. Currently it thinks 360 is 0 so it'll go backwards instead of just progressing.
 
 
-	//printf("***********************************************\nANGLE DELTA: %f\n***********************************************\n", (float)angleDelta);
+	if (isPlayer)
+	{
 
-	//printf("***********************************************\nCURRENT ANGLE: %f\n***********************************************\n",(float)spriteAngle);
+		printf("***********************************************\nANIMATION TIMER: %f\n***********************************************\n", (float)animationTimer);
+
+		printf("***********************************************\GOAL ANGLE: %f\n***********************************************\n", (float)goalAngle);
+
+
+		//printf("***********************************************\nANGLE DELTA: %f\n***********************************************\n", (float)angleDelta);
+
+		//printf("***********************************************\nCURRENT ANGLE: %f\n***********************************************\n", (float)spriteAngle);
+
+
+		printf("\n\n\n\n");
+	}
+
 
 	if (fabsf(goalAngle-spriteAngle) < 1.0f)
 	{
 		mAnimating = false;
 	}
+
+	futureRotations = currentRotations;
 
 	SetRotation(spriteAngle);
 }
@@ -108,6 +141,16 @@ bool Ship::GetActive()
 	return mActive;
 }
 
+void Ship::SetAnimating(bool isAnimating)
+{
+	mAnimating = isAnimating;
+}
+
+bool Ship::GetAnimating()
+{
+	return mAnimating;
+}
+
 void Ship::SetHit(bool wasHit)
 {
 	mWasHit = wasHit;
@@ -152,7 +195,7 @@ void Ship::SetDestVector(Vector2 destination)
 		
 		goalAngle = destinationDirection * 90.0f; //4 Directions which means 360/4 which equals 90 degrees
 
-		if (spriteAngle != goalAngle)
+		if (spriteAngle != goalAngle && mActive)
 		{
 			mAnimating = true;
 		}
@@ -167,8 +210,15 @@ void Ship::SetDestVector(Vector2 destination)
 		}
 	}
 
+	//printf("STATUS: %x\n", mAnimating);
+	printf("SPRITE ANGLE: %f\n", spriteAngle);
 
 
+}
+
+int Ship::GetHealth()
+{
+	return Health;
 }
 
 void Ship::Respawn(Vector2 respawnPos)
@@ -225,36 +275,38 @@ void Ship::InitializeBullets()
 	//}
 }
 
-void Ship::FireBullet()
-{
-	//for (int i = 0; i < MAX_BULLETS; i++)
-	//{
-	//	if (!mBullets[i]->GetActive())
-	//	{
-	//		mBullets[i]->Fire(GetPosition());
-
-	//		//Play audio here
-
-	//		break;
-
-	//	}
-	//}
-}
-
 void Ship::Hit(PhysicEntity* otherEntity)
 {
-	//Death animation and handling here
-	mWasHit = true;
-
-	if (!mAnimating && mActive)
+	if (!isPlayer)
 	{
-		mActive = false;
-		mDeathAnimation->ResetAnimation();
-		mAnimating = true;
-
+		int x = 0;
 	}
+	if (otherEntity->GetActive())
+	{
+		if (!invincible)
+		{
+			if (!mWasHit)
+			{
+				Health--;
+			}
+			//Death animation and handling here
+			mWasHit = true;
 
-	//Play Death Audio
+
+			if (!mAnimating && mActive)
+			{
+				if (Health <= 0)
+				{
+					SetActive(false);
+					mActive = false;
+					mDeathAnimation->ResetAnimation();
+					mAnimating = true;
+				}
+			}
+
+			//Play Death Audio
+		}
+	}
 }
 
 void Ship::CheckBoundaries()
@@ -304,10 +356,13 @@ void Ship::Update()
 			animationTimer += sTimerInstance->DeltaTime();
 			MoveAnimation();
 
+			printf("\n------------------- TIMER : %f -----------------------------------------\n", (float) animationTimer);
+
 			if (animationTimer >= animationSpeed)
 			{
+				printf("\n------------------------- ANIMATION TIMER RESET ----------------------------------------- \n");
 				mAnimating = false;
-				animationTimer = 0; //Reset
+				animationTimer -= animationSpeed; //Reset
 			}
 		}
 	}
@@ -320,6 +375,7 @@ void Ship::Update()
 			//Check if sprite is facing the correct angle
 			if (spriteAngle != goalAngle)
 			{
+				printf("ANGLE MISMATCH - FIXING\n");
 				//SetRotation(goalAngle);
 				spriteAngle = goalAngle;
 			}

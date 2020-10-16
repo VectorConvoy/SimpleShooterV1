@@ -5,6 +5,23 @@
 void Enemy::CustomUpdate()
 {
 	this->Update();
+	EnemyMove();
+	CheckBoundaries();
+}
+
+void Enemy::CustomRender()
+{
+	this->Render();
+}
+
+void Enemy::SetDebugBehavior(int behavior)
+{
+	debug_behavior = behavior;
+}
+
+int Enemy::GetDebugBehavior()
+{
+	return debug_behavior;
 }
 
 void Enemy::RespawnEnemy()
@@ -26,16 +43,17 @@ void Enemy::SetEnemyDestVector(Vector2 goalVector)
 	if (goalAngle < 0)
 	{
 		goalAngle += 360;
+		futureRotations--;
 	}
-	else if (goalAngle >= 360)
+	else if (goalAngle > 360)
 	{
-		goalAngle = 0;
-	}
-	else if (goalAngle == 0)
-	{
-		goalAngle = 360;
+		futureRotations++;
+		goalAngle = fmodf(goalAngle, 360);
 	}
 
+	
+
+	printf("GOAL ANGLE: %f\n", goalAngle);
 	//Move(destVector);
 
 }
@@ -52,9 +70,12 @@ Enemy::Enemy()
 	mVisible = false;
 	mAnimating = false;
 	mWasHit = false;
+	isPlayer = false;
+	mActive = true;
 	currentDirection = UP;
 	destinationDirection = UP;
 	spriteAngle = 0;
+	Health = 1;
 
 	mMoveSpeed = 50.0f;
 	mMoveBounds = Vector2(Graphics::SCREEN_WIDTH, Graphics::SCREEN_HEIGHT);
@@ -72,10 +93,13 @@ Enemy::Enemy()
 	mId = PhysicsManager::Instance()->RegisterEntity(this, PhysicsManager::CollisionLayers::Enemy);
 
 	mActive = false;
+
+	spriteAngle = 180.0f;
 }
 
 Enemy::~Enemy()
 {
+
 }
 
 void Enemy::InitializeBullets()

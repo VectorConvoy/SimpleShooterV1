@@ -10,6 +10,7 @@ class Ship : public PhysicEntity
 public:
 
 	static const int DEFAULT_SPEED = 1;
+	const static int PLAYER_HEALTH = 5;
 
 	Ship();
 	~Ship();
@@ -25,6 +26,9 @@ public:
 	void SetActive(bool active);
 	bool GetActive();
 
+	void SetAnimating(bool isAnimating);
+	bool GetAnimating();
+
 	void SetHit(bool wasHit);
 	bool GetHit();
 
@@ -34,6 +38,9 @@ public:
 	void SetShipFileName(std::string filename);
 	void SetDirection(float direction);
 	void SetDestVector(Vector2 destination);
+
+	int GetHealth();
+
 	
 	void Respawn(Vector2 respawnPos);
 
@@ -63,8 +70,14 @@ protected:
 	bool mWasHit;
 	bool mActive;
 	bool isMoving;
+	bool invincible;
+	bool isPlayer;
+	bool fullRotation;
 
 	int frameCounter;
+	int Health;
+	int futureRotations;  //Use to keep track of the change in rotations without committing yet
+	int currentRotations; //Keep track of number of rotation
 
 	float spriteAngle;
 	float goalAngle;

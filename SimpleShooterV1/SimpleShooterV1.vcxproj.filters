@@ -25,9 +25,6 @@
     <Filter Include="Source Files\Physics">
       <UniqueIdentifier>{6f5590e8-e928-49e2-81d0-40e02850395b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Managers">
-      <UniqueIdentifier>{d9f01c2f-a286-43f8-98f3-349ecd9cc5b5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Commands">
       <UniqueIdentifier>{237c8bcf-b4fa-4581-a765-2c95b58628a3}</UniqueIdentifier>
     </Filter>
@@ -42,6 +39,18 @@
     </Filter>
     <Filter Include="Source Files\Managers">
       <UniqueIdentifier>{7464c4af-6bb5-4e0b-be17-adc9432f5cf5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Screens">
+      <UniqueIdentifier>{2e1e57c5-6e51-4836-a45a-e25e5f6efed1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Screens">
+      <UniqueIdentifier>{263a1ca0-c9c5-4807-a31d-042bd6a13707}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Entities\Managers">
+      <UniqueIdentifier>{d9f01c2f-a286-43f8-98f3-349ecd9cc5b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Behaviors">
+      <UniqueIdentifier>{bab69564-335a-479c-869f-2a268a7b55f3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -64,9 +73,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ShipAnimation.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayScreen.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Bullet.cpp">
@@ -132,6 +138,12 @@
     <ClCompile Include="Ship.cpp">
       <Filter>Source Files\Entities</Filter>
     </ClCompile>
+    <ClCompile Include="StartScreen.cpp">
+      <Filter>Source Files\Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayScreen.cpp">
+      <Filter>Source Files\Screens</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="graphics.h">
@@ -158,9 +170,6 @@
     <ClInclude Include="Bullet.h">
       <Filter>Header Files\Entities</Filter>
     </ClInclude>
-    <ClInclude Include="PlayScreen.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Collider.h">
       <Filter>Header Files\Physics</Filter>
     </ClInclude>
@@ -183,22 +192,19 @@
       <Filter>Header Files\Physics</Filter>
     </ClInclude>
     <ClInclude Include="AudioManager.h">
-      <Filter>Header Files\Managers</Filter>
+      <Filter>Header Files\Entities\Managers</Filter>
     </ClInclude>
     <ClInclude Include="AssetManager.h">
-      <Filter>Header Files\Managers</Filter>
+      <Filter>Header Files\Entities\Managers</Filter>
     </ClInclude>
     <ClInclude Include="gameManager.h">
-      <Filter>Header Files\Managers</Filter>
+      <Filter>Header Files\Entities\Managers</Filter>
     </ClInclude>
     <ClInclude Include="InputManager.h">
-      <Filter>Header Files\Managers</Filter>
+      <Filter>Header Files\Entities\Managers</Filter>
     </ClInclude>
     <ClInclude Include="ScreenManager.h">
-      <Filter>Header Files\Managers</Filter>
-    </ClInclude>
-    <ClInclude Include="Behavior.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Entities\Managers</Filter>
     </ClInclude>
     <ClInclude Include="AIEngine.h">
       <Filter>Header Files</Filter>
@@ -247,6 +253,24 @@
     </ClInclude>
     <ClInclude Include="Player.h">
       <Filter>Header Files\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayScreen.h">
+      <Filter>Header Files\Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="StartScreen.h">
+      <Filter>Header Files\Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="Behavior.h">
+      <Filter>Header Files\Behaviors</Filter>
+    </ClInclude>
+    <ClInclude Include="FleeBehavior.h">
+      <Filter>Header Files\Behaviors</Filter>
+    </ClInclude>
+    <ClInclude Include="SeekBehavior.h">
+      <Filter>Header Files\Behaviors</Filter>
+    </ClInclude>
+    <ClInclude Include="ShootBehavior.h">
+      <Filter>Header Files\Behaviors</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

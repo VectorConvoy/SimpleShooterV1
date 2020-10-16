@@ -24,6 +24,9 @@ public:
 	void CustomUpdate();
 	void CustomRender();
 
+	void SetDebugBehavior(int behavior);
+	int GetDebugBehavior();
+
 	void RespawnEnemy();
 	void SetEnemyDestVector(Vector2 goalVector);
 	void EnemyMove();
@@ -31,5 +34,6 @@ public:
 private:
 	Bullet* mBullets[MAX_BULLETS];
 
+	int debug_behavior;
 		
 };

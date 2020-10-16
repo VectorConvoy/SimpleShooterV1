@@ -15,6 +15,8 @@ PlayScreen::PlayScreen()
 	mBackground = new Texture("space_custom.png");
 	mBackground->SetPosition(Vector2(Graphics::SCREEN_WIDTH / 2, Graphics::SCREEN_HEIGHT / 2));
 
+	SetTopBarEntities();
+
 	//mPlayer = new Player();
 	//mPlayer->SetPosition(Vector2(Graphics::SCREEN_WIDTH / 2, Graphics::SCREEN_HEIGHT / 2));
 }
@@ -27,20 +29,18 @@ PlayScreen::~PlayScreen()
 	mPhysicsManager = NULL;
 	mAIManager = NULL;
 
-	if (mPlayer)
-	{
-		delete mPlayer;
-	}
+	delete mPlayer;
 	mPlayer = NULL;
-
-	if (mEnemy)
-	{
-		delete mEnemy;
-	}
-	mEnemy = NULL;
 
 	delete mBackground;
 	mBackground = NULL;
+
+	for (std::shared_ptr<Enemy> enemy : mEnemies)
+	{
+		enemy = NULL;
+	}
+
+	mEnemies.clear();
 }
 
 void PlayScreen::StartNewGame()
@@ -60,18 +60,7 @@ void PlayScreen::StartNewGame()
 	mPlayer->SetActive(true);
 	//Spawn enemies
 
-	if (mEnemy)
-	{
-		delete mEnemy;
-	}
-	
-	mEnemy = new Enemy();
-	mEnemy->SetPosition(Vector2(Graphics::SCREEN_WIDTH / 2, Graphics::SCREEN_HEIGHT / 4));
-	mEnemy->SetRotation(180);
-
 	mAIManager->SetPlayer(mPlayer);
-	mAIManager->AddEnemy(mEnemy);
-	mAIManager->ActivateAI();
 
 }
 
@@ -88,11 +77,6 @@ bool PlayScreen::GetGameStarted()
 Player* PlayScreen::GetPlayer()
 {
 	return mPlayer;
-}
-
-Enemy* PlayScreen::GetEnemy()
-{
-	return mEnemy;
 }
 
 void PlayScreen::checkKeyPress()
@@ -165,8 +149,16 @@ void PlayScreen::checkKeyPress()
 	}
 	else if (mInputManager->KeyPressed(SDL_SCANCODE_C))
 	{
-		mEnemy->RespawnEnemy();
+		SpawnEnemy((int)AIEngine::BEHAVIOR::seek);
 		//Respawn Enemy
+	}
+	else if (mInputManager->KeyPressed(SDL_SCANCODE_F))
+	{
+		SpawnEnemy((int)AIEngine::BEHAVIOR::flee);
+	}
+	else if (mInputManager->KeyPressed(SDL_SCANCODE_SPACE))
+	{
+ 		mPlayer->FireBullet();
 	}
 }
 
@@ -234,44 +226,130 @@ void PlayScreen::checkKeyRelease()
 	}
 }
 
+void PlayScreen::SetTopBarEntities()
+{
+	//Top bar enttities
+	mTopBar = new GameEntity(Vector2(Graphics::Instance()->SCREEN_WIDTH * .5f, 80.0f));
+	mPlayerLives = new Texture("1UP", "Boxy-Bold.ttf", 16, { 231, 255, 4 });
+	mPlayerLives->SetParent(mTopBar);
+	mPlayerLives->SetPosition(Vector2(-Graphics::Instance()->SCREEN_WIDTH * 0.35f, 0.0f));
+
+	UpdateHealthBar();
+
+	mTopBar->SetParent(this);
+}
+
+
+/*
+* Method to calculate which health bar file to use by calculating the correct
+* value and then returning it in the correct format so we can append it
+**/
+std::string PlayScreen::GetHealthFileNum()
+{
+	int healthNumber = 10;
+	std::string healthFileName = "_10.png";
+	
+	if (mPlayer)
+	{
+		if (mPlayer->GetActive())
+		{
+			int playerHealth = mPlayer->GetHealth();
+
+			playerHealthIncrements = ceil(MAXIMUM_HEALTH / mPlayer->PLAYER_HEALTH);
+
+			healthNumber = playerHealth * playerHealthIncrements;
+
+			healthFileName = "_" + std::to_string(healthNumber) + ".png";
+		}
+	}
+	
+	return healthFileName;
+}
+
+void PlayScreen::UpdateHealthBar()
+{
+	if (mPlayerHealth)
+	{
+		delete mPlayerHealth;
+		mPlayerHealth = NULL;
+	}
+
+	mPlayerHealth = new Texture(HealthBar + GetHealthFileNum());
+	mPlayerHealth->SetParent(mTopBar);
+	mPlayerHealth->SetPosition(Vector2(Graphics::Instance()->SCREEN_WIDTH * 0.35f, 0.0f));
+
+	mPlayerHealth->SetScale(Vector2(0.5, 0.5));
+}
+
+void PlayScreen::SpawnEnemy(int behavior)
+{
+	std::shared_ptr<Enemy> temp = std::shared_ptr<Enemy>(new Enemy());
+	temp->SetRotation(180);
+	temp->SetPosition(Vector2(Graphics::SCREEN_WIDTH / 2, Graphics::SCREEN_HEIGHT / 4));
+	temp->SetDebugBehavior(behavior);
+	temp->SetActive(true);
+
+	mAIManager->AddEnemy(temp);
+	mEnemies.push_back(temp);
+}
+
+void PlayScreen::CheckEnemyStatus()
+{
+	for (std::shared_ptr<Enemy> enemy : mEnemies)
+	{
+
+		if (!(*enemy).GetActive() && !(*enemy).GetAnimating())
+		{
+			mAIManager->RemoveEnemy(enemy);
+			enemy.reset();
+
+			mEnemies.erase(std::find(mEnemies.begin(), mEnemies.end()-1, enemy));
+		}
+	}
+
+}
+
 void PlayScreen::Update()
 {
 	if (mActive)
 	{
 		if (mPlayer)
 		{
-			mPlayer->Update();
+			mPlayer->CustomUpdate();
 		}
 
-		if (mEnemy)
-		{
-			mEnemy->Update();
-		}
 		mPhysicsManager->Update();
+		UpdateHealthBar();
 		mAIManager->Update();
+		CheckEnemyStatus();
 
-	}
-	else
-	{
-
+		for (std::shared_ptr<Enemy> enemy : mEnemies)
+		{
+			if (enemy)
+			{
+				enemy->CustomUpdate();
+			}
+		}
 	}
 }
 
 void PlayScreen::Render()
 {
-	//mPlayer->Render();
 	mBackground->Render();
+	mPlayerLives->Render();
+	mPlayerHealth->Render();
+
 	if (mActive)
 	{
 		if (mPlayer)
 		{
-			mPlayer->Render();
+			mPlayer->CustomRender();
 		}
+	}
 
-		if (mEnemy)
-		{
-			mEnemy->Render();
-		}
+	for (std::shared_ptr<Enemy> enemy : mEnemies)
+	{
+		enemy->CustomRender();	
 	}
 
 }

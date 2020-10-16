@@ -24,6 +24,7 @@ public:
 	void SetClipped(int x, int y, int w, int h);
 	void UpdatePosition(int x, int y);
 
+
 	virtual void Render();
 
 protected:

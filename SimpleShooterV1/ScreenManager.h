@@ -4,6 +4,7 @@
 //#include "StartScreen.h"
 #include "InputManager.h"
 #include "PlayScreen.h"
+#include "StartScreen.h"
 
 class ScreenManager
 {
@@ -11,6 +12,7 @@ public:
 	static ScreenManager* Instance();
 	static void Release();
 
+	StartScreen* GetStartScreen();
 	PlayScreen* GetPlayScreen();
 
 	void Update();
@@ -24,6 +26,7 @@ private:
 	
 	InputManager* mInputManager;
 
+	StartScreen* mStartScreen;
 	PlayScreen* mPlayScreen;
 
 	SCREENS mCurrentScreen;

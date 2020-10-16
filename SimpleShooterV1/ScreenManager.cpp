@@ -1,6 +1,5 @@
 #include "ScreenManager.h"
 
-
 ScreenManager* ScreenManager::sInstance = NULL;
 
 ScreenManager* ScreenManager::Instance()
@@ -18,6 +17,11 @@ void ScreenManager::Release()
     sInstance = NULL;
 }
 
+StartScreen* ScreenManager::GetStartScreen()
+{
+    return mStartScreen;
+}
+
 PlayScreen* ScreenManager::GetPlayScreen()
 {
     return mPlayScreen;
@@ -29,7 +33,7 @@ void ScreenManager::Update()
     {
     case SCREENS::start:
         //mStartScreen->render();
-        if (mInputManager->KeyPressed(SDL_SCANCODE_RETURN))
+        if (mInputManager->KeyPressed(SDL_SCANCODE_RETURN) && mStartScreen->GetAnimationDone())
         {
             //Reset the game
 
@@ -37,6 +41,11 @@ void ScreenManager::Update()
             mCurrentScreen = SCREENS::play;
             //mStartScreen->ResetAnimation();
             mPlayScreen->StartNewGame();
+            mPlayScreen->SetGameStarted(true);
+        }
+        else
+        {
+            mStartScreen->Update();
         }
         break;
 
@@ -64,6 +73,7 @@ void ScreenManager::Render()
     switch (mCurrentScreen)
     {
     case SCREENS::start:
+        mStartScreen->Render();
         break;
 
     case SCREENS::play:
@@ -78,8 +88,9 @@ ScreenManager::ScreenManager()
 
     mInputManager = InputManager::Instance();
 
+    mStartScreen = new StartScreen();
     mPlayScreen = new PlayScreen();
-    mCurrentScreen = SCREENS::play;
+    mCurrentScreen = SCREENS::start;
 }
 
 ScreenManager::~ScreenManager()

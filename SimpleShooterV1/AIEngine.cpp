@@ -40,21 +40,33 @@ void AIEngine::SetPlayer(Player* thePlayer)
     player = thePlayer;
 }
 
-void AIEngine::AddEnemy(Enemy* enemy)
+void AIEngine::AddEnemy(std::shared_ptr<Enemy> enemy)
 {
     enemies.push_back(enemy);
 }
 
+void AIEngine::RemoveEnemy(std::shared_ptr<Enemy> enemy)
+{
+    enemies.erase(std::find(enemies.begin(), enemies.end() - 1, enemy));
+}
+
 void AIEngine::Update()
 {
-    for (Enemy* enemy : enemies)
+    for (std::shared_ptr<Enemy> enemy : enemies)
     {
-        newTarget = behaviors.Seek(enemy->GetPosition(), player->GetPosition());
+        if (enemy->GetDebugBehavior() == BEHAVIOR::flee)
+        {
+            newTarget = behaviors.Flee(enemy->GetPosition(), player->GetPosition(), 1000.0f);
+        }
+        else
+        {
+            newTarget = behaviors.Seek(enemy->GetPosition(), player->GetPosition());
+        }
         enemy->SetEnemyDestVector(newTarget);
-        enemy->Update();
+        //enemy->Update();
     }
 
-    ActivateAI();
+    //ActivateAI();
 }
 
 AIEngine::AIEngine()

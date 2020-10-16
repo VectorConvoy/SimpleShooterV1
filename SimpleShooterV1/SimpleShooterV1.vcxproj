@@ -170,6 +170,7 @@
     <ClCompile Include="ScreenManager.cpp" />
     <ClCompile Include="Ship.cpp" />
     <ClCompile Include="ShipAnimation.cpp" />
+    <ClCompile Include="StartScreen.cpp" />
     <ClCompile Include="SteeringBehaviors.cpp" />
     <ClCompile Include="texture.cpp" />
     <ClCompile Include="timer.cpp" />
@@ -190,6 +191,7 @@
     <ClInclude Include="DirectionCommand.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="FireCommand.h" />
+    <ClInclude Include="FleeBehavior.h" />
     <ClInclude Include="GameEntity.h" />
     <ClInclude Include="gameManager.h" />
     <ClInclude Include="graphics.h" />
@@ -206,10 +208,13 @@
     <ClInclude Include="PlayScreen.h" />
     <ClInclude Include="PositionStatus.h" />
     <ClInclude Include="ScreenManager.h" />
+    <ClInclude Include="SeekBehavior.h" />
     <ClInclude Include="Selector.h" />
     <ClInclude Include="Sequence.h" />
     <ClInclude Include="Ship.h" />
     <ClInclude Include="ShipAnimation.h" />
+    <ClInclude Include="ShootBehavior.h" />
+    <ClInclude Include="StartScreen.h" />
     <ClInclude Include="SteeringBehaviors.h" />
     <ClInclude Include="texture.h" />
     <ClInclude Include="timer.h" />
