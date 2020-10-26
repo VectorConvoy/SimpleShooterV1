@@ -1,20 +1,20 @@
 #pragma once
 #define _SELECTOR_H
 
-#include "CompositeNode.h"
+#include "ParentTask.h"
 
-class Selector : public CompositeNode
+class Selector : public ParentTask
 {
 public:
-	virtual bool Run() override
-	{
-		for (Node* child : GetChildren())
-		{
-			if (child->Run())
-			{
-				return true;
-			}
-		}
-		return false;
-	}
+	typedef ParentTask super;
+
+	Selector();
+	Selector(Blackboard* board);
+	~Selector();
+
+	Tasks* ChooseNewTask();
+
+	void ChildSucceeded();
+	void ChildFailed();
+	
 };

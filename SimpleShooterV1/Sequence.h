@@ -1,21 +1,21 @@
 #pragma once
 #define _SEQUENCE_H
 
-#include "CompositeNode.h"
+#include "ParentTask.h"
 
-class Sequence : public CompositeNode
+class Sequence : public ParentTask
 {
 public:
-	virtual bool Run() override
-	{
-		for (Node* child : GetChildren())
-		{
-			if (!child->Run())
-			{
-				return false;
-			}
-		}
 
-		return true;
-	}
+	typedef ParentTask super;
+
+	Sequence();
+	Sequence(Blackboard* enemyBoard);
+	~Sequence();
+
+	void ChildFailed();
+	void ChildSucceeded();
+
+private:
+
 };

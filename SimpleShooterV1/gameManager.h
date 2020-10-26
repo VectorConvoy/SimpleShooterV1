@@ -14,16 +14,18 @@
 class GameManager 
 {
 public:
+	const int FRAME_RATE = 60;
+
 	static GameManager* Instance();
 	static void Release();
 
 	void Run();
 
+	int GetFrameRate() { return FRAME_RATE; };
+
 private:
 	static GameManager* singleInstance;
 	
-	const int FRAME_RATE = 60;
-
 	bool mQuit;
 	bool mPlayerHit;
 

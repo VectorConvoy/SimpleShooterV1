@@ -3,8 +3,6 @@
 
 #include "InputManager.h"
 #include "timer.h"
-#include "Player.h"
-#include "Enemy.h"
 #include "AudioManager.h"
 #include "PhysicsManager.h"
 #include "AIEngine.h"

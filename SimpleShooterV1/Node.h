@@ -1,8 +1,25 @@
 #pragma once
 #define _NODE_H
 
-class Node
+#include "Tasks.h"
+#include "Blackboard.h"
+
+class Node : public Tasks
 {
 public:
-	virtual bool Run() = 0;
+	typedef Tasks super;
+
+	Node();
+	Node(Blackboard* enemyBoard);
+	~Node();
+
+	void CreateController(); //Creates a task controller for this node
+
+	//TaskController GetControl();
+	TaskController* controller;
+
+private:
+
+protected:
+	//TaskController controller;
 };

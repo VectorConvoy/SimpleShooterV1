@@ -1,6 +1,7 @@
 #include "Enemy.h"
 #include "BoxCollider.h"
 #include "PhysicsManager.h"
+#include "Blackboard.h"
 
 void Enemy::CustomUpdate()
 {
@@ -51,9 +52,7 @@ void Enemy::SetEnemyDestVector(Vector2 goalVector)
 		goalAngle = fmodf(goalAngle, 360);
 	}
 
-	
-
-	printf("GOAL ANGLE: %f\n", goalAngle);
+	goalAngle = truncf(goalAngle);
 	//Move(destVector);
 
 }
@@ -61,6 +60,17 @@ void Enemy::SetEnemyDestVector(Vector2 goalVector)
 void Enemy::EnemyMove()
 {
 	SetPosition(GetPosition() + destVector);
+}
+
+void Enemy::CreateBehaviorTree()
+{
+	if (decisionTree != NULL)
+	{
+		delete decisionTree;
+		decisionTree = NULL;
+	}
+
+	decisionTree = new BehaviorTree(this);
 }
 
 Enemy::Enemy()
@@ -95,6 +105,8 @@ Enemy::Enemy()
 	mActive = false;
 
 	spriteAngle = 180.0f;
+
+	AIBoard = new Blackboard();
 }
 
 Enemy::~Enemy()

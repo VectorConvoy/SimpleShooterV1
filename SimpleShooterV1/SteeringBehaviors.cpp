@@ -31,4 +31,17 @@ Vector2 SteeringBehavior::Flee(Vector2 entityPos, Vector2 targetPos, float panic
     }
 }
 
+Vector2 SteeringBehavior::Wander(Vector2 entityPos, Vector2 targetPos)
+{
+    double patrolJitter = 1;
+    double patrolRadius = 1;
+    double patrolDistance = 2;
+
+    Vector2 circleCenter = entityPos.Normalized() * patrolDistance;
+    Vector2 displacement = Vector2(RandomClamped(1, -1) * patrolJitter, RandomClamped(1, -1) * patrolJitter) * patrolRadius;
+
+    return circleCenter + displacement.Normalized();
+}
+
+
 

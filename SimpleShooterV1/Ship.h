@@ -9,13 +9,14 @@ class Ship : public PhysicEntity
 {
 public:
 
-	static const int DEFAULT_SPEED = 1;
+	static const int FRAME_RATE = 60;
 	const static int PLAYER_HEALTH = 5;
 
 	Ship();
 	~Ship();
 
 	void MoveAnimation();
+	void AIMoveAnimation();
 
 	void Move(int directionEnumVal);
 	void Move(Vector2 directionVector);
@@ -74,7 +75,7 @@ protected:
 	bool isPlayer;
 	bool fullRotation;
 
-	int frameCounter;
+	int frameRate;
 	int Health;
 	int futureRotations;  //Use to keep track of the change in rotations without committing yet
 	int currentRotations; //Keep track of number of rotation
@@ -87,9 +88,10 @@ protected:
 
 	float startTime;
 	float animationTimer;
+	float AIAnimationTimer;
 	float animationSpeed; //Speed in seconds
 
-	int angleDelta = DEFAULT_SPEED;
+	int angleDelta;
 
 	Vector2 destVector;
 	Vector2 mMoveBounds;

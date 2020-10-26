@@ -1,13 +1,20 @@
 #include "Ship.h"
 
+static const double DEFAULT_SPEED = 2.0f;
+
+
 Ship::Ship()
 {
 	animationSpeed = DEFAULT_SPEED;
+	AIAnimationTimer = 0.0f;
 	invincible = false;
 	Health = PLAYER_HEALTH;
 	currentRotations = 0;
 	futureRotations = 0;
 	fullRotation = false;
+	angleDelta = DEFAULT_SPEED;
+	frameRate = FRAME_RATE;
+	
 }
 
 Ship::~Ship()
@@ -22,61 +29,82 @@ Ship::~Ship()
 
 void Ship::MoveAnimation()
 {
-	float tempAngle = goalAngle;
+	float angleDelta = 1;
 
-	if (futureRotations < currentRotations)
+	float remainderGoal;
+	float remainderStart;
+	
+	if (!isPlayer)
 	{
-		tempAngle = 360 - goalAngle;
+		angleDelta = fabsf((float)((goalAngle - spriteAngle)));
+		remainderGoal = 0.0f;
+		remainderStart = 0.0f;
 	}
-	else if (futureRotations > currentRotations)
+	else
 	{
-		tempAngle += 360;
-	}
-	
-	float angleDelta = (float)(animationTimer / (animationSpeed / (tempAngle - spriteAngle)));
-	
-	int rotationDirection = (tempAngle - spriteAngle);
-	
-	if (rotationDirection != 0)
-	{
-		rotationDirection /= rotationDirection; //We only want the sign (positive or negative)
+		angleDelta = 360 / FRAME_RATE * DEFAULT_SPEED;
+
+		//Used to handle situations where direction is halfway i.e. upleft, upright, downleft, downright which are in 45 degree increments and do not divide by 6 evenly
+		remainderGoal = fmodf(goalAngle, angleDelta);
+		remainderStart = fmodf(spriteAngle, angleDelta);
 	}
 
-	angleDelta *= rotationDirection;
 
+	if (spriteAngle == 0.0f && goalAngle == 270.0f)
+	{
+		angleDelta *= -1;
+	}
+	else if (spriteAngle >= 270.0f && goalAngle == 0.0f)
+	{
+		angleDelta *= 1;
+	}
+	else if (spriteAngle > goalAngle)
+	{
+		angleDelta *= -1;
+	}
+
+	if (!isPlayer)
+	{
+		printf("AI ANGLE: %f\n", (float) spriteAngle);
+		printf("AI ANGLE DELTA: %f\n", (float)angleDelta);
+
+		printf("AI GOAL ANGLE: %f\n\n", (float) goalAngle);
+	}
 
 	spriteAngle += angleDelta;
 
-	//TO-DO
-	//Look into figuring out how to reduce the angle delta so that it starts off small and increases. Currently, it works when the animation timer is low enough
-	//Issue is when the angle shifts from 359 to 360/0. Currently it thinks 360 is 0 so it'll go backwards instead of just progressing.
 
 
-	if (isPlayer)
+	if (spriteAngle >= 360)
 	{
-
-		printf("***********************************************\nANIMATION TIMER: %f\n***********************************************\n", (float)animationTimer);
-
-		printf("***********************************************\GOAL ANGLE: %f\n***********************************************\n", (float)goalAngle);
-
-
-		//printf("***********************************************\nANGLE DELTA: %f\n***********************************************\n", (float)angleDelta);
-
-		//printf("***********************************************\nCURRENT ANGLE: %f\n***********************************************\n", (float)spriteAngle);
-
-
-		printf("\n\n\n\n");
+		spriteAngle = fmodf(spriteAngle, 360.0f);
 	}
-
-
-	if (fabsf(goalAngle-spriteAngle) < 1.0f)
+	else if (spriteAngle < 0)
+	{
+		spriteAngle += 360.0f;
+	}
+	if (goalAngle == spriteAngle)
 	{
 		mAnimating = false;
 	}
-
-	futureRotations = currentRotations;
+	else if (fabsf(goalAngle - spriteAngle) <= remainderGoal && isPlayer)
+	{
+		mAnimating = false;
+		spriteAngle = goalAngle;
+	}
+	else if (fabsf(goalAngle - spriteAngle) <= remainderStart && isPlayer)
+	{
+		mAnimating = false;
+		spriteAngle = goalAngle;
+	}
+	//futureRotations = currentRotations;
 
 	SetRotation(spriteAngle);
+}
+
+void Ship::AIMoveAnimation()
+{
+
 }
 
 void Ship::Move(int directionEnumValue)
@@ -175,11 +203,6 @@ void Ship::SetShipFileName(std::string filename)
 	shipTextureFileName = filename;
 }
 
-void Ship::SetDirection(float direction)
-{
-
-}
-
 void Ship::SetDestVector(Vector2 destination)
 {
 	//Normalize the vector
@@ -187,12 +210,12 @@ void Ship::SetDestVector(Vector2 destination)
 
 	if (destination == VEC2_ZERO)
 	{
-		goalAngle = spriteAngle;
+		//printf("\n VECTOR IS ZERO \n");
+		//goalAngle = spriteAngle;
 		
 	}
 	else
 	{
-		
 		goalAngle = destinationDirection * 90.0f; //4 Directions which means 360/4 which equals 90 degrees
 
 		if (spriteAngle != goalAngle && mActive)
@@ -204,14 +227,24 @@ void Ship::SetDestVector(Vector2 destination)
 			mAnimating = false;
 		}
 
-		if (spriteAngle > goalAngle)
+		if (goalAngle >= 360)
 		{
-			angleDelta *= -1;
+			futureRotations++;
+			goalAngle = fmodf(goalAngle, 360.0f);
 		}
+		else if (goalAngle == 0.0f && spriteAngle == 270.0f)
+		{
+			futureRotations++;
+		}
+		else if ((goalAngle == 270.0f && spriteAngle == 0.0f) || (fmodf(spriteAngle, 360.0f) > goalAngle))
+		{
+			futureRotations--;
+		}
+
 	}
 
 	//printf("STATUS: %x\n", mAnimating);
-	printf("SPRITE ANGLE: %f\n", spriteAngle);
+	//printf("SPRITE ANGLE: %f\n", spriteAngle);
 
 
 }
@@ -293,7 +326,7 @@ void Ship::Hit(PhysicEntity* otherEntity)
 			mWasHit = true;
 
 
-			if (!mAnimating && mActive)
+			if ((!mAnimating || !isPlayer) && mActive)
 			{
 				if (Health <= 0)
 				{
@@ -354,15 +387,11 @@ void Ship::Update()
 		else
 		{
 			animationTimer += sTimerInstance->DeltaTime();
-			MoveAnimation();
-
-			printf("\n------------------- TIMER : %f -----------------------------------------\n", (float) animationTimer);
-
-			if (animationTimer >= animationSpeed)
+			if (animationTimer >= (1 / (animationSpeed * frameRate)))
 			{
-				printf("\n------------------------- ANIMATION TIMER RESET ----------------------------------------- \n");
-				mAnimating = false;
-				animationTimer -= animationSpeed; //Reset
+				MoveAnimation();
+
+				animationTimer = 0; //Reset
 			}
 		}
 	}
@@ -401,6 +430,4 @@ void Ship::Render()
 	}
 
 	PhysicEntity::Render();
-
-	++frameCounter;
 }

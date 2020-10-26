@@ -15,6 +15,8 @@ Player::Player()
 	currentDirection = UP;
 	destinationDirection = UP;
 	spriteAngle = 0;
+	futureRotations = 0;
+	currentRotations = 0;
 
 	mMoveSpeed = 200.0f;
 	mMoveBounds = Vector2(Graphics::SCREEN_WIDTH, Graphics::SCREEN_HEIGHT);

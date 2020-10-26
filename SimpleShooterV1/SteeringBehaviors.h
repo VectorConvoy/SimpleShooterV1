@@ -10,5 +10,6 @@ public:
 
 	Vector2 Seek(Vector2 entityPos, Vector2 targetPos);
 	Vector2 Flee(Vector2 entityPos, Vector2 targetPos, float panicDistance = 100);
+	Vector2 Wander(Vector2 entityPos, Vector2 targetPos);
 private:
 };

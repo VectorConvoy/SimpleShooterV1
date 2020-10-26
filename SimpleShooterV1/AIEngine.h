@@ -1,16 +1,19 @@
 #pragma once
+#define _AIENGINE_H
+
+
 #include <vector>
-#include "Enemy.h"
-#include "Player.h"
 #include "SteeringBehaviors.h"
 #include <memory>
-#define _AIENGINE_H
+#include "Blackboard.h"
+
+class Enemy;
 
 class AIEngine
 {
 public:
 
-	static enum BEHAVIOR {flee = 0, seek = 1};
+	enum BEHAVIOR {flee = 0, seek = 1};
 
 	static AIEngine* Instance();
 	static void Release();

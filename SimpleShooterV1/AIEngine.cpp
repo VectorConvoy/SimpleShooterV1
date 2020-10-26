@@ -1,8 +1,5 @@
 #include "AIEngine.h"
 
-#include "SteeringBehaviors.h"
-
-
 AIEngine* AIEngine::sInstance = NULL;
 
 AIEngine* AIEngine::Instance()
@@ -60,7 +57,7 @@ void AIEngine::Update()
         }
         else
         {
-            newTarget = behaviors.Seek(enemy->GetPosition(), player->GetPosition());
+            newTarget = behaviors.Wander(enemy->GetPosition(), player->GetPosition());
         }
         enemy->SetEnemyDestVector(newTarget);
         //enemy->Update();

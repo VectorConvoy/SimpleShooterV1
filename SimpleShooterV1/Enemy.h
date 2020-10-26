@@ -1,11 +1,10 @@
 #pragma once
 #define _ENEMY_H
 
-#include "AnimatedTexture.h"
-#include <vector>
-#include "Bullet.h"
 #include "Ship.h"
-#include "Sequence.h"
+#include "BehaviorTree.h"
+
+class Blackboard;
 
 class Enemy : public Ship
 {
@@ -30,9 +29,13 @@ public:
 	void RespawnEnemy();
 	void SetEnemyDestVector(Vector2 goalVector);
 	void EnemyMove();
+
+	void CreateBehaviorTree();
 		
 private:
 	Bullet* mBullets[MAX_BULLETS];
+
+	BehaviorTree* decisionTree;
 
 	int debug_behavior;
 		

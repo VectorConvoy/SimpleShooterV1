@@ -3,6 +3,7 @@
 #define _MATHHELPER_H
 
 #include <math.h>
+#include <stdlib.h>
 
 #define PI 3.14159265
 #define DEG_TO_RAD PI / 180.0f
@@ -163,6 +164,12 @@ inline Vector2 Lerp(Vector2& start, Vector2& end, float time)
 
 		return start + dir * mag * time;
 	}
+}
+
+
+static inline long RandomClamped(long max, long min = 0)
+{
+	return (rand() % max) + min;
 }
 
 const Vector2 VEC2_ZERO = { 0.0f, 0.0f };
