@@ -16,6 +16,7 @@ public:
 
 	ParentTaskController();
 	ParentTaskController(Tasks* task);
+	ParentTaskController(Tasks* task, std::string aName);
 	~ParentTaskController();
 
 	void AddTask(Tasks* newTask);

@@ -2,12 +2,17 @@
 #define _FLEEDESTINATION_H
 
 
-#include "Tasks.h"
+#include "Node.h"
 
-class FleeDestinationTask : public Tasks
+
+
+class FleeDestinationTask : public Node
 {
 public:
+	typedef Node super;
+
 	FleeDestinationTask(Blackboard* board);
+	FleeDestinationTask(Blackboard* board, std::string aName);
 	~FleeDestinationTask();
 
 	bool CheckConditions();

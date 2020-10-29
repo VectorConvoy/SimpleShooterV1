@@ -9,6 +9,11 @@ GetPlayerTask::GetPlayerTask(Blackboard* blackboard) : super(blackboard)
 
 }
 
+GetPlayerTask::GetPlayerTask(Blackboard* blackboard, std::string aName) : super(blackboard, aName)
+{
+
+}
+
 GetPlayerTask::~GetPlayerTask()
 {
 }
@@ -27,19 +32,32 @@ bool GetPlayerTask::CheckConditions()
 
 void GetPlayerTask::DoAction()
 {
-    ScreenManager* instance = ScreenManager::Instance();
+    logText = ("PERFORMING %s TASK", name);
+    this->sLogger->Log(logText);
 
-    board->SetPlayer(instance->GetPlayScreen()->GetPlayer());
+    board->SetPlayer(ScreenManager::Instance()->GetPlayScreen()->GetPlayer());
 
-    instance = NULL;
+
+    if (board->GetPlayer()->GetActive())
+    {
+        this->controller->FinishWithSuccess();
+    }
+    else
+    {
+        this->controller->FinishWithFailure();
+    }
+
 }
 
 void GetPlayerTask::Start()
 {
-    printf("STARTED GETPLAYER TASK\n");
+
+    logText = ("STARTING %s TASK", name);
+    this->sLogger->Log(logText);
 }
 
 void GetPlayerTask::End()
 {
-    printf("ENDED GETPLAYER TASK\n");
+    logText = ("ENDING %s TASK", name);
+    this->sLogger->Log(logText);
 }

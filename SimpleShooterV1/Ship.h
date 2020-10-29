@@ -4,6 +4,7 @@
 #include "AnimatedTexture.h"
 #include "Bullet.h"
 #include "AudioManager.h"
+#include "Logger.h"
 
 class Ship : public PhysicEntity
 {
@@ -102,6 +103,7 @@ protected:
 
 	AudioManager* sAudioManagerInstance;
 	Timer* sTimerInstance;
+	Logger* sLoggerInstance;
 
 	float mMoveSpeed;
 

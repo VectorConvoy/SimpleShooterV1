@@ -10,6 +10,10 @@ Selector::Selector(Blackboard* board) : super(board)
 	
 }
 
+Selector::Selector(Blackboard* board, std::string aName) : super(board, aName)
+{
+}
+
 Selector::~Selector()
 {
 
@@ -54,7 +58,7 @@ Tasks* Selector::ChooseNewTask()
 
 void Selector::ChildSucceeded()
 {
-	controller->FinishWithFailure();	
+	controller->FinishWithSuccess();	
 }
 
 void Selector::ChildFailed()

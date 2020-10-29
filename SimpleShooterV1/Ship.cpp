@@ -1,10 +1,11 @@
 #include "Ship.h"
-
+#include <sstream>
 static const double DEFAULT_SPEED = 2.0f;
 
 
 Ship::Ship()
 {
+	
 	animationSpeed = DEFAULT_SPEED;
 	AIAnimationTimer = 0.0f;
 	invincible = false;
@@ -14,7 +15,10 @@ Ship::Ship()
 	fullRotation = false;
 	angleDelta = DEFAULT_SPEED;
 	frameRate = FRAME_RATE;
-	
+
+	mActive = true;
+
+	sLoggerInstance = Logger::Instance();
 }
 
 Ship::~Ship()
@@ -63,13 +67,13 @@ void Ship::MoveAnimation()
 		angleDelta *= -1;
 	}
 
-	if (!isPlayer)
-	{
-		printf("AI ANGLE: %f\n", (float) spriteAngle);
-		printf("AI ANGLE DELTA: %f\n", (float)angleDelta);
+	//if (!isPlayer)
+	//{
+	//	printf("AI ANGLE: %f\n", (float) spriteAngle);
+	//	printf("AI ANGLE DELTA: %f\n", (float)angleDelta);
 
-		printf("AI GOAL ANGLE: %f\n\n", (float) goalAngle);
-	}
+	//	printf("AI GOAL ANGLE: %f\n\n", (float) goalAngle);
+	//}
 
 	spriteAngle += angleDelta;
 
@@ -310,10 +314,6 @@ void Ship::InitializeBullets()
 
 void Ship::Hit(PhysicEntity* otherEntity)
 {
-	if (!isPlayer)
-	{
-		int x = 0;
-	}
 	if (otherEntity->GetActive())
 	{
 		if (!invincible)
@@ -373,6 +373,7 @@ void Ship::Update()
 {
 	if (mAnimating)
 	{
+		sLoggerInstance->LogDebugText("SPRITE IS CURRENTLY ANIMATING");
 		if (!mActive)
 		{
 			if (mWasHit)
@@ -381,6 +382,7 @@ void Ship::Update()
 				mWasHit = false;
 			}
 
+			sLoggerInstance->LogDebugText("SPRITE IS CURRENTLY ANIMATING FOR DEATH");
 			mDeathAnimation->Update();
 			mAnimating = mDeathAnimation->IsAnimating();
 		}
@@ -404,7 +406,7 @@ void Ship::Update()
 			//Check if sprite is facing the correct angle
 			if (spriteAngle != goalAngle)
 			{
-				printf("ANGLE MISMATCH - FIXING\n");
+				sLoggerInstance->Log("ANGLE MISMATCH - SPRITE IS AT AN INCORRECT ANGLE - FIXING.....");
 				//SetRotation(goalAngle);
 				spriteAngle = goalAngle;
 			}

@@ -12,6 +12,7 @@ public:
 	
 	ParentTask();
 	ParentTask(Blackboard* enemyBoard);
+	ParentTask(Blackboard* enemyBoard, std::string aName);
 	~ParentTask();
 
 	void CreateController();
@@ -30,4 +31,5 @@ public:
 
 private:
 	//ParentTaskController* controller;
+	std::string logText;
 };

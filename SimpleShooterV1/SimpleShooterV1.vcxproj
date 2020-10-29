@@ -161,6 +161,7 @@
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="FleeBehavior.cpp" />
     <ClCompile Include="FleeDestinationTask.cpp" />
+    <ClCompile Include="Logger.cpp" />
     <ClCompile Include="PanicDecorator.cpp" />
     <ClCompile Include="GameEntity.cpp" />
     <ClCompile Include="gameManager.cpp" />
@@ -209,12 +210,12 @@
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="CircleCollider.h" />
     <ClInclude Include="Collider.h" />
-    <ClInclude Include="CompositeNode.h" />
     <ClInclude Include="DirectionCommand.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="FireCommand.h" />
     <ClInclude Include="FleeBehavior.h" />
     <ClInclude Include="FleeDestinationTask.h" />
+    <ClInclude Include="Logger.h" />
     <ClInclude Include="PanicDecorator.h" />
     <ClInclude Include="GameEntity.h" />
     <ClInclude Include="gameManager.h" />

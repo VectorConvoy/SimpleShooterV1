@@ -9,13 +9,18 @@ TaskDecorator::TaskDecorator(Blackboard* board, Tasks* newTask) : super(board)
 	InitiateTask(newTask);
 }
 
+TaskDecorator::TaskDecorator(Blackboard* board, Tasks* newTask, std::string aName) : super(board, aName)
+{
+	InitiateTask(newTask);
+}
+
 TaskDecorator::~TaskDecorator()
 {
 }
 
 bool TaskDecorator::CheckConditions()
 {
-	return false;
+	return this->task->CheckConditions();
 }
 
 void TaskDecorator::Start()

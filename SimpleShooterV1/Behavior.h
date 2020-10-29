@@ -1,5 +1,5 @@
 #pragma once
-#include "Sequence.h"
+#include "Tasks.h"
 #define _BEHAVIOR_H
 
 class Behavior
@@ -7,7 +7,7 @@ class Behavior
 public:
 
 	int priorityValue;
-	Sequence* behaviorSequence;
+	Tasks* behaviorSequence;
 
 	Behavior();
 	~Behavior();

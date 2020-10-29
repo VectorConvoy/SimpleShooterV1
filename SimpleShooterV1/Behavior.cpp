@@ -2,6 +2,7 @@
 
 Behavior::Behavior()
 {
+	behaviorSequence = nullptr;
 }
 
 Behavior::~Behavior()

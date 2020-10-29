@@ -49,19 +49,19 @@ void AIEngine::RemoveEnemy(std::shared_ptr<Enemy> enemy)
 
 void AIEngine::Update()
 {
-    for (std::shared_ptr<Enemy> enemy : enemies)
-    {
-        if (enemy->GetDebugBehavior() == BEHAVIOR::flee)
-        {
-            newTarget = behaviors.Flee(enemy->GetPosition(), player->GetPosition(), 1000.0f);
-        }
-        else
-        {
-            newTarget = behaviors.Wander(enemy->GetPosition(), player->GetPosition());
-        }
-        enemy->SetEnemyDestVector(newTarget);
-        //enemy->Update();
-    }
+    //for (std::shared_ptr<Enemy> enemy : enemies)
+    //{
+    //    if (enemy->GetDebugBehavior() == BEHAVIOR::flee)
+    //    {
+    //        newTarget = behaviors.Flee(enemy->GetPosition(), player->GetPosition(), 1000.0f);
+    //    }
+    //    else
+    //    {
+    //        newTarget = behaviors.Wander(enemy->GetPosition(), player->GetPosition());
+    //    }
+    //    enemy->SetEnemyDestVector(newTarget);
+    //    //enemy->Update();
+    //}
 
     //ActivateAI();
 }

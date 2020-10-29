@@ -12,6 +12,7 @@ public:
 
 	GetPlayerTask();
 	GetPlayerTask(Blackboard* blackboard);
+	GetPlayerTask(Blackboard* blackboard, std::string aName);
 	~GetPlayerTask();
 
 	bool CheckConditions();
@@ -21,6 +22,7 @@ public:
 	void Start();
 	void End();
 private:
+
 
 protected:
 };

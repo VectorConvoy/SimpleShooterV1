@@ -1,4 +1,5 @@
 #include "ChanceDecorator.h"
+#include <cstdlib>
 
 ChanceDecorator::ChanceDecorator()
 {

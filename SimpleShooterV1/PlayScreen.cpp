@@ -58,6 +58,7 @@ void PlayScreen::StartNewGame()
 	mPlayer->SetShipFileName(PlayerShipName);
 	mPlayer->SetPosition(Vector2(Graphics::SCREEN_WIDTH / 2, Graphics::SCREEN_HEIGHT / 2));
 	mPlayer->SetActive(true);
+	
 	//Spawn enemies
 
 	mAIManager->SetPlayer(mPlayer);
@@ -255,9 +256,9 @@ std::string PlayScreen::GetHealthFileNum()
 		{
 			int playerHealth = mPlayer->GetHealth();
 
-			playerHealthIncrements = ceil(MAXIMUM_HEALTH / mPlayer->PLAYER_HEALTH);
+			playerHealthIncrements = (float) ceil(MAXIMUM_HEALTH / mPlayer->PLAYER_HEALTH);
 
-			healthNumber = playerHealth * playerHealthIncrements;
+			healthNumber = playerHealth * (int) playerHealthIncrements;
 
 			healthFileName = "_" + std::to_string(healthNumber) + ".png";
 		}
@@ -286,8 +287,10 @@ void PlayScreen::SpawnEnemy(int behavior)
 	std::shared_ptr<Enemy> temp = std::shared_ptr<Enemy>(new Enemy());
 	temp->SetRotation(180);
 	temp->SetPosition(Vector2(Graphics::SCREEN_WIDTH / 2, Graphics::SCREEN_HEIGHT / 4));
-	temp->SetDebugBehavior(behavior);
+	//temp->SetDebugBehavior(behavior);
 	temp->SetActive(true);
+
+	temp->CreateBehaviorTree();
 
 	mAIManager->AddEnemy(temp);
 	mEnemies.push_back(temp);

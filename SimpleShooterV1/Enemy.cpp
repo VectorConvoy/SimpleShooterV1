@@ -2,12 +2,53 @@
 #include "BoxCollider.h"
 #include "PhysicsManager.h"
 #include "Blackboard.h"
+#include "BehaviorTree.h"
+#include <iostream>
+#include <sstream>
 
 void Enemy::CustomUpdate()
 {
-	this->Update();
-	EnemyMove();
-	CheckBoundaries();
+	if (this->mActive)
+	{
+		if (decisionTree->CheckFinished())
+		{
+			sLoggerInstance->LogDebugText("DECISION TREE FINISHED");
+			if (decisionTree->CheckFinishWithSuccess())
+			{
+				sLoggerInstance->LogDebugText("TREE FINISHED SUCCESS");
+				this->Update();
+				EnemyMove();
+				CheckBoundaries();
+
+				decisionTree->StopBehavior();
+
+				if (!this->mAnimating)
+				{				
+					//Restart behavior
+					sLoggerInstance->LogDebugText("TREE RESET");
+					decisionTree->ResetBehavior();
+					decisionTree->StartBehavior();
+
+				}
+
+			}
+
+		}
+		else if (!decisionTree->CheckStarted())
+		{
+			sLoggerInstance->LogDebugText("DECISION TREE STARTED");
+			decisionTree->StartBehavior();
+		}
+
+		while (!decisionTree->CheckFinished() && decisionTree->GetActive())
+		{
+			decisionTree->DoBehavior();
+		}
+	}
+	else if (this->mAnimating)
+	{
+		this->Update();
+	}
 }
 
 void Enemy::CustomRender()
@@ -32,11 +73,10 @@ void Enemy::RespawnEnemy()
 
 void Enemy::SetEnemyDestVector(Vector2 goalVector)
 {
-	destVector = goalVector;
 
-	Vector2 normal = destVector.Normalized();
+	destVector = goalVector * SPEED_MULTIPLIER;
 
-	SetDestVector(goalVector);
+	SetDestVector(destVector);
 
 	goalAngle = (float)(atan2(goalVector.y, goalVector.x) * RAD_TO_DEG) + 90;
 	//goalAngle = fmodf(goalAngle + 2 * PI, 2 * PI);
@@ -55,15 +95,22 @@ void Enemy::SetEnemyDestVector(Vector2 goalVector)
 	goalAngle = truncf(goalAngle);
 	//Move(destVector);
 
+	//if (goalAngle != spriteAngle)
+	//{
+	//	mAnimating = true;
+	//}
 }
 
 void Enemy::EnemyMove()
 {
+
 	SetPosition(GetPosition() + destVector);
 }
 
 void Enemy::CreateBehaviorTree()
 {
+	this->sLoggerInstance->Log("CREATING BEHAVIOR TREE FOR ENEMY");
+
 	if (decisionTree != NULL)
 	{
 		delete decisionTree;
@@ -71,6 +118,9 @@ void Enemy::CreateBehaviorTree()
 	}
 
 	decisionTree = new BehaviorTree(this);
+
+	//debug
+	decisionTree->CreateBehaviorTree();
 }
 
 Enemy::Enemy()
@@ -106,7 +156,6 @@ Enemy::Enemy()
 
 	spriteAngle = 180.0f;
 
-	AIBoard = new Blackboard();
 }
 
 Enemy::~Enemy()

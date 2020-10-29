@@ -3,6 +3,7 @@
 
 
 #include "Behavior.h"
+#include "MathHelper.h"
 
 class PatrolBehavior : public Behavior
 {

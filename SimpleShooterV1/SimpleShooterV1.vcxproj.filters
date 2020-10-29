@@ -214,6 +214,9 @@
       <Filter>Source Files\Behavior</Filter>
     </ClCompile>
     <ClCompile Include="FleeDestinationTask.cpp">
+      <Filter>Source Files\BehaviorTree\Task</Filter>
+    </ClCompile>
+    <ClCompile Include="Logger.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -299,9 +302,6 @@
     <ClInclude Include="Selector.h">
       <Filter>Header Files\Behavior Tree</Filter>
     </ClInclude>
-    <ClInclude Include="CompositeNode.h">
-      <Filter>Header Files\Behavior Tree</Filter>
-    </ClInclude>
     <ClInclude Include="Sequence.h">
       <Filter>Header Files\Behavior Tree</Filter>
     </ClInclude>
@@ -376,6 +376,9 @@
     </ClInclude>
     <ClInclude Include="FleeDestinationTask.h">
       <Filter>Header Files\Behavior Tree\Modular Tasks</Filter>
+    </ClInclude>
+    <ClInclude Include="Logger.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

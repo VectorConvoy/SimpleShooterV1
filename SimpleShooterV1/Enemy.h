@@ -2,9 +2,9 @@
 #define _ENEMY_H
 
 #include "Ship.h"
-#include "BehaviorTree.h"
 
 class Blackboard;
+class BehaviorTree;
 
 class Enemy : public Ship
 {
@@ -12,6 +12,7 @@ public:
 	static const int MAX_BULLETS = 3;
 	const std::string SHIP_NAME= "enemyship1.png";
 	const std::string DEATH_ANIMATION = "ship_explosion.png";
+	const int SPEED_MULTIPLIER = 1;
 
 	Enemy();
 	~Enemy();

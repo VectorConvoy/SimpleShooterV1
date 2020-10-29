@@ -2,6 +2,7 @@
 #define _FLEEBEHAVIOR_H
 
 #include "Behavior.h"
+#include "PanicDecorator.h"
 
 class FleeBehavior : public Behavior
 {
@@ -18,8 +19,10 @@ public:
 	void SetPanicDist(float dist);
 	float GetPanicDist();
 
+
+
 private:
-	const float PANIC_DISTANCE = 100.0f;
+	const float PANIC_DISTANCE = 250.0f;
 	float panicDistance; //Determines how close the player needs to get before reaction
 
 };

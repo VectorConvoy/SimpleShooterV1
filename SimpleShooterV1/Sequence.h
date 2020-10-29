@@ -11,6 +11,7 @@ public:
 
 	Sequence();
 	Sequence(Blackboard* enemyBoard);
+	Sequence(Blackboard* enemyBoard, std::string aName);
 	~Sequence();
 
 	void ChildFailed();

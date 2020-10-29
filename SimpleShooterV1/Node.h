@@ -11,11 +11,12 @@ public:
 
 	Node();
 	Node(Blackboard* enemyBoard);
+	Node(Blackboard* enemyBoard, std::string aName);
 	~Node();
 
 	void CreateController(); //Creates a task controller for this node
 
-	//TaskController GetControl();
+	TaskController* GetControl();
 	TaskController* controller;
 
 private:

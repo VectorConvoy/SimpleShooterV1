@@ -10,6 +10,7 @@ public:
 
 	Selector();
 	Selector(Blackboard* board);
+	Selector(Blackboard* board, std::string aName);
 	~Selector();
 
 	Tasks* ChooseNewTask();

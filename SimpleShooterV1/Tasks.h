@@ -1,14 +1,23 @@
 #pragma once
 #define _TASKS_H
 
-#include "Blackboard.h"
+#include "Logger.h"
 #include "TaskController.h"
+#include <string>
+
+class Blackboard;
+
 class Tasks
 {
 public:
+	Logger* sLogger;
+
 	Tasks();
 	Tasks(Blackboard* enemyBoard);
+	Tasks(Blackboard* enemyBoard, std::string aName);
 	~Tasks();
+
+	std::string GetName();
 
 	virtual bool CheckConditions() { return false; };
 	virtual void Start() {};
@@ -19,6 +28,8 @@ public:
 
 protected:
 	Blackboard* board;
+	std::string name;
+	std::string logText;
 
 private:
 

@@ -1,7 +1,15 @@
 #include "FleeDestinationTask.h"
+#include <stdio.h>
+#include "Blackboard.h"
 
-FleeDestinationTask::FleeDestinationTask(Blackboard* board)
+FleeDestinationTask::FleeDestinationTask(Blackboard* board) : super(board)
 {
+	
+}
+
+FleeDestinationTask::FleeDestinationTask(Blackboard* board, std::string aName) : super(board, aName)
+{
+
 }
 
 FleeDestinationTask::~FleeDestinationTask()
@@ -10,30 +18,28 @@ FleeDestinationTask::~FleeDestinationTask()
 
 bool FleeDestinationTask::CheckConditions()
 {
-	bool check = (this->board->GetPlayer() != NULL && this->board->GetEnemy() != NULL);
+	bool check = (board->GetPlayer() != NULL && board->GetEnemy() != NULL);
 
 	return check;
 }
 
 void FleeDestinationTask::Start()
 {
-	//Log start
-	printf("\n*****************************************************************************************************\n");
-	printf("GETTING FLEE DESTINATION VECTOR");
-	printf("\n*****************************************************************************************************\n");
+	logText = ("STARTING %s TASK", name);
+	this->sLogger->Log(logText);
 
 }
 
 void FleeDestinationTask::End()
 {
-	//Log end
-	printf("\n*****************************************************************************************************\n");
-	printf("FINISHED GETTING FLEE DESTINATION VECTOR");
-	printf("\n*****************************************************************************************************\n");
+	logText = ("ENDING %s TASK", name);
+	this->sLogger->Log(logText);
 }
 
 void FleeDestinationTask::DoAction()
 {
+	logText = ("PERFORMING %s TASK", name);
+	this->sLogger->Log(logText);
 	Vector2 enemyPos = this->board->GetEnemy()->GetPosition();
 	Vector2 playerPos = this->board->GetPlayer()->GetPosition();
 	
@@ -44,5 +50,13 @@ void FleeDestinationTask::DoAction()
 	//Save the vector to the blackboard
 	this->board->SetMoveDirection(desiredVelocity);
 	
+	if (desiredVelocity != NULL)
+	{
+		this->GetControl()->FinishWithSuccess();
+	}
+	else
+	{
+		this->GetControl()->FinishWithFailure();
+	}
 
 }

@@ -1,6 +1,9 @@
 #pragma once
 #define _TASKCONTROLLER_H
 
+#include <string>
+#include "Logger.h"
+
 class Tasks;
 
 class TaskController
@@ -9,10 +12,11 @@ public:
 
 	TaskController();
 	TaskController(Tasks* task);
+	TaskController(Tasks* task, std::string aName);
 	~TaskController();
 
 	void SetTask(Tasks* newTask);
-	Tasks* GetTask();
+	Logger* GetLogger();
 
 	void SafeStart(); //Start the controlled task 
 	void SafeEnd(); //End the controlled task
@@ -33,10 +37,11 @@ private:
 	bool started; //Indicates whether or not a task has started
 
 	Tasks* task; //The task this controller is controlling
+	Logger* sLoggerInstance;
 
 	void Initialize(); //Initialize boolean variables
 
 protected:
-
+	std::string name;
 
 };
