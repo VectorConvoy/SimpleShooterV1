@@ -153,14 +153,17 @@
     <ClCompile Include="BehaviorTree.cpp" />
     <ClCompile Include="Blackboard.cpp" />
     <ClCompile Include="ChanceDecorator.cpp" />
+    <ClCompile Include="ChaseDestinationTask.cpp" />
     <ClCompile Include="Command.cpp" />
     <ClCompile Include="BoxCollider.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="CircleCollider.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="EnemyShootTask.cpp" />
     <ClCompile Include="FleeBehavior.cpp" />
     <ClCompile Include="FleeDestinationTask.cpp" />
+    <ClCompile Include="IdleTask.cpp" />
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="PanicDecorator.cpp" />
     <ClCompile Include="GameEntity.cpp" />
@@ -180,6 +183,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayScreen.cpp" />
     <ClCompile Include="PositionStatus.cpp" />
+    <ClCompile Include="Regulator.cpp" />
     <ClCompile Include="RegulatorDecorator.cpp" />
     <ClCompile Include="ResetDecorator.cpp" />
     <ClCompile Include="ScreenManager.cpp" />
@@ -205,6 +209,7 @@
     <ClInclude Include="BehaviorTree.h" />
     <ClInclude Include="Blackboard.h" />
     <ClInclude Include="ChanceDecorator.h" />
+    <ClInclude Include="ChaseDestinationTask.h" />
     <ClInclude Include="Command.h" />
     <ClInclude Include="BoxCollider.h" />
     <ClInclude Include="Bullet.h" />
@@ -212,9 +217,11 @@
     <ClInclude Include="Collider.h" />
     <ClInclude Include="DirectionCommand.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="EnemyShootTask.h" />
     <ClInclude Include="FireCommand.h" />
     <ClInclude Include="FleeBehavior.h" />
     <ClInclude Include="FleeDestinationTask.h" />
+    <ClInclude Include="IdleTask.h" />
     <ClInclude Include="Logger.h" />
     <ClInclude Include="PanicDecorator.h" />
     <ClInclude Include="GameEntity.h" />
@@ -234,6 +241,7 @@
     <ClInclude Include="PhysicsManager.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayScreen.h" />
+    <ClInclude Include="Regulator.h" />
     <ClInclude Include="RegulatorDecorator.h" />
     <ClInclude Include="ResetDecorator.h" />
     <ClInclude Include="ScreenManager.h" />

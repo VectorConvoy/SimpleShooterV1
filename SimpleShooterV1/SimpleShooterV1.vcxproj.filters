@@ -219,6 +219,18 @@
     <ClCompile Include="Logger.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ChaseDestinationTask.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyShootTask.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="IdleTask.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Regulator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="graphics.h">
@@ -378,6 +390,18 @@
       <Filter>Header Files\Behavior Tree\Modular Tasks</Filter>
     </ClInclude>
     <ClInclude Include="Logger.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ChaseDestinationTask.h">
+      <Filter>Header Files\Behavior Tree\Modular Tasks</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyShootTask.h">
+      <Filter>Header Files\Behavior Tree\Modular Tasks</Filter>
+    </ClInclude>
+    <ClInclude Include="IdleTask.h">
+      <Filter>Header Files\Behavior Tree\Modular Tasks</Filter>
+    </ClInclude>
+    <ClInclude Include="Regulator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

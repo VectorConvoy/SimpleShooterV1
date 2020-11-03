@@ -28,7 +28,6 @@ void Enemy::CustomUpdate()
 					sLoggerInstance->LogDebugText("TREE RESET");
 					decisionTree->ResetBehavior();
 					decisionTree->StartBehavior();
-
 				}
 
 			}
@@ -170,5 +169,22 @@ void Enemy::InitializeBullets()
 		mBullets[i] = new Bullet();
 		mBullets[i]->RegisterPlayerBullets();
 	}
+}
+
+bool Enemy::FireBullet()
+{
+	bool successfulFire = false;
+	for (int i = 0; i < MAX_BULLETS; i++)
+	{
+		if (!mBullets[i]->GetActive())
+		{
+			mBullets[i]->Fire(GetPosition());
+			//Play audio here
+			successfulFire = true;
+			break;
+
+		}
+	}
+	return successfulFire;
 }
 

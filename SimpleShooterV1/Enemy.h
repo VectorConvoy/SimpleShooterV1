@@ -19,7 +19,7 @@ public:
 
 	void InitializeBullets();
 	void SetBulletDirection(float nextDirection);
-	void FireBullet();
+	bool FireBullet();
 
 	void CustomUpdate();
 	void CustomRender();
