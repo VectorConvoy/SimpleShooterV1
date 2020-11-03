@@ -154,6 +154,7 @@
     <ClCompile Include="Blackboard.cpp" />
     <ClCompile Include="ChanceDecorator.cpp" />
     <ClCompile Include="ChaseDestinationTask.cpp" />
+    <ClCompile Include="CloseToPlayerDecorator.cpp" />
     <ClCompile Include="Command.cpp" />
     <ClCompile Include="BoxCollider.cpp" />
     <ClCompile Include="Bullet.cpp" />
@@ -187,6 +188,7 @@
     <ClCompile Include="RegulatorDecorator.cpp" />
     <ClCompile Include="ResetDecorator.cpp" />
     <ClCompile Include="ScreenManager.cpp" />
+    <ClCompile Include="SeekBehavior.cpp" />
     <ClCompile Include="Selector.cpp" />
     <ClCompile Include="Sequence.cpp" />
     <ClCompile Include="Ship.cpp" />
@@ -210,6 +212,7 @@
     <ClInclude Include="Blackboard.h" />
     <ClInclude Include="ChanceDecorator.h" />
     <ClInclude Include="ChaseDestinationTask.h" />
+    <ClInclude Include="CloseToPlayerDecorator.h" />
     <ClInclude Include="Command.h" />
     <ClInclude Include="BoxCollider.h" />
     <ClInclude Include="Bullet.h" />

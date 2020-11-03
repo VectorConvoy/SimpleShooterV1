@@ -231,6 +231,12 @@
     <ClCompile Include="Regulator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="CloseToPlayerDecorator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SeekBehavior.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="graphics.h">
@@ -403,6 +409,9 @@
     </ClInclude>
     <ClInclude Include="Regulator.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CloseToPlayerDecorator.h">
+      <Filter>Header Files\Behavior Tree\Decorators</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
