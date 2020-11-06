@@ -10,7 +10,7 @@ public:
 	typedef TaskDecorator super;
 	RegulatorDecorator();
 	//RegulatorDecorator(Blackboard* board, Tasks* task, float UpdateTime, std::string aName);
-	RegulatorDecorator(Blackboard* board, Tasks* task, float UpdateTime);
+	RegulatorDecorator(Blackboard* board, Tasks* task, std::string aName, float UpdateTime);
 	~RegulatorDecorator();
 
 	void DoAction();

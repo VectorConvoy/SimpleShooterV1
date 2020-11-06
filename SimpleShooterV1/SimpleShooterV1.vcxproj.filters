@@ -156,9 +156,6 @@
     <ClCompile Include="PlayScreen.cpp">
       <Filter>Source Files\Screens</Filter>
     </ClCompile>
-    <ClCompile Include="PatrolBehavior.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Sequence.cpp">
       <Filter>Source Files\BehaviorTree</Filter>
     </ClCompile>
@@ -219,22 +216,34 @@
     <ClCompile Include="Logger.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ChaseDestinationTask.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="ShootBehavior.cpp">
+      <Filter>Source Files\Behavior</Filter>
     </ClCompile>
     <ClCompile Include="EnemyShootTask.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\BehaviorTree\Task</Filter>
+    </ClCompile>
+    <ClCompile Include="CloseToPlayerDecorator.cpp">
+      <Filter>Source Files\BehaviorTree\Decorator</Filter>
+    </ClCompile>
+    <ClCompile Include="ChaseDestinationTask.cpp">
+      <Filter>Source Files\BehaviorTree\Task</Filter>
     </ClCompile>
     <ClCompile Include="IdleTask.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\BehaviorTree\Task</Filter>
+    </ClCompile>
+    <ClCompile Include="SeekBehavior.cpp">
+      <Filter>Source Files\Behavior</Filter>
+    </ClCompile>
+    <ClCompile Include="PatrolBehavior.cpp">
+      <Filter>Source Files\Behavior</Filter>
     </ClCompile>
     <ClCompile Include="Regulator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CloseToPlayerDecorator.cpp">
+    <ClCompile Include="IdleBehavior.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SeekBehavior.cpp">
+    <ClCompile Include="FacePlayerTask.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -412,6 +421,12 @@
     </ClInclude>
     <ClInclude Include="CloseToPlayerDecorator.h">
       <Filter>Header Files\Behavior Tree\Decorators</Filter>
+    </ClInclude>
+    <ClInclude Include="IdleBehavior.h">
+      <Filter>Header Files\Behaviors</Filter>
+    </ClInclude>
+    <ClInclude Include="FacePlayerTask.h">
+      <Filter>Header Files\Behavior Tree\Modular Tasks</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

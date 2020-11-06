@@ -8,7 +8,7 @@ class EnemyShootTask : public Node
 public:
 	typedef Node super;
 
-	EnemyShootTask(Blackboard* board);
+	//EnemyShootTask(Blackboard* board);
 	EnemyShootTask(Blackboard* board, std::string aName);
 	~EnemyShootTask();
 

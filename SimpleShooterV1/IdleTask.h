@@ -10,7 +10,7 @@ public:
 	typedef Node super;
 
 	IdleTask();
-	IdleTask(Blackboard* blackboard);
+	//IdleTask(Blackboard* blackboard);
 	IdleTask(Blackboard* blackboard, std::string aName);
 	~IdleTask();
 

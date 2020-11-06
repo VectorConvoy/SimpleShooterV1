@@ -4,9 +4,9 @@ ResetDecorator::ResetDecorator()
 {
 }
 
-ResetDecorator::ResetDecorator(Blackboard* bboard, Tasks* newTask)
+ResetDecorator::ResetDecorator(Blackboard* bboard, Tasks* newTask, std::string aName) : super(bboard, newTask, aName)
 {
-	super(bboard, newTask);
+
 
 }
 

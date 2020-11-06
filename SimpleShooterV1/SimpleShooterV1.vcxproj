@@ -162,8 +162,10 @@
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyShootTask.cpp" />
+    <ClCompile Include="FacePlayerTask.cpp" />
     <ClCompile Include="FleeBehavior.cpp" />
     <ClCompile Include="FleeDestinationTask.cpp" />
+    <ClCompile Include="IdleBehavior.cpp" />
     <ClCompile Include="IdleTask.cpp" />
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="PanicDecorator.cpp" />
@@ -193,6 +195,7 @@
     <ClCompile Include="Sequence.cpp" />
     <ClCompile Include="Ship.cpp" />
     <ClCompile Include="ShipAnimation.cpp" />
+    <ClCompile Include="ShootBehavior.cpp" />
     <ClCompile Include="StartScreen.cpp" />
     <ClCompile Include="SteeringBehaviors.cpp" />
     <ClCompile Include="TaskController.cpp" />
@@ -221,9 +224,11 @@
     <ClInclude Include="DirectionCommand.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyShootTask.h" />
+    <ClInclude Include="FacePlayerTask.h" />
     <ClInclude Include="FireCommand.h" />
     <ClInclude Include="FleeBehavior.h" />
     <ClInclude Include="FleeDestinationTask.h" />
+    <ClInclude Include="IdleBehavior.h" />
     <ClInclude Include="IdleTask.h" />
     <ClInclude Include="Logger.h" />
     <ClInclude Include="PanicDecorator.h" />

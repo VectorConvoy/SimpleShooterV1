@@ -1,6 +1,7 @@
 #include "TaskController.h"
 #include "Tasks.h"
 #include <stdio.h>
+#include <sstream>
 
 TaskController::TaskController()
 {
@@ -32,7 +33,9 @@ TaskController::~TaskController()
 
 void TaskController::SetTask(Tasks* newTask)
 {
-	this->sLoggerInstance->Log(("SETTING TASK (%s) IN TASK CONTROLLER - %s", newTask->GetName(), this->name));
+	std::ostringstream oss;
+	oss << "SETTING TASK  " << newTask->GetName() << " IN TASK CONTROLLER " << this->name;
+	this->sLoggerInstance->Log(oss.str());
 	task = newTask;
 }
 
@@ -47,8 +50,9 @@ Logger* TaskController::GetLogger()
 
 void TaskController::SafeStart()
 {	
-	
-	this->sLoggerInstance->Log(("SAFE STARTING TASK CONTROLLER - %s", this->name));
+	std::ostringstream oss;
+	oss << "SAFE STARTING TASK CONTROLLER " << this->name;
+	this->sLoggerInstance->Log(oss.str());
 	started = true;
 
 	task->Start();
@@ -57,8 +61,9 @@ void TaskController::SafeStart()
 
 void TaskController::SafeEnd()
 {
-	this->sLoggerInstance->Log(("SAFE ENDING TASK CONTROLLER - %s", this->name));
-
+	std::ostringstream oss;
+	oss << "SAFE ENDING TASK CONTROLLER " << this->name;
+	this->sLoggerInstance->Log(oss.str());
 	done = false;
 	started = false;
 	task->End();
@@ -93,8 +98,9 @@ void TaskController::Reset()
 
 void TaskController::Initialize()
 {
-	
-	this->sLoggerInstance->Log(("INITIALIZING TASK CONTROLLER - %s", this->name));
+	std::ostringstream oss;
+	oss << "INITIALIZING TASK CONTROLLER " << this->name;
+	this->sLoggerInstance->Log(oss.str());
 
 	done = false;
 	success = false;
@@ -105,16 +111,19 @@ void TaskController::FinishWithSuccess()
 {
 	success = true;
 	done = true;
-	//Log Task here
-	this->sLoggerInstance->Log(("TASK (%s) FINISHED SUCCESSFULLY  FROM TASK CONTROLLER - %s", task->GetName(), this->name));
 
+	std::ostringstream oss;
+	oss << "TASK " << task->GetName() << " FINISHED SUCCESSFULLY FROM TASK CONTORLLER " << this->name;
+	this->sLoggerInstance->Log(oss.str());
 }
 
 void TaskController::FinishWithFailure()
 {
 	success = false;
 	done = true;
-	this->sLoggerInstance->Log(("TASK (%s) FINISHED WITH FAILURE  FROM TASK CONTROLLER - %s", task->GetName(), this->name));
 
+	std::ostringstream oss;
+	oss << "TASK " << task->GetName() << " FINISHED WITH FAILURE FROM TASK CONTROLLER " << this->name;
+	this->sLoggerInstance->Log(oss.str());
 	//log task
 }

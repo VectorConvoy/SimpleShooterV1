@@ -4,7 +4,7 @@ RegulatorDecorator::RegulatorDecorator()
 {
 }
 
-RegulatorDecorator::RegulatorDecorator(Blackboard* board, Tasks* task, float UpdateTime) : super(board, task)
+RegulatorDecorator::RegulatorDecorator(Blackboard* board, Tasks* task, std::string aName, float UpdateTime) : super(board, task, aName)
 {
 	updateTime = UpdateTime;
 }
@@ -25,8 +25,9 @@ void RegulatorDecorator::DoAction()
 
 void RegulatorDecorator::Start()
 {
-	logText = ("STARTING REGULATOR FOR TASK %s", task->GetName());
-	this->sLogger->Log(logText);
+	std::ostringstream oss;
+	oss << "STARTING REGULATOR FOR TASK " << task->GetName();
+	this->sLogger->Log(oss.str());
 	
 	task->Start();
 	regulator = new Regulator(1.0f / updateTime);
@@ -34,6 +35,7 @@ void RegulatorDecorator::Start()
 
 void RegulatorDecorator::End()
 {
-	logText = ("ENDING REGULATOR FOR TASK %s", task->GetName());
-	this->sLogger->Log(logText);
+	std::ostringstream oss;
+	oss << "ENDING REGULATOR FOR TASK " << task->GetName();
+	this->sLogger->Log(oss.str());
 }

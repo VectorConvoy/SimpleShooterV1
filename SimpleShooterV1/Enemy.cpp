@@ -48,11 +48,23 @@ void Enemy::CustomUpdate()
 	{
 		this->Update();
 	}
+
+	for (int i = 0; i < MAX_BULLETS; i++)
+	{
+		if (mBullets[i]->GetActive())
+		{
+			mBullets[i]->Update();
+		}
+	}
 }
 
 void Enemy::CustomRender()
 {
 	this->Render();
+	for (int i = 0; i < MAX_BULLETS; i++)
+	{
+		mBullets[i]->Render();
+	}
 }
 
 void Enemy::SetDebugBehavior(int behavior)
@@ -100,6 +112,25 @@ void Enemy::SetEnemyDestVector(Vector2 goalVector)
 	//}
 }
 
+void Enemy::SetAngle(float newAngle)
+{
+	goalAngle = newAngle;
+	if (goalAngle < 0)
+	{
+		goalAngle += 360;
+		futureRotations--;
+	}
+	else if (goalAngle > 360)
+	{
+		futureRotations++;
+		goalAngle = fmodf(goalAngle, 360);
+	}
+
+	goalAngle = truncf(goalAngle);
+	this->shipTexture->SetRotation(goalAngle);
+	
+}
+
 void Enemy::EnemyMove()
 {
 
@@ -119,7 +150,7 @@ void Enemy::CreateBehaviorTree()
 	decisionTree = new BehaviorTree(this);
 
 	//debug
-	decisionTree->CreateBehaviorTree();
+	decisionTree->CreateBehaviorTree(BehaviorTree::BEHAVIOR_TYPES::sentry);
 }
 
 Enemy::Enemy()
@@ -167,7 +198,20 @@ void Enemy::InitializeBullets()
 	for (int i = 0; i < MAX_BULLETS; i++)
 	{
 		mBullets[i] = new Bullet();
-		mBullets[i]->RegisterPlayerBullets();
+		mBullets[i]->SetBulletSpeed(500.0f);
+		mBullets[i]->RegisterEnemyBullets();
+	}
+}
+
+void Enemy::SetBulletDirection(Vector2 direction)
+{
+	for (int i = 0; i < MAX_BULLETS; i++)
+	{
+		if (!mBullets[i]->GetActive())
+		{
+			mBullets[i]->SetBulletDirection(direction);
+		}
+		mBullets[i]->SetShipDirection(direction);
 	}
 }
 
@@ -178,6 +222,7 @@ bool Enemy::FireBullet()
 	{
 		if (!mBullets[i]->GetActive())
 		{
+			sLoggerInstance->Log("ENEMY SHOOT");
 			mBullets[i]->Fire(GetPosition());
 			//Play audio here
 			successfulFire = true;

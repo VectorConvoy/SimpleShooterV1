@@ -1,13 +1,14 @@
 #include "ParentTask.h"
+#include <sstream>
 
 ParentTask::ParentTask()
 {
 }
 
-ParentTask::ParentTask(Blackboard* enemyBoard) : super(enemyBoard)
-{
-	CreateController();
-}
+//ParentTask::ParentTask(Blackboard* enemyBoard) : super(enemyBoard)
+//{
+//	CreateController();
+//}
 
 ParentTask::ParentTask(Blackboard* enemyBoard, std::string aName) : super(enemyBoard, aName)
 {
@@ -38,20 +39,16 @@ bool ParentTask::CheckConditions()
 
 void ParentTask::DoAction()
 {
-	logText = ("GOING DOWN PARENT TREE (%s)", this->name);
-	this->sLogger->Log(logText);
+	std::ostringstream oss;
 	if (controller->Finished())
 	{
-
-		logText = ("PARENT TASK CONTROLLER IS DONE");
-		this->sLogger->Log(logText);
 		return;
 	}
 
 	if (controller->currentTask == NULL)
 	{
-		logText = ("CURRENT TASK IS NULL");
-		this->sLogger->Log(logText);
+		oss << "CURRENT TASK IS NULL";
+		this->sLogger->Log(oss.str());
 
 		//Null check
 		return;
@@ -59,30 +56,31 @@ void ParentTask::DoAction()
 
 	if (!controller->currentTask->GetControl()->Started())
 	{
-		logText = ("CURRENT TASK (%s) HAS NOT BEEN STARTED; STARTING", controller->currentTask->GetName());
-		this->sLogger->Log(logText);
+		oss << "CURRENT TASK " << controller->currentTask->GetName() << " NOW STARTING";
+		this->sLogger->Log(oss.str());
 
 		//Task has not been started so start it
 		controller->currentTask->GetControl()->SafeStart();
 	}
 	else if (controller->currentTask->GetControl()->Finished())
 	{
-		logText = ("CURRENT TASK (%s) HAS FINISHED", controller->currentTask->GetName());
-		this->sLogger->Log(logText); 
+		oss << "CURRENT TASK " << controller->currentTask->GetName() << " FINISHED";
+		this->sLogger->Log(oss.str());
 
+		std::ostringstream oss2;
 		//Task has finished so end it
 		controller->currentTask->GetControl()->SafeEnd();
 
 		if (controller->currentTask->GetControl()->Succeeded())
 		{
-			logText = ("CURRENT TASK (%s) SUCCEEDED", controller->currentTask->GetName());
-			this->sLogger->Log(logText);
+			oss2 << "CURRENT TASK " << controller->currentTask->GetName() << " SUCCEEDED";
+			this->sLogger->Log(oss.str());
 			this->ChildSucceeded();
 		}
 		else if (controller->currentTask->GetControl()->Failed())
 		{
-			logText = ("CURRENT TASK (%s) FAILED", controller->currentTask->GetName());
-			this->sLogger->Log(logText);
+			oss2 << "CURRENT TASK " << controller->currentTask->GetName() << " FAILED";
+			this->sLogger->Log(oss.str());
 			this->ChildFailed();
 		}
 	}
@@ -95,15 +93,15 @@ void ParentTask::DoAction()
 
 void ParentTask::Start()
 {
-	logText = ("STARTING PARENT TREE");
-	this->sLogger->Log(logText);
+	std::ostringstream oss;
 
 	for (Tasks* temp : controller->subtasks)
 	{
 		if (temp->CheckConditions())
 		{
-			logText = ("FOUND NEW TASK (%s)", temp->GetName());
-			this->sLogger->Log(logText);
+			oss << "FOUND NEW TASK " << temp->GetName();
+			this->sLogger->Log(oss.str());
+
 			controller->currentTask = temp;
 			break;
 		}
@@ -113,15 +111,16 @@ void ParentTask::Start()
 
 	if (controller->currentTask == NULL)
 	{
-		logText = ("NO NEW TASK FOUND");
-		this->sLogger->Log(logText);
+		oss << "NO NEW TASK FOUND";
+		this->sLogger->Log(oss.str());
 	}
 
 }
 
 void ParentTask::End()
 {
-	logText = ("PARENT TREE FINISHED; ENDING......");
-	this->sLogger->Log(logText);
+	std::ostringstream oss;
+	oss << "PARENT TREE FINISHED";
+	this->sLogger->Log(oss.str());
 	//Log task ending
 }

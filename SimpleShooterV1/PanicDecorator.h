@@ -9,9 +9,9 @@ public:
 	typedef TaskDecorator super;
 
 	PanicDecorator();
-	PanicDecorator(Blackboard* board, Tasks* newTask);
+	//PanicDecorator(Blackboard* board, Tasks* newTask);
 	PanicDecorator(Blackboard* board, Tasks* newTask, std::string aName);
-	PanicDecorator(Blackboard* board, Tasks* newTask, float panicDist);
+	//PanicDecorator(Blackboard* board, Tasks* newTask, float panicDist);
 	PanicDecorator(Blackboard* board, Tasks* newTask, float panicDist, std::string aName);
 	~PanicDecorator();
 

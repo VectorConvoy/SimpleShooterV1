@@ -9,7 +9,7 @@ class MoveToTask : public Node
 public:
 	typedef Node super;
 
-	MoveToTask(Blackboard* board);
+	//MoveToTask(Blackboard* board);
 	MoveToTask(Blackboard* board, std::string aName);
 
 	~MoveToTask();

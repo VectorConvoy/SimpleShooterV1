@@ -10,7 +10,7 @@ public:
 	typedef ParentTask super;
 
 	Sequence();
-	Sequence(Blackboard* enemyBoard);
+	//Sequence(Blackboard* enemyBoard);
 	Sequence(Blackboard* enemyBoard, std::string aName);
 	~Sequence();
 

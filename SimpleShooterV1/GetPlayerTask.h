@@ -11,7 +11,7 @@ public:
 	typedef Node super;
 
 	GetPlayerTask();
-	GetPlayerTask(Blackboard* blackboard);
+	//GetPlayerTask(Blackboard* blackboard);
 	GetPlayerTask(Blackboard* blackboard, std::string aName);
 	~GetPlayerTask();
 

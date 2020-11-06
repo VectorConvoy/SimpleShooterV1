@@ -1,11 +1,12 @@
 #pragma once
 #include <string>
+#include <sstream>
+
 #define _LOGGER_H
 
 class Logger
 {
 public:
-	
 	static Logger* Instance();
 	static void Release();
 

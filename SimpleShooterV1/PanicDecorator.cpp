@@ -6,20 +6,20 @@ PanicDecorator::PanicDecorator()
 {
 }
 
-PanicDecorator::PanicDecorator(Blackboard* board, Tasks* newTask) : super(board, newTask)
-{
-	PanicDistanceValue = 0.0f;
-}
+//PanicDecorator::PanicDecorator(Blackboard* board, Tasks* newTask) : super(board, newTask)
+//{
+//	PanicDistanceValue = 0.0f;
+//}
 
 PanicDecorator::PanicDecorator(Blackboard* board, Tasks* newTask, std::string aName) : super(board, newTask, aName)
 {
 	PanicDistanceValue = 0.0f;
 }
 
-PanicDecorator::PanicDecorator(Blackboard* board, Tasks* newTask, float panicDist) : super(board, newTask)
-{
-	PanicDistanceValue = panicDist;
-}
+//PanicDecorator::PanicDecorator(Blackboard* board, Tasks* newTask, float panicDist) : super(board, newTask)
+//{
+//	PanicDistanceValue = panicDist;
+//}
 
 PanicDecorator::PanicDecorator(Blackboard* board, Tasks* newTask, float panicDist, std::string aName) : super(board, newTask, aName)
 {

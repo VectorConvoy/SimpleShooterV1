@@ -18,7 +18,9 @@ public:
 	
 	void SetBulletDirection(Vector2 vec);
 	void SetShipDirection(Vector2 vec);
+	void SetBulletSpeed(float speedMultiplier);
 	void RegisterPlayerBullets();
+	void RegisterEnemyBullets();
 
 	void Update();
 	void Render();

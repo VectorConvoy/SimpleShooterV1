@@ -10,7 +10,7 @@ public:
 	typedef Tasks super;
 
 	Node();
-	Node(Blackboard* enemyBoard);
+	//Node(Blackboard* enemyBoard);
 	Node(Blackboard* enemyBoard, std::string aName);
 	~Node();
 

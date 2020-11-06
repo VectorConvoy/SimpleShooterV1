@@ -1,10 +1,11 @@
 #include "MoveToTask.h"
+#include <sstream>
 
-MoveToTask::MoveToTask(Blackboard* board) : super(board)
-
-{
-
-}
+//MoveToTask::MoveToTask(Blackboard* board) : super(board)
+//
+//{
+//
+//}
 
 MoveToTask::MoveToTask(Blackboard* board, std::string aName) : super(board, aName)
 {
@@ -24,25 +25,28 @@ bool MoveToTask::CheckConditions()
 
 void MoveToTask::Start()
 {
-	logText = ("STARTING %s TASK", name);
-	this->sLogger->Log(logText);
+	std::ostringstream oss;
+	oss << "STARTING TASK " << name;
+	this->sLogger->Log(oss.str());
 }
 
 void MoveToTask::End()
 {
-	logText = ("ENDING %s TASK", name);
-	this->sLogger->Log(logText);
+	std::ostringstream oss;
+	oss << "ENDING TASK " << name;
+	this->sLogger->Log(oss.str());
 }
 
 void MoveToTask::DoAction()
 {
-	logText = ("PERFORMING %s TASK", name);
-	this->sLogger->Log(logText);
+	std::ostringstream oss;
+	oss << "PERFORMING TASK " << name;
+	this->sLogger->Log(oss.str());
 
 	board->GetEnemy()->SetEnemyDestVector(board->GetMoveDirection());
 
 
-	if (board->GetMoveDirection() != NULL)
+	if (board->GetMoveDirection() != NULL || board->GetMoveDirection() == VEC2_ZERO)
 	{
 		this->controller->FinishWithSuccess();
 	}

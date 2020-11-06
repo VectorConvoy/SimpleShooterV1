@@ -15,6 +15,8 @@ public:
 	void SetPriorityID(int priority);
 	int GetPriorityID();
 
+	void AddAdditionalSequence(Tasks* newTask);
+
 
 private:
 };

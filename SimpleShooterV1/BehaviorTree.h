@@ -11,11 +11,12 @@ class Behavior;
 class BehaviorTree
 {
 public:
+	enum class BEHAVIOR_TYPES { flee = 0, chase, chase_shoot, sentry};
 	BehaviorTree();
 	BehaviorTree(Enemy* owner);
 	~BehaviorTree();
 
-	void CreateBehaviorTree(std::string behaviorType = "flee");
+	void CreateBehaviorTree(BEHAVIOR_TYPES behavior = BEHAVIOR_TYPES::flee);
 
 	void AddToBehaviorTree(Sequence* seq);
 	void AddBehaviorToBehaviorTree(Behavior* behaviorSeq);

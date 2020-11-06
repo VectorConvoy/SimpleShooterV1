@@ -10,7 +10,7 @@ public:
 	Tasks* task;
 
 	TaskDecorator();
-	TaskDecorator(Blackboard* board, Tasks* newTask);
+	//TaskDecorator(Blackboard* board, Tasks* newTask);
 	TaskDecorator(Blackboard* board, Tasks* newTask, std::string aName);
 	~TaskDecorator();
 

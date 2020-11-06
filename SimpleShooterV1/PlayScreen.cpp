@@ -148,11 +148,11 @@ void PlayScreen::checkKeyPress()
 		mPlayer->RespawnPlayer();
 		//Respawn Player;
 	}
-	else if (mInputManager->KeyPressed(SDL_SCANCODE_C))
-	{
-		SpawnEnemy((int)AIEngine::BEHAVIOR::seek);
-		//Respawn Enemy
-	}
+	//else if (mInputManager->KeyPressed(SDL_SCANCODE_C))
+	//{
+	//	SpawnEnemy((int)AIEngine::BEHAVIOR::seek);
+	//	//Respawn Enemy
+	//}
 	else if (mInputManager->KeyPressed(SDL_SCANCODE_F))
 	{
 		SpawnEnemy((int)AIEngine::BEHAVIOR::flee);

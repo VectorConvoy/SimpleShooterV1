@@ -91,9 +91,20 @@ void Bullet::SetShipDirection(Vector2 vec)
 	ShipDirection = vec;
 }
 
+void Bullet::SetBulletSpeed(float speedMultiplier)
+{
+	mSpeed = speedMultiplier;
+}
+
 
 void Bullet::RegisterPlayerBullets()
 {
 	AddCollider(new BoxCollider(mTexture->ScaledDimensions()));
 	mId = PhysicsManager::Instance()->RegisterEntity(this, PhysicsManager::CollisionLayers::FriendlyProjectiles);
+}
+
+void Bullet::RegisterEnemyBullets()
+{
+	AddCollider(new BoxCollider(mTexture->ScaledDimensions()));
+	mId = PhysicsManager::Instance()->RegisterEntity(this, PhysicsManager::CollisionLayers::EnemyProjectiles);
 }

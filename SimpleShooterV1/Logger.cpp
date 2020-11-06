@@ -28,14 +28,22 @@ bool Logger::Initialized()
 
 void Logger::Log(std::string text)
 {
-	//printf("\n*************************************\n%s\n**************************\n", text.c_str());
+	if (text.empty())
+	{
+		printf("\n*************************************\nNO TEXT\n**************************\n");
+
+	}
+	else
+	{
+		printf("\n*************************************\n%s\n**************************\n", text.c_str());
+	}
 
 	//std::cout << "Test";
 }
 
 void Logger::LogDebugText(std::string text)
 {
-	printf("\n*************************************\n%s\n**************************\n", text.c_str());
+	//printf("\n*************************************\n%s\n**************************\n", text.c_str());
 }
 
 Logger::Logger()

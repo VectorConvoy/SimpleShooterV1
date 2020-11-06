@@ -4,10 +4,10 @@ Tasks::Tasks()
 {
 }
 
-Tasks::Tasks(Blackboard* enemyBoard)
-{
-	this->board = enemyBoard;
-}
+//Tasks::Tasks(Blackboard* enemyBoard)
+//{
+//	this->board = enemyBoard;
+//}
 
 Tasks::Tasks(Blackboard* enemyBoard, std::string aName)
 {

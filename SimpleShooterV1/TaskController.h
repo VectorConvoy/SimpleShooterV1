@@ -9,7 +9,6 @@ class Tasks;
 class TaskController
 {
 public:
-
 	TaskController();
 	TaskController(Tasks* task);
 	TaskController(Tasks* task, std::string aName);
@@ -40,6 +39,8 @@ private:
 	Logger* sLoggerInstance;
 
 	void Initialize(); //Initialize boolean variables
+
+
 
 protected:
 	std::string name;

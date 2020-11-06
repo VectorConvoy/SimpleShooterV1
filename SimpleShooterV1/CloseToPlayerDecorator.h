@@ -9,9 +9,9 @@ public:
 	typedef TaskDecorator super;
 
 	CloseToPlayerDecorator();
-	CloseToPlayerDecorator(Blackboard* board, Tasks* newTask);
+	//CloseToPlayerDecorator(Blackboard* board, Tasks* newTask);
 	CloseToPlayerDecorator(Blackboard* board, Tasks* newTask, std::string aName);
-	CloseToPlayerDecorator(Blackboard* board, Tasks* newTask, float chaseDist);
+	//CloseToPlayerDecorator(Blackboard* board, Tasks* newTask, float chaseDist);
 	CloseToPlayerDecorator(Blackboard* board, Tasks* newTask, float chaseDist, std::string aName);
 	~CloseToPlayerDecorator();
 

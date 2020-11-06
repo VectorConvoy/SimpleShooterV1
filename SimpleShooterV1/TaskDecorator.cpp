@@ -4,10 +4,10 @@ TaskDecorator::TaskDecorator()
 {
 }
 
-TaskDecorator::TaskDecorator(Blackboard* board, Tasks* newTask) : super(board)
-{
-	InitiateTask(newTask);
-}
+//TaskDecorator::TaskDecorator(Blackboard* board, Tasks* newTask) : super(board)
+//{
+//	InitiateTask(newTask);
+//}
 
 TaskDecorator::TaskDecorator(Blackboard* board, Tasks* newTask, std::string aName) : super(board, aName)
 {

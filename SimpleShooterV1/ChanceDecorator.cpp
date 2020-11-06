@@ -5,9 +5,13 @@ ChanceDecorator::ChanceDecorator()
 {
 }
 
-ChanceDecorator::ChanceDecorator(Blackboard* board, Tasks* task, int chance)
+//ChanceDecorator::ChanceDecorator(Blackboard* board, Tasks* task, int chance): super(board, task)
+//{
+//	Initialize(chance);
+//}
+
+ChanceDecorator::ChanceDecorator(Blackboard* board, Tasks* task, std::string aName, int chance) : super(board, task, aName)
 {
-	super(board, task);
 	Initialize(chance);
 }
 
@@ -22,8 +26,9 @@ void ChanceDecorator::DoAction()
 
 bool ChanceDecorator::CheckConditions()
 {
+	
 	randomValue = rand() % CHANCE_RANGE;
-
+	std::string rng = (task->CheckConditions() && randomValue <= chanceValue ? "RNG CHECK PASSED" : "RNG CHECK FAILED");
 	return (task->CheckConditions() && randomValue <= chanceValue);
 }
 

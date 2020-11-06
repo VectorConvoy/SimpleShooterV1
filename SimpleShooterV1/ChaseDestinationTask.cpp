@@ -1,11 +1,12 @@
 #include "ChaseDestinationTask.h"
+#include <sstream>
 
-ChaseDestinationTask::ChaseDestinationTask(Blackboard* board)
-{
+//ChaseDestinationTask::ChaseDestinationTask(Blackboard* board) : super(board)
+//{
+//
+//}
 
-}
-
-ChaseDestinationTask::ChaseDestinationTask(Blackboard* board, std::string aName)
+ChaseDestinationTask::ChaseDestinationTask(Blackboard* board, std::string aName) : super(board, aName)
 {
 }
 
@@ -22,14 +23,16 @@ bool ChaseDestinationTask::CheckConditions()
 
 void ChaseDestinationTask::Start()
 {
-	logText = ("STARTING %s TASK", name);
-	this->sLogger->Log(logText);
+	std::ostringstream oss;
+	oss << "STARTING TASK " << name;
+	this->sLogger->Log(oss.str());
 }
 
 void ChaseDestinationTask::End()
 {
-	logText = ("ENDING %s TASK", name);
-	this->sLogger->Log(logText);
+	std::ostringstream oss;
+	oss << "ENDING TASK " << name;
+	this->sLogger->Log(oss.str());
 }
 
 void ChaseDestinationTask::DoAction()

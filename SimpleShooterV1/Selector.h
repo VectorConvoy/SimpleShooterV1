@@ -9,7 +9,7 @@ public:
 	typedef ParentTask super;
 
 	Selector();
-	Selector(Blackboard* board);
+	//Selector(Blackboard* board);
 	Selector(Blackboard* board, std::string aName);
 	~Selector();
 
@@ -17,5 +17,7 @@ public:
 
 	void ChildSucceeded();
 	void ChildFailed();
+
+	
 	
 };

@@ -11,7 +11,7 @@ class FleeDestinationTask : public Node
 public:
 	typedef Node super;
 
-	FleeDestinationTask(Blackboard* board);
+	//FleeDestinationTask(Blackboard* board);
 	FleeDestinationTask(Blackboard* board, std::string aName);
 	~FleeDestinationTask();
 

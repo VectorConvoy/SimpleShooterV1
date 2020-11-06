@@ -1,11 +1,12 @@
 #include "FleeDestinationTask.h"
 #include <stdio.h>
+#include <sstream>
 #include "Blackboard.h"
 
-FleeDestinationTask::FleeDestinationTask(Blackboard* board) : super(board)
-{
-	
-}
+//FleeDestinationTask::FleeDestinationTask(Blackboard* board) : super(board)
+//{
+//	
+//}
 
 FleeDestinationTask::FleeDestinationTask(Blackboard* board, std::string aName) : super(board, aName)
 {
@@ -25,21 +26,26 @@ bool FleeDestinationTask::CheckConditions()
 
 void FleeDestinationTask::Start()
 {
-	logText = ("STARTING %s TASK", name);
-	this->sLogger->Log(logText);
+	std::ostringstream oss;
+	oss << "STARTING TASK " << name;
+	this->sLogger->Log(oss.str());
 
 }
 
 void FleeDestinationTask::End()
 {
-	logText = ("ENDING %s TASK", name);
-	this->sLogger->Log(logText);
+	std::ostringstream oss;
+	oss << "ENDING TASK " << name;
+	this->sLogger->Log(oss.str());
 }
 
 void FleeDestinationTask::DoAction()
 {
-	logText = ("PERFORMING %s TASK", name);
-	this->sLogger->Log(logText);
+	std::ostringstream oss;
+
+	oss << "PERFORMING TASK " << name;
+	this->sLogger->Log(oss.str());
+
 	Vector2 enemyPos = this->board->GetEnemy()->GetPosition();
 	Vector2 playerPos = this->board->GetPlayer()->GetPosition();
 	

@@ -1,12 +1,14 @@
 #include "IdleTask.h"
+#include <sstream>
 
 IdleTask::IdleTask()
 {
 }
 
-IdleTask::IdleTask(Blackboard* blackboard) : super(blackboard)
-{
-}
+//IdleTask::IdleTask(Blackboard* blackboard) : super(blackboard)
+//{
+//
+//}
 
 IdleTask::IdleTask(Blackboard* blackboard, std::string aName) : super(blackboard, aName)
 {
@@ -28,24 +30,30 @@ void IdleTask::DoAction()
 	//Set the vector to the Zero Vector into the blackboard
 	this->board->SetMoveDirection(VEC2_ZERO);
 
-	if (this->board->GetMoveDirection() != NULL)
-	{
-		this->GetControl()->FinishWithSuccess();
-	}
-	else
-	{
-		this->GetControl()->FinishWithFailure();
-	}
+	this->GetControl()->FinishWithSuccess();
+
+	//if (this->board->GetMoveDirection() != NULL)
+	//{
+	//	this->GetControl()->FinishWithSuccess();
+	//}
+	//else
+	//{
+	//	this->GetControl()->FinishWithFailure();
+	//}
 }
 
 void IdleTask::Start()
 {
-	logText = ("STARTING %s TASK", name);
-	this->sLogger->Log(logText);
+	std::ostringstream oss;
+
+	oss << "STARTING TASK " << name;
+	this->sLogger->Log(oss.str());
 }
 
 void IdleTask::End()
 {
-	logText = ("ENDING %s TASK", name);
-	this->sLogger->Log(logText);
+	std::ostringstream oss;
+
+	oss << "ENDING TASK " << name;
+	this->sLogger->Log(oss.str());
 }

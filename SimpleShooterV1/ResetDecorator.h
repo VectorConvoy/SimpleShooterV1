@@ -10,7 +10,7 @@ class ResetDecorator : public TaskDecorator
 public:
 	typedef TaskDecorator super;
 	ResetDecorator();
-	ResetDecorator(Blackboard* bboard, Tasks* newTask);
+	ResetDecorator(Blackboard* bboard, Tasks* newTask, std::string aName);
 	~ResetDecorator();
 
 	void DoAction();

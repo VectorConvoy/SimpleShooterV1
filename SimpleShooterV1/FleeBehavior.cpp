@@ -9,8 +9,6 @@ FleeBehavior::FleeBehavior()
 {
 	priorityValue = -1;
 	panicDistance = PANIC_DISTANCE;
-
-	fleeSequence = nullptr;
 }
 
 FleeBehavior::FleeBehavior(Blackboard* board)
@@ -21,15 +19,14 @@ FleeBehavior::FleeBehavior(Blackboard* board)
 	behaviorSequence = new Sequence(board, "Flee Sequence");
 	behaviorSequence = new PanicDecorator(board, behaviorSequence, PANIC_DISTANCE, "Panic Decorator");
 	
-	((ParentTaskController*)behaviorSequence->GetControl())->AddTask(new GetPlayerTask(board, "Get Player Task"));
+	//((ParentTaskController*)behaviorSequence->GetControl())->AddTask(new GetPlayerTask(board, "Get Player Task"));
 	((ParentTaskController*)behaviorSequence->GetControl())->AddTask(new FleeDestinationTask(board, "Get Flee Destination Task"));
 	((ParentTaskController*)behaviorSequence->GetControl())->AddTask(new MoveToTask(board, "Move Enemy Tasks"));
 }
 
 FleeBehavior::~FleeBehavior()
 {
-	delete fleeSequence;
-	fleeSequence = nullptr;
+	
 }
 
 void FleeBehavior::SetPanicDist(float dist)

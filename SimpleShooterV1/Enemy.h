@@ -18,7 +18,7 @@ public:
 	~Enemy();
 
 	void InitializeBullets();
-	void SetBulletDirection(float nextDirection);
+	void SetBulletDirection(Vector2 direction);
 	bool FireBullet();
 
 	void CustomUpdate();
@@ -29,6 +29,7 @@ public:
 
 	void RespawnEnemy();
 	void SetEnemyDestVector(Vector2 goalVector);
+	void SetAngle(float newAngle);
 	void EnemyMove();
 
 	void CreateBehaviorTree();

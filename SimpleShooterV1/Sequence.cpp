@@ -4,10 +4,10 @@ Sequence::Sequence()
 {
 }
 
-Sequence::Sequence(Blackboard* enemyBoard) : super(enemyBoard)
-{
-	
-}
+//Sequence::Sequence(Blackboard* enemyBoard) : super(enemyBoard)
+//{
+//	
+//}
 
 Sequence::Sequence(Blackboard* enemyBoard, std::string aName) : super(enemyBoard, aName)
 {

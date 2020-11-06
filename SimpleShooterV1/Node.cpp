@@ -4,10 +4,10 @@ Node::Node()
 {
 }
 
-Node::Node(Blackboard* enemyBoard) : super(enemyBoard)
-{
-	CreateController();
-}
+//Node::Node(Blackboard* enemyBoard) : super(enemyBoard)
+//{
+//	CreateController();
+//}
 
 Node::Node(Blackboard* enemyBoard, std::string aName) : super(enemyBoard, aName)
 {

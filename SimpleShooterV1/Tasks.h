@@ -3,7 +3,7 @@
 
 #include "Logger.h"
 #include "TaskController.h"
-#include <string>
+#include <sstream>
 
 class Blackboard;
 
@@ -13,7 +13,7 @@ public:
 	Logger* sLogger;
 
 	Tasks();
-	Tasks(Blackboard* enemyBoard);
+	//Tasks(Blackboard* enemyBoard);
 	Tasks(Blackboard* enemyBoard, std::string aName);
 	~Tasks();
 
@@ -29,8 +29,6 @@ public:
 protected:
 	Blackboard* board;
 	std::string name;
-	std::string logText;
-
 private:
 
 };

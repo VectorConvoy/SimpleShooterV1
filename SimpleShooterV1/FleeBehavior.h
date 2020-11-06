@@ -10,8 +10,6 @@ public:
 
 	typedef Behavior super;
 
-	PanicDecorator* fleeSequence;
-
 	FleeBehavior();
 	FleeBehavior(Blackboard* board);
 	~FleeBehavior();

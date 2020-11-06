@@ -1,12 +1,17 @@
 #include "BehaviorTree.h"
+#include "ChanceDecorator.h"
 #include "FleeBehavior.h"
+#include "SeekBehavior.h"
+#include "ShootBehavior.h"
+#include "IdleBehavior.h"
 #include "GetPlayerTask.h"
+#include "IdleTask.h"
 #include <algorithm>
 
 BehaviorTree::BehaviorTree()
 {
 	AIBoard = new Blackboard();
-	AISelector = new Selector(AIBoard);
+	AISelector = new Selector(AIBoard, "DEFAULT BEHAVIOR TREE");
 	CreateBehaviorTree();
 }
 
@@ -28,22 +33,38 @@ BehaviorTree::~BehaviorTree()
 	AISelector = nullptr;
 }
 
-void BehaviorTree::CreateBehaviorTree(std::string behaviorType)
+void BehaviorTree::CreateBehaviorTree(BEHAVIOR_TYPES behavior)
 {
 
-	std::transform(behaviorType.begin(), behaviorType.end(), behaviorType.begin(), [](unsigned char c) {return std::tolower(c); });
+	//std::transform(behaviorType.begin(), behaviorType.end(), behaviorType.begin(), [](unsigned char c) {return std::tolower(c); });
 
-	
-
-	if (behaviorType == "flee")
+	if (behavior == BEHAVIOR_TYPES::flee)
 	{
-		this->sLoggerInstance->Log("ADDING FLEE BEHAVIOR");
+		//this->sLoggerInstance->Log("ADDING FLEE BEHAVIOR");
 		AddBehaviorToBehaviorTree(new FleeBehavior(AIBoard));
 
 	}
+	else if (behavior == BEHAVIOR_TYPES::chase)
+	{
+		//this->sLoggerInstance->Log("ADDING CHASE BEHAVIOR");
+		AddBehaviorToBehaviorTree(new SeekBehavior(AIBoard));
+	}
+	else if (behavior == BEHAVIOR_TYPES::chase_shoot)
+	{
+		//this->sLoggerInstance->Log("ADDING CHASE & FIRE BEHAVIOR");
+		SeekBehavior* temp = new SeekBehavior(AIBoard);
+		temp->AddAdditionalSequence((new ShootBehavior(AIBoard))->behaviorSequence);
+		AddBehaviorToBehaviorTree(temp);
 
+		temp = nullptr;
+	}
+	else if (behavior == BEHAVIOR_TYPES::sentry)
+	{
+		AddBehaviorToBehaviorTree(new ShootBehavior(AIBoard));
+	}
 
-
+	//Add Idle Task so if AI does not pass any decorators simply have it idle at current position
+	AddBehaviorToBehaviorTree(new IdleBehavior(AIBoard));
 }
 
 void BehaviorTree::AddToBehaviorTree(Sequence* seq)
@@ -53,13 +74,12 @@ void BehaviorTree::AddToBehaviorTree(Sequence* seq)
 
 void BehaviorTree::AddBehaviorToBehaviorTree(Behavior* behaviorSeq)
 {
-	
 	((ParentTaskController*)AISelector->GetControl())->AddTask(behaviorSeq->behaviorSequence);
 }
 
 void BehaviorTree::StartBehavior()
 {
-	this->sLoggerInstance->Log("STARTING BEHAVIOR");
+	//this->sLoggerInstance->Log("STARTING BEHAVIOR");
 	GetPlayer->DoAction(); //Run task to get the player
 	if (!((ParentTaskController*)AISelector->GetControl())->Started())
 	{

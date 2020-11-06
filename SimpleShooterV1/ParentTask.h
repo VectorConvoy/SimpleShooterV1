@@ -3,15 +3,16 @@
 
 #include "Tasks.h"
 #include "ParentTaskController.h"
+#include <sstream>
 
 class ParentTask : public Tasks
 {
 public:
 	typedef Tasks super;
 	ParentTaskController* controller;
-	
+
 	ParentTask();
-	ParentTask(Blackboard* enemyBoard);
+	//ParentTask(Blackboard* enemyBoard);
 	ParentTask(Blackboard* enemyBoard, std::string aName);
 	~ParentTask();
 
@@ -31,5 +32,4 @@ public:
 
 private:
 	//ParentTaskController* controller;
-	std::string logText;
 };

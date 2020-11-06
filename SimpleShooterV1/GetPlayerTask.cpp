@@ -1,13 +1,14 @@
 #include "GetPlayerTask.h"
+#include <sstream>
 
 GetPlayerTask::GetPlayerTask()
 {
 }
 
-GetPlayerTask::GetPlayerTask(Blackboard* blackboard) : super(blackboard)
-{
-
-}
+//GetPlayerTask::GetPlayerTask(Blackboard* blackboard) : super(blackboard)
+//{
+//
+//}
 
 GetPlayerTask::GetPlayerTask(Blackboard* blackboard, std::string aName) : super(blackboard, aName)
 {
@@ -32,8 +33,9 @@ bool GetPlayerTask::CheckConditions()
 
 void GetPlayerTask::DoAction()
 {
-    logText = ("PERFORMING %s TASK", name);
-    this->sLogger->Log(logText);
+    std::ostringstream oss;
+    oss << "PERFORMING TASK " << name;
+    this->sLogger->Log(oss.str());
 
     board->SetPlayer(ScreenManager::Instance()->GetPlayScreen()->GetPlayer());
 
@@ -51,13 +53,14 @@ void GetPlayerTask::DoAction()
 
 void GetPlayerTask::Start()
 {
-
-    logText = ("STARTING %s TASK", name);
-    this->sLogger->Log(logText);
+    std::ostringstream oss;
+    oss << "STARTING TASK " << name;
+    this->sLogger->Log(oss.str());
 }
 
 void GetPlayerTask::End()
 {
-    logText = ("ENDING %s TASK", name);
-    this->sLogger->Log(logText);
+    std::ostringstream oss;
+    oss << "ENDING TASK " << name;
+    this->sLogger->Log(oss.str());
 }

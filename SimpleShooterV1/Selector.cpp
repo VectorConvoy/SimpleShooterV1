@@ -1,14 +1,15 @@
 #include "Selector.h"
+#include <sstream>
 
 Selector::Selector()
 {
 
 }
 
-Selector::Selector(Blackboard* board) : super(board)
-{
-	
-}
+//Selector::Selector(Blackboard* board) : super(board)
+//{
+//	
+//}
 
 Selector::Selector(Blackboard* board, std::string aName) : super(board, aName)
 {
@@ -41,7 +42,6 @@ Tasks* Selector::ChooseNewTask()
 			task = nullptr;
 			break;
 		}
-
 		currentPos++;
 
 		task = controller->subtasks.at(currentPos);
@@ -50,6 +50,7 @@ Tasks* Selector::ChooseNewTask()
 		{
 			found = true;
 		}
+
 
 	}
 
@@ -63,6 +64,10 @@ void Selector::ChildSucceeded()
 
 void Selector::ChildFailed()
 {
+	std::ostringstream oss;
+
+	oss << "TASK FAILED " << name << " SELECTING NEW TASK....";
+	this->sLogger->Log(oss.str());
 	controller->currentTask = ChooseNewTask();
 
 	if (controller->currentTask == nullptr)
