@@ -6,14 +6,7 @@ TopPlayBar::TopPlayBar()
 	mAudio = AudioManager::Instance();
 
 	//mTopBar = new GameEntity((Vector2(Graphics::Instance()->SCREEN_WIDTH * .5f, 20)));
-
-	SetTopBarEntities();
-	InitializeLives();
-	UpdateHealthBar();
-
-
-	mShips = new GameEntity();
-	mShips->SetParent(mTopBar);
+	InitializeTopBar();
 }
 
 TopPlayBar::~TopPlayBar()
@@ -53,6 +46,17 @@ void TopPlayBar::Render()
 		mShipTextures[i]->Render();
 	}
 
+}
+
+void TopPlayBar::InitializeTopBar()
+{
+	SetTopBarEntities();
+	InitializeLives();
+	UpdateHealthBar();
+
+
+	mShips = new GameEntity();
+	mShips->SetParent(mTopBar);
 }
 
 void TopPlayBar::SetTopBarEntities()
@@ -104,6 +108,11 @@ void TopPlayBar::UpdateHealthBar()
 void TopPlayBar::SetPlayer(Player* player)
 {
 	mPlayer = player;
+}
+
+void TopPlayBar::SetLives(int lives)
+{
+	mTotalShips = lives;
 }
 
 /*

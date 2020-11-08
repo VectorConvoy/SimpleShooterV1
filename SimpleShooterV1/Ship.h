@@ -6,10 +6,11 @@
 #include "AudioManager.h"
 #include "Logger.h"
 
+class ScreenManager;
+
 class Ship : public PhysicEntity
 {
 public:
-
 	static const int FRAME_RATE = 60;
 	const static int PLAYER_HEALTH = 5;
 
@@ -43,7 +44,6 @@ public:
 
 	int GetHealth();
 
-	
 	void Respawn(Vector2 respawnPos);
 
 	void LoadTextureFromFile(std::string filename);
@@ -65,6 +65,7 @@ public:
 
 	void Update();
 	void Render();
+
 protected:
 
 	bool mVisible;
@@ -101,6 +102,7 @@ protected:
 
 	//Bullet* mBullets[MAX_BULLETS];
 
+	ScreenManager* sScreenManagerInstance;
 	AudioManager* sAudioManagerInstance;
 	Timer* sTimerInstance;
 	Logger* sLoggerInstance;

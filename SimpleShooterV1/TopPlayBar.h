@@ -25,10 +25,13 @@ public:
 	void Update();
 	void Render();
 
+	void InitializeTopBar();
 	void SetTopBarEntities();
 	void InitializeLives();
 	void UpdateHealthBar();
 	void SetPlayer(Player* player);
+
+	void SetLives(int lives = DEFAULT_LIVES);
 	
 	std::string GetHealthFileNum();
 

@@ -17,8 +17,10 @@ PlayScreen::PlayScreen()
 
 	topBar = new TopPlayBar();
 
-	//mPlayer = new Player();
-	//mPlayer->SetPosition(Vector2(Graphics::SCREEN_WIDTH / 2, Graphics::SCREEN_HEIGHT / 2));
+
+
+	mRoundStartDelay = 5.0f;
+	mRoundStarted = false;
 }
 
 PlayScreen::~PlayScreen()
@@ -29,14 +31,18 @@ PlayScreen::~PlayScreen()
 	mPhysicsManager = NULL;
 	mAIManager = NULL;
 
+	delete mBackground;
+	mBackground = NULL;
+
 	delete topBar;
 	topBar = nullptr;
+
+	delete mStartLabel;
+	mStartLabel = nullptr;
 
 	delete mPlayer;
 	mPlayer = NULL;
 
-	delete mBackground;
-	mBackground = NULL;
 
 	for (std::shared_ptr<Enemy> enemy : mEnemies)
 	{
@@ -50,7 +56,31 @@ void PlayScreen::StartNewGame()
 {
 	mActive = false;
 	mPlayerHit = false;
+	mGameStarted = false;
 
+	mAudioManager->PlayMusic("Start_Sounds_003.wav", 0);
+
+	InitializePlayer();
+	topBar->SetPlayer(mPlayer);
+	
+	//Add player to AIManager
+	mAIManager->SetPlayer(mPlayer);
+
+	currentRound = 1;
+
+	SetupStartLabel();
+
+}
+
+void PlayScreen::StartNextRound()
+{
+	currentRound++;
+	mRoundStartTimer = 0.0f;
+	mRoundStarted = false;
+}
+
+void PlayScreen::InitializePlayer()
+{
 	delete mPlayer;
 	if (mPlayer)
 	{
@@ -61,12 +91,6 @@ void PlayScreen::StartNewGame()
 	mPlayer->SetShipFileName(PlayerShipName);
 	mPlayer->SetPosition(Vector2(Graphics::SCREEN_WIDTH / 2, Graphics::SCREEN_HEIGHT / 2));
 	mPlayer->SetActive(true);
-	
-	topBar->SetPlayer(mPlayer);
-	//Spawn enemies
-
-	mAIManager->SetPlayer(mPlayer);
-
 }
 
 void PlayScreen::SetGameStarted(bool started)
@@ -77,6 +101,16 @@ void PlayScreen::SetGameStarted(bool started)
 bool PlayScreen::GetGameStarted()
 {
 	return mActive;
+}
+
+void PlayScreen::SetRoundStarted(bool started)
+{
+	mRoundStarted = started;
+}
+
+bool PlayScreen::GetRoundStarted()
+{
+	return mRoundStarted;
 }
 
 Player* PlayScreen::GetPlayer()
@@ -152,19 +186,23 @@ void PlayScreen::checkKeyPress()
 		mPlayer->RespawnPlayer();
 		//Respawn Player;
 	}
-	//else if (mInputManager->KeyPressed(SDL_SCANCODE_C))
-	//{
-	//	SpawnEnemy((int)AIEngine::BEHAVIOR::seek);
-	//	//Respawn Enemy
-	//}
-	else if (mInputManager->KeyPressed(SDL_SCANCODE_F))
-	{
-		SpawnEnemy((int)AIEngine::BEHAVIOR::flee);
-	}
 	else if (mInputManager->KeyPressed(SDL_SCANCODE_SPACE))
 	{
- 		mPlayer->FireBullet();
+		mPlayer->FireBullet();
 	}
+	else if (mInputManager->KeyPressed(SDL_SCANCODE_RETURN))
+	{
+		//Only capture the input and start round if it is the beginning
+		if (!mRoundStarted && currentRound < 2)
+		{
+			mRoundStarted = true;
+			SpawnEnemy((int)AIEngine::BEHAVIOR::flee);
+
+			//Begin round animation
+
+		}
+	}
+
 }
 
 void PlayScreen::checkKeyRelease()
@@ -265,46 +303,105 @@ void PlayScreen::Update()
 {
 	if (mActive)
 	{
-		if (mPlayer)
+		if (mGameStarted && mRoundStarted)
 		{
-			mPlayer->CustomUpdate();
+			topBar->Update();
 		}
 
-		mPhysicsManager->Update();
-		mAIManager->Update();
-		CheckEnemyStatus();
-
-		for (std::shared_ptr<Enemy> enemy : mEnemies)
+		//Level delay
+		if (!mRoundStarted)
 		{
-			if (enemy)
+			mRoundStartTimer += mTimer->DeltaTime();
+
+			if (mRoundStartTimer >= mRoundStartDelay)
 			{
-				enemy->CustomUpdate();
+				mRoundStarted = true;
+				SpawnEnemy((int)AIEngine::BEHAVIOR::flee);
 			}
 		}
+		else
+		{
+			if (mGameStarted && mRoundStarted)
+			{
+				topBar->Update();
+			}
+
+			if (mGameStarted)
+			{
+				//Level delay
+				if (!mRoundStarted)
+				{
+					mRoundStartTimer += mTimer->DeltaTime();
+
+					if (mRoundStartTimer >= mRoundStartDelay)
+					{
+
+					}
+				}
+				else
+				{
+					if (mPlayer)
+					{
+						mPlayer->CustomUpdate();
+					}
+
+					mPhysicsManager->Update();
+					mAIManager->Update();
+					CheckEnemyStatus();
+
+					for (std::shared_ptr<Enemy> enemy : mEnemies)
+					{
+						if (enemy)
+						{
+							enemy->CustomUpdate();
+						}
+					}
+				}
+			}
+			else
+			{
+				if (mRoundStarted && !mRoundAnimation)
+				{
+					mGameStarted = true;
+					mAudioManager->PlaySFX("Start_Sounds_003.wav");
+				}
+			}
+			}
 	}
 
-	topBar->Update();
+	
 }
 
 void PlayScreen::Render()
-{
+{	
+	topBar->Render();
 	mBackground->Render();
 
 
 	if (mActive)
 	{
-		if (mPlayer)
+		if (!mGameStarted)
 		{
-			mPlayer->CustomRender();
+			mStartLabel->Render();
+		}
+		else
+		{
+			//Round started, render game assets 
+			if (mPlayer)
+			{
+				mPlayer->CustomRender();
+			}
+
+			for (std::shared_ptr<Enemy> enemy : mEnemies)
+			{
+				enemy->CustomRender();
+			}
+
 		}
 	}
 
-	for (std::shared_ptr<Enemy> enemy : mEnemies)
-	{
-		enemy->CustomRender();	
-	}
 
-	topBar->Render();
+
 
 }
 
@@ -317,4 +414,13 @@ void PlayScreen::SetupPhysics()
 	//Set collision layers for player projectile and enemy projectiles
 	mPhysicsManager->SetLayerCollisionMask(PhysicsManager::CollisionLayers::FriendlyProjectiles, PhysicsManager::CollisionFlags::Enemy);
 	mPhysicsManager->SetLayerCollisionMask(PhysicsManager::CollisionLayers::EnemyProjectiles, PhysicsManager::CollisionFlags::Friendly);
+}
+
+void PlayScreen::SetupStartLabel()
+{
+	std::ostringstream oss;
+	oss << "ROUND " << currentRound;
+	mStartLabel = new Texture(oss.str(), "alagard_by_pix3m-d6awiwp.ttf", 32, { 255, 0, 0 });
+	mStartLabel->SetParent(this);
+	mStartLabel->SetPosition(Vector2(Graphics::SCREEN_WIDTH * 0.5f, Graphics::SCREEN_HEIGHT * 0.45f));
 }

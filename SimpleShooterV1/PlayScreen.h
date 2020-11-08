@@ -21,9 +21,15 @@ public:
 	~PlayScreen();
 
 	void StartNewGame();
+	void StartNextRound(); //Loads and sets up next round
+
+	void InitializePlayer();
 
 	void SetGameStarted(bool started);
 	bool GetGameStarted();
+
+	void SetRoundStarted(bool started);
+	bool GetRoundStarted();
 
 	Player* GetPlayer();
 	//Enemy* GetEnemy();
@@ -52,20 +58,28 @@ private:
 	PhysicsManager* mPhysicsManager;
 	AIEngine* mAIManager;
 
-	Texture* mBackground;
 
-	//Top Bar
+	//Top Bar and entities
 	TopPlayBar* topBar;
-
+	Texture* mBackground;
 	Player* mPlayer;
-	//Enemy* mEnemy; //Enemy for debugging purposes
+	
+	//Start components
+	Texture* mStartLabel;
+	float mRoundStartTimer;
+	float mRoundStartDelay;
+
+	bool mGameStarted;
+	bool mRoundStarted;
+	bool mRoundAnimation;
+	int currentRound;
 
 	std::vector<std::shared_ptr<Enemy>> mEnemies;
 
 	bool mPlayerHit;
 
-	void StartLevel();
-
 	void SetupPhysics();
+
+	void SetupStartLabel();
 	
 };

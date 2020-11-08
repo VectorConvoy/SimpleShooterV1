@@ -107,6 +107,7 @@ void Player::FireBullet()
 		{
 			mBullets[i]->Fire(GetPosition());
 			//Play audio here
+			sAudioManagerInstance->PlaySFX("Laser-Shot-1.mp3");
 			break;
 
 		}

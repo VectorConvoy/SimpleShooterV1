@@ -147,7 +147,7 @@ Enemy::Enemy()
 	mMoveSpeed = 50.0f;
 	mMoveBounds = Vector2(Graphics::SCREEN_WIDTH, Graphics::SCREEN_HEIGHT);
 
-	mDeathAnimation = new AnimatedTexture(DEATH_ANIMATION, 0, 0, 64, 64, 4, 1.0f, AnimatedTexture::ANIMATED_DIRECTION::vertical);
+	mDeathAnimation = new AnimatedTexture(DEATH_ANIMATION, 0, 0, 64, 64, 4, 0.5f, AnimatedTexture::ANIMATED_DIRECTION::vertical);
 	mDeathAnimation->SetParent(this); //Unsure if it will work
 	mDeathAnimation->SetPosition(VEC2_ZERO);
 	mDeathAnimation->WrapMode(AnimatedTexture::WRAP_MODE::once);

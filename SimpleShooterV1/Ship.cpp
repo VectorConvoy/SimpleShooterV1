@@ -1,4 +1,5 @@
 #include "Ship.h"
+#include "ScreenManager.h"
 #include <sstream>
 static const double DEFAULT_SPEED = 2.0f;
 
@@ -19,6 +20,8 @@ Ship::Ship()
 	mActive = true;
 
 	sLoggerInstance = Logger::Instance();
+	sScreenManagerInstance = ScreenManager::Instance();
+	sAudioManagerInstance = AudioManager::Instance();
 }
 
 Ship::~Ship()
@@ -334,10 +337,13 @@ void Ship::Hit(PhysicEntity* otherEntity)
 					mActive = false;
 					mDeathAnimation->ResetAnimation();
 					mAnimating = true;
+					
+					sScreenManagerInstance->GetPlayScreen()->StartNextRound(); //Set round started to false to prepare for next round
 				}
 			}
 
 			//Play Death Audio
+			sAudioManagerInstance->PlaySFX("8bit_bomb_explosion.wav");
 		}
 	}
 }
