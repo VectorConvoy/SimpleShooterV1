@@ -88,28 +88,6 @@ void Enemy::SetEnemyDestVector(Vector2 goalVector)
 	destVector = goalVector * SPEED_MULTIPLIER;
 
 	SetDestVector(destVector);
-
-	goalAngle = (float)(atan2(goalVector.y, goalVector.x) * RAD_TO_DEG) + 90;
-	//goalAngle = fmodf(goalAngle + 2 * PI, 2 * PI);
-	
-	if (goalAngle < 0)
-	{
-		goalAngle += 360;
-		futureRotations--;
-	}
-	else if (goalAngle > 360)
-	{
-		futureRotations++;
-		goalAngle = fmodf(goalAngle, 360);
-	}
-
-	goalAngle = truncf(goalAngle);
-	//Move(destVector);
-
-	//if (goalAngle != spriteAngle)
-	//{
-	//	mAnimating = true;
-	//}
 }
 
 void Enemy::SetAngle(float newAngle)
@@ -127,8 +105,7 @@ void Enemy::SetAngle(float newAngle)
 	}
 
 	goalAngle = truncf(goalAngle);
-	this->shipTexture->SetRotation(goalAngle);
-	
+	this->shipTexture->SetRotation(goalAngle);	
 }
 
 void Enemy::EnemyMove()
@@ -185,7 +162,7 @@ Enemy::Enemy()
 	mActive = false;
 
 	spriteAngle = 180.0f;
-
+	goalAngle = 180.0f;
 }
 
 Enemy::~Enemy()

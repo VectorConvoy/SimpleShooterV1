@@ -14,6 +14,8 @@ public:
 	const static int MAX_BULLETS = 10;
 	const static int INVINCIBILITY_TIME = 3; //In seconds
 
+	const static int DEFAULT_SPEED = 400;
+
 	const int FRAME_HEIGHT = 64;
 	const int FRAME_WIDTH = 64;
 

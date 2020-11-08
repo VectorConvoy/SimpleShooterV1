@@ -21,11 +21,6 @@ private:
 	
 	Timer* mTimer;
 
-	//Top Bar Entities
-	GameEntity* mTopBar;
-	Texture* mPlayerLives;
-	Texture* mPlayerHealth;
-
 	//Play Mode Entities
 	GameEntity* mPlayModes;
 	Texture* mEnter;

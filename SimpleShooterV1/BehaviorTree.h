@@ -1,3 +1,8 @@
+/*
+* Behavior Tree components and logic based on the following
+* http://magicscrollsofcode.blogspot.com/2010/12/behavior-trees-by-example-ai-in-android.html
+*/
+
 #pragma once
 #define _BEHAVIORTREE_H
 

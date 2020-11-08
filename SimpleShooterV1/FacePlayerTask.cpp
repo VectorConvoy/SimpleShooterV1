@@ -37,10 +37,8 @@ void FacePlayerTask::DoAction()
 {
 	float goalAngle;
 	
-	goalAngle = (float)(atan2(board->GetMoveDirection().y, board->GetMoveDirection().x) * RAD_TO_DEG) - 90;
-
-	//goalAngle = fmod(goalAngle + (2 * PI), 2 * PI);
-
+	goalAngle = (atan2(board->GetMoveDirection().y, board->GetMoveDirection().x) * RAD_TO_DEG);
+	
 	board->GetEnemy()->SetAngle(goalAngle);
 
 	board->GetEnemy()->SetBulletDirection(board->GetMoveDirection());

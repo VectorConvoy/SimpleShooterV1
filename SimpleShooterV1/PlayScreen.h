@@ -7,6 +7,7 @@
 #include "PhysicsManager.h"
 #include "AIEngine.h"
 #include <memory>
+#include "TopPlayBar.h"
 
 class PlayScreen : public GameEntity
 {
@@ -15,9 +16,7 @@ public:
 	const std::string PlayerShipName = "SpriteSheet.png";
 	const std::string EnemyShipName = "enemyship1.png";
 	const std::string DeathAnimation = "ship_explosion.png";
-	const std::string HealthBar = "HealthBars/VIDA";
-	const int MAXIMUM_HEALTH = 10;
-
+	
 	PlayScreen();
 	~PlayScreen();
 
@@ -31,10 +30,6 @@ public:
 
 	void checkKeyPress();
 	void checkKeyRelease();
-
-	void SetTopBarEntities();
-	std::string GetHealthFileNum();
-	void UpdateHealthBar();
 
 	void SpawnEnemy(int behavior = AIEngine::BEHAVIOR::flee);
 
@@ -59,10 +54,8 @@ private:
 
 	Texture* mBackground;
 
-	//Top Bar Entities
-	GameEntity* mTopBar;
-	Texture* mPlayerLives;
-	Texture* mPlayerHealth;
+	//Top Bar
+	TopPlayBar* topBar;
 
 	Player* mPlayer;
 	//Enemy* mEnemy; //Enemy for debugging purposes

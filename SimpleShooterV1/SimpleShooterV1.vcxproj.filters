@@ -246,6 +246,9 @@
     <ClCompile Include="FacePlayerTask.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="TopPlayBar.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="graphics.h">
@@ -427,6 +430,9 @@
     </ClInclude>
     <ClInclude Include="FacePlayerTask.h">
       <Filter>Header Files\Behavior Tree\Modular Tasks</Filter>
+    </ClInclude>
+    <ClInclude Include="TopPlayBar.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

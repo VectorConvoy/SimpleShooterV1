@@ -15,7 +15,7 @@ PlayScreen::PlayScreen()
 	mBackground = new Texture("space_custom.png");
 	mBackground->SetPosition(Vector2(Graphics::SCREEN_WIDTH / 2, Graphics::SCREEN_HEIGHT / 2));
 
-	SetTopBarEntities();
+	topBar = new TopPlayBar();
 
 	//mPlayer = new Player();
 	//mPlayer->SetPosition(Vector2(Graphics::SCREEN_WIDTH / 2, Graphics::SCREEN_HEIGHT / 2));
@@ -28,6 +28,9 @@ PlayScreen::~PlayScreen()
 	mAudioManager = NULL;
 	mPhysicsManager = NULL;
 	mAIManager = NULL;
+
+	delete topBar;
+	topBar = nullptr;
 
 	delete mPlayer;
 	mPlayer = NULL;
@@ -59,6 +62,7 @@ void PlayScreen::StartNewGame()
 	mPlayer->SetPosition(Vector2(Graphics::SCREEN_WIDTH / 2, Graphics::SCREEN_HEIGHT / 2));
 	mPlayer->SetActive(true);
 	
+	topBar->SetPlayer(mPlayer);
 	//Spawn enemies
 
 	mAIManager->SetPlayer(mPlayer);
@@ -227,61 +231,6 @@ void PlayScreen::checkKeyRelease()
 	}
 }
 
-void PlayScreen::SetTopBarEntities()
-{
-	//Top bar enttities
-	mTopBar = new GameEntity(Vector2(Graphics::Instance()->SCREEN_WIDTH * .5f, 80.0f));
-	mPlayerLives = new Texture("1UP", "Boxy-Bold.ttf", 16, { 231, 255, 4 });
-	mPlayerLives->SetParent(mTopBar);
-	mPlayerLives->SetPosition(Vector2(-Graphics::Instance()->SCREEN_WIDTH * 0.35f, 0.0f));
-
-	UpdateHealthBar();
-
-	mTopBar->SetParent(this);
-}
-
-
-/*
-* Method to calculate which health bar file to use by calculating the correct
-* value and then returning it in the correct format so we can append it
-**/
-std::string PlayScreen::GetHealthFileNum()
-{
-	int healthNumber = 10;
-	std::string healthFileName = "_10.png";
-	
-	if (mPlayer)
-	{
-		if (mPlayer->GetActive())
-		{
-			int playerHealth = mPlayer->GetHealth();
-
-			playerHealthIncrements = (float) ceil(MAXIMUM_HEALTH / mPlayer->PLAYER_HEALTH);
-
-			healthNumber = playerHealth * (int) playerHealthIncrements;
-
-			healthFileName = "_" + std::to_string(healthNumber) + ".png";
-		}
-	}
-	
-	return healthFileName;
-}
-
-void PlayScreen::UpdateHealthBar()
-{
-	if (mPlayerHealth)
-	{
-		delete mPlayerHealth;
-		mPlayerHealth = NULL;
-	}
-
-	mPlayerHealth = new Texture(HealthBar + GetHealthFileNum());
-	mPlayerHealth->SetParent(mTopBar);
-	mPlayerHealth->SetPosition(Vector2(Graphics::Instance()->SCREEN_WIDTH * 0.35f, 0.0f));
-
-	mPlayerHealth->SetScale(Vector2(0.5, 0.5));
-}
-
 void PlayScreen::SpawnEnemy(int behavior)
 {
 	std::shared_ptr<Enemy> temp = std::shared_ptr<Enemy>(new Enemy());
@@ -322,7 +271,6 @@ void PlayScreen::Update()
 		}
 
 		mPhysicsManager->Update();
-		UpdateHealthBar();
 		mAIManager->Update();
 		CheckEnemyStatus();
 
@@ -334,13 +282,14 @@ void PlayScreen::Update()
 			}
 		}
 	}
+
+	topBar->Update();
 }
 
 void PlayScreen::Render()
 {
 	mBackground->Render();
-	mPlayerLives->Render();
-	mPlayerHealth->Render();
+
 
 	if (mActive)
 	{
@@ -354,6 +303,8 @@ void PlayScreen::Render()
 	{
 		enemy->CustomRender();	
 	}
+
+	topBar->Render();
 
 }
 

@@ -3,20 +3,6 @@
 StartScreen::StartScreen()
 {
 	mTimer = Timer::Instance();
-	//Top bar enttities
-	mTopBar = new GameEntity( Vector2(Graphics::Instance()->SCREEN_WIDTH * .5f, 80.0f));
-	mPlayerLives = new Texture("1UP: ", "Boxy-Bold.ttf", 16, { 231, 255, 4});
-
-	//mPlayerHealth = new Texture("1UP", "Boxy-Bold.ttf", 16, { 231, 255, 4 });
-
-	mPlayerLives->SetParent(mTopBar);
-	//mPlayerHealth->SetParent(mTopBar);
-
-	mPlayerLives->SetPosition(Vector2(-Graphics::Instance()->SCREEN_WIDTH * 0.35f, 0.0f));
-	//mPlayerHealth->SetPosition();
-
-	mTopBar->SetParent(this);
-
 	
 	//Play Mode Entities
 	mPlayModes = new GameEntity(Vector2(Graphics::Instance()->SCREEN_WIDTH * 0.5f, Graphics::Instance()->SCREEN_HEIGHT * 0.75f));
@@ -62,15 +48,6 @@ StartScreen::StartScreen()
 
 StartScreen::~StartScreen()
 {
-	//Free Top Bar
-	delete mTopBar;
-	mTopBar = NULL;
-
-	delete mPlayerLives;
-	mPlayerLives = NULL;
-
-	delete mPlayerHealth;
-	mPlayerHealth = NULL;
 
 	//Free Play Mode
 	delete mPlayModes;
@@ -120,10 +97,7 @@ void StartScreen::Update()
 
 void StartScreen::Render()
 {
-	mPlayerLives->Render();
 	
-	//mPlayerHealth->Render();
-
 	mEnter->Render();
 
 	mTitle1->Render();

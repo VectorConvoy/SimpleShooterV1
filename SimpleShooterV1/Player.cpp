@@ -18,7 +18,7 @@ Player::Player()
 	futureRotations = 0;
 	currentRotations = 0;
 
-	mMoveSpeed = 200.0f;
+	mMoveSpeed = (float) DEFAULT_SPEED;
 	mMoveBounds = Vector2(Graphics::SCREEN_WIDTH, Graphics::SCREEN_HEIGHT);
 
 	mDeathAnimation = new AnimatedTexture(DEATH_ANIMATION, 0, 0, 64, 64, 4, 1.0f, AnimatedTexture::ANIMATED_DIRECTION::vertical);

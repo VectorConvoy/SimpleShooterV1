@@ -222,14 +222,14 @@ void Ship::SetDestVector(Vector2 destination)
 	{
 		goalAngle = destinationDirection * 90.0f; //4 Directions which means 360/4 which equals 90 degrees
 
-		if (spriteAngle != goalAngle && mActive)
-		{
-			mAnimating = true;
-		}
-		else
-		{
-			mAnimating = false;
-		}
+		//if (spriteAngle != goalAngle && mActive)
+		//{
+		//	mAnimating = true;
+		//}
+		//else
+		//{
+		//	mAnimating = false;
+		//}
 
 		if (goalAngle >= 360)
 		{
@@ -386,16 +386,24 @@ void Ship::Update()
 			mDeathAnimation->Update();
 			mAnimating = mDeathAnimation->IsAnimating();
 		}
-		else
-		{
-			animationTimer += sTimerInstance->DeltaTime();
-			if (animationTimer >= (1 / (animationSpeed * frameRate)))
-			{
-				MoveAnimation();
+		//else
+		//{
+		//	//animationTimer += sTimerInstance->DeltaTime();
+		//	//if (animationTimer >= (1 / (animationSpeed * frameRate)))
+		//	//{
+		//	//	MoveAnimation();
 
-				animationTimer = 0; //Reset
-			}
-		}
+		//	//	animationTimer = 0; //Reset
+		//	//}
+		//	if (spriteAngle != goalAngle)
+		//	{
+		//		sLoggerInstance->Log("CHANGING ANGLE TO MATCH GOAL ANGLE");
+		//		//SetRotation(goalAngle);
+		//		spriteAngle = goalAngle;
+		//		SetRotation(spriteAngle);
+
+		//	}
+		//}
 	}
 	else
 	{
@@ -403,12 +411,20 @@ void Ship::Update()
 		if (mActive)
 		{
 			currentDirection = destinationDirection;
-			//Check if sprite is facing the correct angle
+			////Check if sprite is facing the correct angle
+			//if (spriteAngle != goalAngle)
+			//{
+			//	sLoggerInstance->Log("ANGLE MISMATCH - SPRITE IS AT AN INCORRECT ANGLE - FIXING.....");
+			//	//SetRotation(goalAngle);
+			//	spriteAngle = goalAngle;
+			//}
 			if (spriteAngle != goalAngle)
 			{
-				sLoggerInstance->Log("ANGLE MISMATCH - SPRITE IS AT AN INCORRECT ANGLE - FIXING.....");
+				sLoggerInstance->Log("CHANGING ANGLE TO MATCH GOAL ANGLE");
 				//SetRotation(goalAngle);
 				spriteAngle = goalAngle;
+				SetRotation(spriteAngle);
+
 			}
 
 			Move(destVector);
