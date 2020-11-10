@@ -12,7 +12,7 @@ class Ship : public PhysicEntity
 {
 public:
 	static const int FRAME_RATE = 60;
-	const static int PLAYER_HEALTH = 5;
+	const static int PLAYER_HEALTH = 2;
 
 	Ship();
 	~Ship();
@@ -42,7 +42,6 @@ public:
 	void SetDirection(float direction);
 	void SetDestVector(Vector2 destination);
 
-	int GetHealth();
 
 	void Respawn(Vector2 respawnPos);
 
@@ -58,6 +57,9 @@ public:
 
 	void InitializeBullets();
 	void FireBullet();
+
+	void SetHealth(int health);
+	int GetHealth();
 
 	void Hit(PhysicEntity* otherEntity);
 

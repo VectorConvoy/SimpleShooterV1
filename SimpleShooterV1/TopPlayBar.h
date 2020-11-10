@@ -32,6 +32,9 @@ public:
 	void SetPlayer(Player* player);
 
 	void SetLives(int lives = DEFAULT_LIVES);
+	int GetLives();
+
+	void LostALife();
 	
 	std::string GetHealthFileNum();
 
@@ -53,5 +56,6 @@ private:
 	GameEntity* mShips;
 	Texture* mShipTextures[DEFAULT_LIVES];
 	int mTotalShips;
+	int currentLives;
 
 };

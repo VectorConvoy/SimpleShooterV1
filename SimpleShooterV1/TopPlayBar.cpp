@@ -7,6 +7,8 @@ TopPlayBar::TopPlayBar()
 
 	//mTopBar = new GameEntity((Vector2(Graphics::Instance()->SCREEN_WIDTH * .5f, 20)));
 	InitializeTopBar();
+
+	mTotalShips = DEFAULT_LIVES;
 }
 
 TopPlayBar::~TopPlayBar()
@@ -29,7 +31,6 @@ TopPlayBar::~TopPlayBar()
 void TopPlayBar::Update()
 {
 	UpdateHealthBar();
-
 }
 
 void TopPlayBar::Render()
@@ -43,7 +44,10 @@ void TopPlayBar::Render()
 
 	for (int i = 0; i < DEFAULT_LIVES; i++)
 	{
-		mShipTextures[i]->Render();
+		if (mShipTextures[i]->GetActive())
+		{
+			mShipTextures[i]->Render();
+		}
 	}
 
 }
@@ -87,7 +91,10 @@ void TopPlayBar::InitializeLives()
 		mShipTextures[i] = new Texture(PLAYER_SHIP_NAME);
 		mShipTextures[i]->SetParent(mShips);
 		mShipTextures[i]->SetPosition(Vector2(FRAME_WIDTH * (i % DEFAULT_LIVES) + mOneUpText->GetPosition().x*1.5, 40.0f * (i / DEFAULT_LIVES) + mOneUpText->GetPosition().y));
+		mShipTextures[i]->SetActive(true);
 	}
+
+	currentLives = DEFAULT_LIVES;
 }
 
 void TopPlayBar::UpdateHealthBar()
@@ -112,8 +119,26 @@ void TopPlayBar::SetPlayer(Player* player)
 
 void TopPlayBar::SetLives(int lives)
 {
-	mTotalShips = lives;
+	currentLives = lives;
 }
+
+int TopPlayBar::GetLives()
+{
+	return currentLives;
+}
+
+void TopPlayBar::LostALife()
+{
+	for (int i = mTotalShips - 1; i >= 0; i--)
+	{
+		if (mShipTextures[i]->GetActive())
+		{
+			mShipTextures[i]->SetActive(false);
+			break;
+		}
+	}
+}
+
 
 /*
 * Method to calculate which health bar file to use by calculating the correct
@@ -121,8 +146,8 @@ void TopPlayBar::SetLives(int lives)
 **/
 std::string TopPlayBar::GetHealthFileNum()
 {
-	int healthNumber = 10;
-	std::string healthFileName = "_10.png";
+	int healthNumber = 0;
+	std::string healthFileName = "_0.png";
 	
 	if (mPlayer)
 	{

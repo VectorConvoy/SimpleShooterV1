@@ -40,7 +40,10 @@ public:
 	void SpawnEnemy(int behavior = AIEngine::BEHAVIOR::flee);
 
 	void CheckEnemyStatus();
-		
+
+	void PlayerDeath();
+	void ResetPlayer();
+
 	void Update();
 	void Render();
 
@@ -81,5 +84,6 @@ private:
 	void SetupPhysics();
 
 	void SetupStartLabel();
+	void DestroyStartLabel();
 	
 };

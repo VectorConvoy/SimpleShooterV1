@@ -256,6 +256,11 @@ void Ship::SetDestVector(Vector2 destination)
 
 }
 
+void Ship::SetHealth(int health)
+{
+	Health = health;
+}
+
 int Ship::GetHealth()
 {
 	return Health;
@@ -306,15 +311,6 @@ void Ship::SetRotationSpeed()
 	//int frameRate = (animationTimer / sTimerInstance->DeltaTime() / 1000.0f);
 }
 
-void Ship::InitializeBullets()
-{
-	//for (int i = 0; i < MAX_BULLETS; i++)
-	//{
-	//	mBullets[i] = new Bullet();
-	//	mBullets[i]->RegisterPlayerBullets();
-	//}
-}
-
 void Ship::Hit(PhysicEntity* otherEntity)
 {
 	if (otherEntity->GetActive())
@@ -328,22 +324,32 @@ void Ship::Hit(PhysicEntity* otherEntity)
 			//Death animation and handling here
 			mWasHit = true;
 
-
-			if ((!mAnimating || !isPlayer) && mActive)
+			//if ((!mAnimating || !isPlayer) && mActive)
+			if (mActive)
 			{
 				if (Health <= 0)
 				{
-					SetActive(false);
 					mActive = false;
 					mDeathAnimation->ResetAnimation();
-					mAnimating = true;
-					
-					sScreenManagerInstance->GetPlayScreen()->StartNextRound(); //Set round started to false to prepare for next round
+					mAnimating = true;		
+
+					//Play Death Audio
+					sAudioManagerInstance->PlaySFX("8bit_bomb_explosion.wav");
+
+					if (isPlayer)
+					{
+						sScreenManagerInstance->GetPlayScreen()->PlayerDeath();
+					}
 				}
+				else
+				{
+					sAudioManagerInstance->PlaySFX("hit.mp3");
+				}
+
+
 			}
 
-			//Play Death Audio
-			sAudioManagerInstance->PlaySFX("8bit_bomb_explosion.wav");
+
 		}
 	}
 }
@@ -392,38 +398,22 @@ void Ship::Update()
 			mDeathAnimation->Update();
 			mAnimating = mDeathAnimation->IsAnimating();
 		}
-		//else
-		//{
-		//	//animationTimer += sTimerInstance->DeltaTime();
-		//	//if (animationTimer >= (1 / (animationSpeed * frameRate)))
-		//	//{
-		//	//	MoveAnimation();
-
-		//	//	animationTimer = 0; //Reset
-		//	//}
-		//	if (spriteAngle != goalAngle)
-		//	{
-		//		sLoggerInstance->Log("CHANGING ANGLE TO MATCH GOAL ANGLE");
-		//		//SetRotation(goalAngle);
-		//		spriteAngle = goalAngle;
-		//		SetRotation(spriteAngle);
-
-		//	}
-		//}
 	}
-	else
+	else 	//Not being animated
 	{
-		//Not being animated
-		if (mActive)
+		if (!mActive)
+		{
+			if (!isPlayer)
+			{
+				//AI is dead
+				sScreenManagerInstance->GetPlayScreen()->StartNextRound(); //Set round started to false to prepare for next round
+				sScreenManagerInstance->GetPlayScreen()->CheckEnemyStatus(); //Make sure to delete enemy from list
+			}
+		}
+		else
 		{
 			currentDirection = destinationDirection;
-			////Check if sprite is facing the correct angle
-			//if (spriteAngle != goalAngle)
-			//{
-			//	sLoggerInstance->Log("ANGLE MISMATCH - SPRITE IS AT AN INCORRECT ANGLE - FIXING.....");
-			//	//SetRotation(goalAngle);
-			//	spriteAngle = goalAngle;
-			//}
+
 			if (spriteAngle != goalAngle)
 			{
 				sLoggerInstance->Log("CHANGING ANGLE TO MATCH GOAL ANGLE");

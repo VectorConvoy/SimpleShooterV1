@@ -17,9 +17,7 @@ PlayScreen::PlayScreen()
 
 	topBar = new TopPlayBar();
 
-
-
-	mRoundStartDelay = 5.0f;
+	mRoundStartDelay = 3.0f;
 	mRoundStarted = false;
 }
 
@@ -77,6 +75,10 @@ void PlayScreen::StartNextRound()
 	currentRound++;
 	mRoundStartTimer = 0.0f;
 	mRoundStarted = false;
+
+	DestroyStartLabel();
+	SetupStartLabel();
+
 }
 
 void PlayScreen::InitializePlayer()
@@ -89,7 +91,7 @@ void PlayScreen::InitializePlayer()
 
 	mPlayer = new Player();
 	mPlayer->SetShipFileName(PlayerShipName);
-	mPlayer->SetPosition(Vector2(Graphics::SCREEN_WIDTH / 2, Graphics::SCREEN_HEIGHT / 2));
+	mPlayer->SetPosition(Vector2(Graphics::SCREEN_WIDTH / 2, Graphics::SCREEN_HEIGHT * 0.75));
 	mPlayer->SetActive(true);
 }
 
@@ -198,9 +200,14 @@ void PlayScreen::checkKeyPress()
 			mRoundStarted = true;
 			SpawnEnemy((int)AIEngine::BEHAVIOR::flee);
 
+			mAudioManager->PlayMusic("bgm.wav");
 			//Begin round animation
-
 		}
+		else if (!mPlayer->GetActive() && topBar->GetLives() > 0)
+		{
+			ResetPlayer();
+		}
+
 	}
 
 }
@@ -299,6 +306,31 @@ void PlayScreen::CheckEnemyStatus()
 
 }
 
+void PlayScreen::PlayerDeath()
+{
+	topBar->SetLives(topBar->GetLives() - 1);
+
+	if (topBar->GetLives() <= 0)
+	{
+		//Game Over logic here
+	}
+	else
+	{
+		topBar->LostALife();
+	}
+
+	mAudioManager->PauseMusic();
+}
+
+void PlayScreen::ResetPlayer()
+{
+	mPlayer->SetActive(true);
+	mPlayer->SetPosition(Vector2(Graphics::SCREEN_WIDTH / 2, Graphics::SCREEN_HEIGHT * 0.75));
+	mPlayer->SetHealth(Ship::PLAYER_HEALTH);
+
+	mAudioManager->ResumeMusic();
+}
+
 void PlayScreen::Update()
 {
 	if (mActive)
@@ -335,7 +367,7 @@ void PlayScreen::Update()
 
 					if (mRoundStartTimer >= mRoundStartDelay)
 					{
-
+						mRoundStarted = true;
 					}
 				}
 				else
@@ -347,14 +379,10 @@ void PlayScreen::Update()
 
 					mPhysicsManager->Update();
 					mAIManager->Update();
-					CheckEnemyStatus();
 
 					for (std::shared_ptr<Enemy> enemy : mEnemies)
 					{
-						if (enemy)
-						{
-							enemy->CustomUpdate();
-						}
+						enemy->CustomUpdate();	
 					}
 				}
 			}
@@ -363,7 +391,7 @@ void PlayScreen::Update()
 				if (mRoundStarted && !mRoundAnimation)
 				{
 					mGameStarted = true;
-					mAudioManager->PlaySFX("Start_Sounds_003.wav");
+					mAudioManager->PlaySFX("whoosh1.wav");
 				}
 			}
 			}
@@ -374,13 +402,13 @@ void PlayScreen::Update()
 
 void PlayScreen::Render()
 {	
-	topBar->Render();
 	mBackground->Render();
+	topBar->Render();
 
 
 	if (mActive)
 	{
-		if (!mGameStarted)
+		if (!mGameStarted || !mRoundStarted)
 		{
 			mStartLabel->Render();
 		}
@@ -418,9 +446,19 @@ void PlayScreen::SetupPhysics()
 
 void PlayScreen::SetupStartLabel()
 {
+
 	std::ostringstream oss;
 	oss << "ROUND " << currentRound;
 	mStartLabel = new Texture(oss.str(), "alagard_by_pix3m-d6awiwp.ttf", 32, { 255, 0, 0 });
 	mStartLabel->SetParent(this);
 	mStartLabel->SetPosition(Vector2(Graphics::SCREEN_WIDTH * 0.5f, Graphics::SCREEN_HEIGHT * 0.45f));
+}
+
+void PlayScreen::DestroyStartLabel()
+{
+	if (mStartLabel)
+	{
+		delete mStartLabel;
+		mStartLabel = nullptr;
+	}
 }

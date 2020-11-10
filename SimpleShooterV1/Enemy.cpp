@@ -16,7 +16,7 @@ void Enemy::CustomUpdate()
 			if (decisionTree->CheckFinishWithSuccess())
 			{
 				sLoggerInstance->LogDebugText("TREE FINISHED SUCCESS");
-				this->Update();
+				//this->Update();
 				EnemyMove();
 				CheckBoundaries();
 
@@ -44,10 +44,12 @@ void Enemy::CustomUpdate()
 			decisionTree->DoBehavior();
 		}
 	}
-	else if (this->mAnimating)
-	{
-		this->Update();
-	}
+	//else if (this->mAnimating)
+	//{
+	//	this->Update();
+	//}
+
+	this->Update();
 
 	for (int i = 0; i < MAX_BULLETS; i++)
 	{

@@ -18,6 +18,14 @@ bool EnemyShootTask::CheckConditions()
 {
 	bool check = (board->GetEnemy() != NULL) ? true : false;
 
+	if (check)
+	{
+		if (!board->GetPlayer()->GetActive())
+		{
+			check = false;
+		}
+	}
+
 	return check;
 }
 
