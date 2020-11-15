@@ -62,6 +62,24 @@ void BehaviorTree::CreateBehaviorTree(BEHAVIOR_TYPES behavior)
 	{
 		AddBehaviorToBehaviorTree(new ShootBehavior(AIBoard));
 	}
+	else if (behavior == BEHAVIOR_TYPES::sniper)
+	{
+		SeekBehavior* seek = new SeekBehavior(AIBoard, 10.0f);
+		CloseToPlayerDecorator* close = new CloseToPlayerDecorator(AIBoard, seek->behaviorSequence, 200.0f, "Seek Close To Player Decorator Sequence");
+
+		FleeBehavior* flee = new FleeBehavior(AIBoard, 500.0f);
+		ShootBehavior* shoot = new ShootBehavior(AIBoard, 5);
+
+		AddTaskToBehaviorTree(close);
+
+		//AddBehaviorToBehaviorTree(seek);
+		AddBehaviorToBehaviorTree(flee);
+		AddBehaviorToBehaviorTree(shoot);
+
+		//AddBehaviorToBehaviorTree(new SeekBehavior(AIBoard));
+
+
+	}
 
 	//Add Idle Task so if AI does not pass any decorators simply have it idle at current position
 	AddBehaviorToBehaviorTree(new IdleBehavior(AIBoard));
@@ -72,10 +90,17 @@ void BehaviorTree::AddToBehaviorTree(Sequence* seq)
 	((ParentTaskController*)AISelector->GetControl())->AddTask(seq);
 }
 
+void BehaviorTree::AddTaskToBehaviorTree(Tasks* task)
+{
+	((ParentTaskController*)AISelector->GetControl())->AddTask(task);
+}
+
 void BehaviorTree::AddBehaviorToBehaviorTree(Behavior* behaviorSeq)
 {
 	((ParentTaskController*)AISelector->GetControl())->AddTask(behaviorSeq->behaviorSequence);
 }
+
+
 
 void BehaviorTree::StartBehavior()
 {

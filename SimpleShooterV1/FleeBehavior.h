@@ -12,6 +12,7 @@ public:
 
 	FleeBehavior();
 	FleeBehavior(Blackboard* board);
+	FleeBehavior(Blackboard* board, float fleeDist);
 	~FleeBehavior();
 
 	void SetPanicDist(float dist);

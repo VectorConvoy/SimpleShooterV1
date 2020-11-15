@@ -3,7 +3,6 @@
 
 
 #include <vector>
-#include "SteeringBehaviors.h"
 #include <memory>
 #include "Blackboard.h"
 
@@ -26,7 +25,7 @@ public:
 
 private:
 
-	SteeringBehavior behaviors;
+	//SteeringBehavior behaviors;
 
 	Vector2 newTarget;
 

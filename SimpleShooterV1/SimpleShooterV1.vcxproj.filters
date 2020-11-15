@@ -25,12 +25,6 @@
     <Filter Include="Source Files\Physics">
       <UniqueIdentifier>{6f5590e8-e928-49e2-81d0-40e02850395b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Commands">
-      <UniqueIdentifier>{237c8bcf-b4fa-4581-a765-2c95b58628a3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Command">
-      <UniqueIdentifier>{43130006-f632-4fbb-9984-f95721dee296}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Behavior Tree">
       <UniqueIdentifier>{e002b2ea-2b14-498a-a55a-c280a71ee155}</UniqueIdentifier>
     </Filter>
@@ -87,9 +81,6 @@
     <ClCompile Include="AnimatedTexture.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ShipAnimation.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Bullet.cpp">
       <Filter>Source Files\Entities</Filter>
     </ClCompile>
@@ -111,18 +102,6 @@
     <ClCompile Include="CircleCollider.cpp">
       <Filter>Source Files\Physics</Filter>
     </ClCompile>
-    <ClCompile Include="Command.cpp">
-      <Filter>Source Files\Command</Filter>
-    </ClCompile>
-    <ClCompile Include="MoveCommand.cpp">
-      <Filter>Source Files\Command</Filter>
-    </ClCompile>
-    <ClCompile Include="PositionStatus.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="VisibilityStatus.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="AIEngine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -140,9 +119,6 @@
     </ClCompile>
     <ClCompile Include="ScreenManager.cpp">
       <Filter>Source Files\Managers</Filter>
-    </ClCompile>
-    <ClCompile Include="SteeringBehaviors.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>Source Files\Entities</Filter>
@@ -237,16 +213,25 @@
     <ClCompile Include="PatrolBehavior.cpp">
       <Filter>Source Files\Behavior</Filter>
     </ClCompile>
-    <ClCompile Include="Regulator.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="IdleBehavior.cpp">
+    <ClCompile Include="TopPlayBar.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="FacePlayerTask.cpp">
+      <Filter>Source Files\BehaviorTree\Task</Filter>
+    </ClCompile>
+    <ClCompile Include="IdleBehavior.cpp">
+      <Filter>Source Files\Behavior</Filter>
+    </ClCompile>
+    <ClCompile Include="Regulator.cpp">
+      <Filter>Source Files\BehaviorTree</Filter>
+    </ClCompile>
+    <ClCompile Include="SniperBehavior.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TopPlayBar.cpp">
+    <ClCompile Include="FarFromPlayerDecorator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FaceAwayPlayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -267,9 +252,6 @@
       <Filter>Header Files\Entities</Filter>
     </ClInclude>
     <ClInclude Include="AnimatedTexture.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ShipAnimation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Bullet.h">
@@ -314,18 +296,6 @@
     <ClInclude Include="AIEngine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Command.h">
-      <Filter>Header Files\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="FireCommand.h">
-      <Filter>Header Files\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="MoveCommand.h">
-      <Filter>Header Files\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectionCommand.h">
-      <Filter>Header Files\Commands</Filter>
-    </ClInclude>
     <ClInclude Include="Node.h">
       <Filter>Header Files\Behavior Tree</Filter>
     </ClInclude>
@@ -334,9 +304,6 @@
     </ClInclude>
     <ClInclude Include="Sequence.h">
       <Filter>Header Files\Behavior Tree</Filter>
-    </ClInclude>
-    <ClInclude Include="SteeringBehaviors.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Ship.h">
       <Filter>Header Files\Entities</Filter>
@@ -419,9 +386,6 @@
     <ClInclude Include="IdleTask.h">
       <Filter>Header Files\Behavior Tree\Modular Tasks</Filter>
     </ClInclude>
-    <ClInclude Include="Regulator.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="CloseToPlayerDecorator.h">
       <Filter>Header Files\Behavior Tree\Decorators</Filter>
     </ClInclude>
@@ -433,6 +397,18 @@
     </ClInclude>
     <ClInclude Include="TopPlayBar.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Regulator.h">
+      <Filter>Header Files\Behavior Tree</Filter>
+    </ClInclude>
+    <ClInclude Include="SniperBehavior.h">
+      <Filter>Header Files\Behaviors</Filter>
+    </ClInclude>
+    <ClInclude Include="FarFromPlayerDecorator.h">
+      <Filter>Header Files\Behavior Tree\Decorators</Filter>
+    </ClInclude>
+    <ClInclude Include="FaceAwayPlayerTask.h">
+      <Filter>Header Files\Behavior Tree\Modular Tasks</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

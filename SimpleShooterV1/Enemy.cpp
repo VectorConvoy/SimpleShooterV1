@@ -129,7 +129,7 @@ void Enemy::CreateBehaviorTree()
 	decisionTree = new BehaviorTree(this);
 
 	//debug
-	decisionTree->CreateBehaviorTree(BehaviorTree::BEHAVIOR_TYPES::sentry);
+	decisionTree->CreateBehaviorTree(BehaviorTree::BEHAVIOR_TYPES::sniper);
 }
 
 Enemy::Enemy()

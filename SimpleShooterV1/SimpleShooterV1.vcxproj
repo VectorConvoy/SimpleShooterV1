@@ -155,14 +155,15 @@
     <ClCompile Include="ChanceDecorator.cpp" />
     <ClCompile Include="ChaseDestinationTask.cpp" />
     <ClCompile Include="CloseToPlayerDecorator.cpp" />
-    <ClCompile Include="Command.cpp" />
     <ClCompile Include="BoxCollider.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="CircleCollider.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyShootTask.cpp" />
+    <ClCompile Include="FaceAwayPlayer.cpp" />
     <ClCompile Include="FacePlayerTask.cpp" />
+    <ClCompile Include="FarFromPlayerDecorator.cpp" />
     <ClCompile Include="FleeBehavior.cpp" />
     <ClCompile Include="FleeDestinationTask.cpp" />
     <ClCompile Include="IdleBehavior.cpp" />
@@ -175,7 +176,6 @@
     <ClCompile Include="graphics.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="MoveCommand.cpp" />
     <ClCompile Include="MoveToTask.cpp" />
     <ClCompile Include="Node.cpp" />
     <ClCompile Include="ParentTask.cpp" />
@@ -185,7 +185,6 @@
     <ClCompile Include="PhysicsManager.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayScreen.cpp" />
-    <ClCompile Include="PositionStatus.cpp" />
     <ClCompile Include="Regulator.cpp" />
     <ClCompile Include="RegulatorDecorator.cpp" />
     <ClCompile Include="ResetDecorator.cpp" />
@@ -194,17 +193,15 @@
     <ClCompile Include="Selector.cpp" />
     <ClCompile Include="Sequence.cpp" />
     <ClCompile Include="Ship.cpp" />
-    <ClCompile Include="ShipAnimation.cpp" />
     <ClCompile Include="ShootBehavior.cpp" />
+    <ClCompile Include="SniperBehavior.cpp" />
     <ClCompile Include="StartScreen.cpp" />
-    <ClCompile Include="SteeringBehaviors.cpp" />
     <ClCompile Include="TaskController.cpp" />
     <ClCompile Include="TaskDecorator.cpp" />
     <ClCompile Include="Tasks.cpp" />
     <ClCompile Include="texture.cpp" />
     <ClCompile Include="timer.cpp" />
     <ClCompile Include="TopPlayBar.cpp" />
-    <ClCompile Include="VisibilityStatus.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AIEngine.h" />
@@ -217,16 +214,15 @@
     <ClInclude Include="ChanceDecorator.h" />
     <ClInclude Include="ChaseDestinationTask.h" />
     <ClInclude Include="CloseToPlayerDecorator.h" />
-    <ClInclude Include="Command.h" />
     <ClInclude Include="BoxCollider.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="CircleCollider.h" />
     <ClInclude Include="Collider.h" />
-    <ClInclude Include="DirectionCommand.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyShootTask.h" />
+    <ClInclude Include="FaceAwayPlayerTask.h" />
     <ClInclude Include="FacePlayerTask.h" />
-    <ClInclude Include="FireCommand.h" />
+    <ClInclude Include="FarFromPlayerDecorator.h" />
     <ClInclude Include="FleeBehavior.h" />
     <ClInclude Include="FleeDestinationTask.h" />
     <ClInclude Include="IdleBehavior.h" />
@@ -239,7 +235,6 @@
     <ClInclude Include="graphics.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="MathHelper.h" />
-    <ClInclude Include="MoveCommand.h" />
     <ClInclude Include="MoveToTask.h" />
     <ClInclude Include="Node.h" />
     <ClInclude Include="ParentTask.h" />
@@ -258,10 +253,9 @@
     <ClInclude Include="Selector.h" />
     <ClInclude Include="Sequence.h" />
     <ClInclude Include="Ship.h" />
-    <ClInclude Include="ShipAnimation.h" />
     <ClInclude Include="ShootBehavior.h" />
+    <ClInclude Include="SniperBehavior.h" />
     <ClInclude Include="StartScreen.h" />
-    <ClInclude Include="SteeringBehaviors.h" />
     <ClInclude Include="TaskController.h" />
     <ClInclude Include="TaskDecorator.h" />
     <ClInclude Include="Tasks.h" />

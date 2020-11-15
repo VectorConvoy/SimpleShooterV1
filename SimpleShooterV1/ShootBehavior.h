@@ -13,6 +13,7 @@ public:
 
 	ShootBehavior();
 	ShootBehavior(Blackboard* board);
+	ShootBehavior(Blackboard* board, int chance);
 	~ShootBehavior();
 
 	void SetShootChance(int chance);

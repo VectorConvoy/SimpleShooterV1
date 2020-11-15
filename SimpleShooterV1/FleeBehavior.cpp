@@ -1,6 +1,6 @@
 #include "FleeBehavior.h"
 #include "PanicDecorator.h"
-#include "GetPlayerTask.h"
+#include "FaceAwayPlayerTask.h"
 #include "FleeDestinationTask.h"
 #include "MoveToTask.h"
 #include "Sequence.h"
@@ -19,7 +19,20 @@ FleeBehavior::FleeBehavior(Blackboard* board)
 	behaviorSequence = new Sequence(board, "Flee Sequence");
 	behaviorSequence = new PanicDecorator(board, behaviorSequence, PANIC_DISTANCE, "Panic Decorator");
 	
-	//((ParentTaskController*)behaviorSequence->GetControl())->AddTask(new GetPlayerTask(board, "Get Player Task"));
+	((ParentTaskController*)behaviorSequence->GetControl())->AddTask(new FaceAwayPlayerTask(board, "Face Away from Player Task"));
+	((ParentTaskController*)behaviorSequence->GetControl())->AddTask(new FleeDestinationTask(board, "Get Flee Destination Task"));
+	((ParentTaskController*)behaviorSequence->GetControl())->AddTask(new MoveToTask(board, "Move Enemy Tasks"));
+}
+
+FleeBehavior::FleeBehavior(Blackboard* board, float fleeDist)
+{
+	priorityValue = 0;
+	panicDistance = fleeDist;
+
+	behaviorSequence = new Sequence(board, "Flee Sequence");
+	behaviorSequence = new PanicDecorator(board, behaviorSequence, fleeDist, "Panic Decorator");
+
+	((ParentTaskController*)behaviorSequence->GetControl())->AddTask(new FaceAwayPlayerTask(board, "Face Away from Player Task"));
 	((ParentTaskController*)behaviorSequence->GetControl())->AddTask(new FleeDestinationTask(board, "Get Flee Destination Task"));
 	((ParentTaskController*)behaviorSequence->GetControl())->AddTask(new MoveToTask(board, "Move Enemy Tasks"));
 }

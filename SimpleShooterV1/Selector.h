@@ -18,6 +18,5 @@ public:
 	void ChildSucceeded();
 	void ChildFailed();
 
-	
-	
+
 };

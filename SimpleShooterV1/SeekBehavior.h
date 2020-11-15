@@ -14,13 +14,15 @@ public:
 
 	SeekBehavior();
 	SeekBehavior(Blackboard* board);
+	SeekBehavior(Blackboard* board, float seekDist);
+	SeekBehavior(Blackboard* board, float seekDist, TaskDecorator customDeco);
 	~SeekBehavior();
 
 	void SetSeekDist(float dist);
 	float GetSeekDist();
 
 private:
-	const float SEEK_DISTANCE = 250.0f; //Distance of how close the AI should be before it stops chasing or how far away the AI should be beforr it starts chasing
+	const float SEEK_DISTANCE = 100; //Distance of how close the AI should be before it stops chasing or how far away the AI should be beforr it starts chasing
 
 	float pursuitDist;
 	

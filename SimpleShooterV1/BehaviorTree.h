@@ -16,7 +16,7 @@ class Behavior;
 class BehaviorTree
 {
 public:
-	enum class BEHAVIOR_TYPES { flee = 0, chase, chase_shoot, sentry};
+	enum class BEHAVIOR_TYPES { flee = 0, chase, chase_shoot, sentry, sniper};
 	BehaviorTree();
 	BehaviorTree(Enemy* owner);
 	~BehaviorTree();
@@ -24,7 +24,10 @@ public:
 	void CreateBehaviorTree(BEHAVIOR_TYPES behavior = BEHAVIOR_TYPES::flee);
 
 	void AddToBehaviorTree(Sequence* seq);
+	void AddTaskToBehaviorTree(Tasks* task);
 	void AddBehaviorToBehaviorTree(Behavior* behaviorSeq);
+
+
 	void StartBehavior();
 	void StopBehavior();
 	void ResetBehavior();

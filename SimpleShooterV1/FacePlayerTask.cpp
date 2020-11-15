@@ -37,7 +37,9 @@ void FacePlayerTask::DoAction()
 {
 	float goalAngle;
 	
-	goalAngle = (atan2(board->GetMoveDirection().y, board->GetMoveDirection().x) * RAD_TO_DEG);
+	goalAngle = (atan2(board->GetMoveDirection().y, board->GetMoveDirection().x) * RAD_TO_DEG) + 90.0f;
+
+	printf("\nGOAL ANGLE FOR FACING PLAYER: %f\n", goalAngle);
 	
 	board->GetEnemy()->SetAngle(goalAngle);
 

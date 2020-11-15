@@ -23,6 +23,18 @@ ShootBehavior::ShootBehavior(Blackboard* board)
 	((ParentTaskController*)behaviorSequence->GetControl())->AddTask(new EnemyShootTask(board, "Enemy Shoot Task"));
 }
 
+ShootBehavior::ShootBehavior(Blackboard* board, int chance)
+{
+	priorityValue = 0;
+
+	behaviorSequence = new Sequence(board, "Shoot Sequence");
+	behaviorSequence = new ChanceDecorator(board, behaviorSequence, "Chance Decorator", chance);
+
+	((ParentTaskController*)behaviorSequence->GetControl())->AddTask(new ChaseDestinationTask(board, "Chase Destination Task"));
+	((ParentTaskController*)behaviorSequence->GetControl())->AddTask(new FacePlayerTask(board, "Face Player Task"));
+	((ParentTaskController*)behaviorSequence->GetControl())->AddTask(new EnemyShootTask(board, "Enemy Shoot Task"));
+}
+
 ShootBehavior::~ShootBehavior()
 {
 }
