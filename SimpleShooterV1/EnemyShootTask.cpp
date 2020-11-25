@@ -46,6 +46,10 @@ void EnemyShootTask::End()
 void EnemyShootTask::DoAction()
 {
 	bool fire = board->GetEnemy()->FireBullet();
+
+	//Set destination vector to the ZERO Vector to prevent movement
+	board->GetEnemy()->SetDestVector(VEC2_ZERO);
+
 	std::ostringstream oss;
 	oss << name;
 

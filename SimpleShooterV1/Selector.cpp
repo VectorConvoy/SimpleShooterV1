@@ -1,3 +1,10 @@
+/*
+* A class that is based off the ParentTask class
+* 
+* A component for the behavior tree that only executes
+* a single task 
+*/
+
 #include "Selector.h"
 #include <sstream>
 

@@ -97,6 +97,14 @@ void TopPlayBar::InitializeLives()
 	currentLives = DEFAULT_LIVES;
 }
 
+void TopPlayBar::ResetLives()
+{
+	for (int i = 0; i < DEFAULT_LIVES; i++)
+	{
+		mShipTextures[i]->SetActive(true);
+	}
+}
+
 void TopPlayBar::UpdateHealthBar()
 {
 	if (mPlayerHealth)
@@ -138,6 +146,7 @@ void TopPlayBar::LostALife()
 		}
 	}
 }
+
 
 
 /*

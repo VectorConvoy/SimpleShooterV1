@@ -1,3 +1,10 @@
+/*
+* A class based off the ParentTask class
+* 
+* A component of the behavior tree
+* Contains several tasks that will be executed in order
+*/
+
 #include "Sequence.h"
 
 Sequence::Sequence()

@@ -1,3 +1,9 @@
+/*
+* PLAY SCREEN
+* 
+* A class that represents the playscreen and handles all its operations
+* Main class that keeps track of elements such as the player, the enemies, etc.
+*/
 #include "PlayScreen.h"
 #include "AIEngine.h"
 
@@ -9,6 +15,8 @@ PlayScreen::PlayScreen()
 	mAudioManager = AudioManager::Instance();
 	mPhysicsManager = PhysicsManager::Instance();
 	mAIManager = AIEngine::Instance();
+
+	mAIManager->InitializeBehaviors();
 
 	SetupPhysics();
 
@@ -50,11 +58,16 @@ PlayScreen::~PlayScreen()
 	mEnemies.clear();
 }
 
+/*
+* Function to start a new game
+* Starts a new game by resetting some variables and reinitializing them
+*/
 void PlayScreen::StartNewGame()
 {
 	mActive = false;
 	mPlayerHit = false;
 	mGameStarted = false;
+	mRoundStarted = false;
 
 	mAudioManager->PlayMusic("Start_Sounds_003.wav", 0);
 
@@ -67,9 +80,13 @@ void PlayScreen::StartNewGame()
 	currentRound = 1;
 
 	SetupStartLabel();
-
 }
 
+/*
+* Function to setup the next round
+* Changes the appropriate fields to account for the new round
+* Also creates a new start label with the correct round number
+*/
 void PlayScreen::StartNextRound()
 {
 	currentRound++;
@@ -81,9 +98,11 @@ void PlayScreen::StartNextRound()
 
 }
 
+/*
+* Function to initialize the player
+*/
 void PlayScreen::InitializePlayer()
 {
-	delete mPlayer;
 	if (mPlayer)
 	{
 		delete mPlayer;
@@ -93,6 +112,8 @@ void PlayScreen::InitializePlayer()
 	mPlayer->SetShipFileName(PlayerShipName);
 	mPlayer->SetPosition(Vector2(Graphics::SCREEN_WIDTH / 2, Graphics::SCREEN_HEIGHT * 0.75));
 	mPlayer->SetActive(true);
+
+	topBar->ResetLives();
 }
 
 void PlayScreen::SetGameStarted(bool started)
@@ -115,11 +136,29 @@ bool PlayScreen::GetRoundStarted()
 	return mRoundStarted;
 }
 
+void PlayScreen::SetGameOver(bool over)
+{
+	gameOver = over;
+}
+
+bool PlayScreen::GetGameOver()
+{
+	return gameOver;
+}
+
 Player* PlayScreen::GetPlayer()
 {
 	return mPlayer;
 }
 
+/*
+* Function to check what key has been pressed
+* Checks what key has been pressed and carries out 
+* the appropriate action
+* 
+* Does not check if key is released so if a key is held down
+* and another key is pressed, the new key will override the old press
+*/
 void PlayScreen::checkKeyPress()
 {
 	if (mInputManager->KeyPressed(SDL_SCANCODE_D))
@@ -212,6 +251,16 @@ void PlayScreen::checkKeyPress()
 
 }
 
+/*
+* Function to check what key has been released
+* Mostly used to keep the player moving in a direction
+* if they were moving diagonally and let go of one key
+* 
+* e.g. if player is holding down right, the player would
+* continue to move downward if they let go of the right key
+* Without this, if the player let go of a single key, the 
+* player would stop moving 
+*/
 void PlayScreen::checkKeyRelease()
 {
 	if (mInputManager->KeyReleased(SDL_SCANCODE_D))
@@ -276,20 +325,32 @@ void PlayScreen::checkKeyRelease()
 	}
 }
 
+/*
+* Function to spawn an enemy with a specific behavior
+*/
 void PlayScreen::SpawnEnemy(int behavior)
 {
-	std::shared_ptr<Enemy> temp = std::shared_ptr<Enemy>(new Enemy());
-	temp->SetRotation(180);
-	temp->SetPosition(Vector2(Graphics::SCREEN_WIDTH / 2, Graphics::SCREEN_HEIGHT / 4));
+	std::shared_ptr<Enemy> temp = std::shared_ptr<Enemy>(new Enemy(new EnemyType()));
+	
 	//temp->SetDebugBehavior(behavior);
 	temp->SetActive(true);
 
-	temp->CreateBehaviorTree();
+	//temp->CreateBehaviorTree();
 
 	mAIManager->AddEnemy(temp);
 	mEnemies.push_back(temp);
+
+	temp.reset();
 }
 
+/*
+* Function to check all the enemies 
+* Mainly used to check what enemies are no longer active
+* so we can release their pointer
+* 
+* Mainly for future-proofing since the game only 
+* has 1 enemy at a time
+*/
 void PlayScreen::CheckEnemyStatus()
 {
 	for (std::shared_ptr<Enemy> enemy : mEnemies)
@@ -306,22 +367,46 @@ void PlayScreen::CheckEnemyStatus()
 
 }
 
+/*
+* Function to handle the event of player death
+*/
 void PlayScreen::PlayerDeath()
 {
 	topBar->SetLives(topBar->GetLives() - 1);
+	topBar->LostALife();
+	topBar->Update();
 
 	if (topBar->GetLives() <= 0)
 	{
 		//Game Over logic here
-	}
-	else
-	{
-		topBar->LostALife();
+
+		mGameStarted = false;
+		currentRound = -1;
+
+		mAudioManager->PlayMusic("game_over.wav");
+
+		DestroyStartLabel();
+
+		std::ostringstream oss;
+		oss << "GAME OVER";
+		mStartLabel = new Texture(oss.str(), "alagard_by_pix3m-d6awiwp.ttf", 32, { 255, 0, 0 });
+		mStartLabel->SetParent(this);
+		mStartLabel->SetPosition(Vector2(Graphics::SCREEN_WIDTH * 0.5f, Graphics::SCREEN_HEIGHT * 0.45f));
+
+		gameOver = true;
+		
+		//ResetPlayer();
+		mPlayer->SetPosition(Vector2(Graphics::SCREEN_WIDTH / 2, Graphics::SCREEN_HEIGHT * 0.75));
 	}
 
 	mAudioManager->PauseMusic();
 }
 
+/*
+* Function to reset player variables
+* Mainly used in conjuction with the PlayerDeath function
+* to handle the scenario where the player dies
+*/
 void PlayScreen::ResetPlayer()
 {
 	mPlayer->SetActive(true);
@@ -329,6 +414,24 @@ void PlayScreen::ResetPlayer()
 	mPlayer->SetHealth(Ship::PLAYER_HEALTH);
 
 	mAudioManager->ResumeMusic();
+}
+
+/*
+* Function to reset the enemies
+* Mainly used for game over scenarios
+* to remove the enemies and their projectiles
+* 
+*/
+void PlayScreen::ResetEnemy()
+{
+	mAIManager->ClearEnemies();
+
+	for (std::shared_ptr<Enemy> enemy : mEnemies)
+	{
+		enemy.get()->SetActive(false);
+	}
+
+	CheckEnemyStatus();
 }
 
 void PlayScreen::Update()
@@ -388,7 +491,7 @@ void PlayScreen::Update()
 			}
 			else
 			{
-				if (mRoundStarted && !mRoundAnimation)
+				if (mRoundStarted && !mRoundAnimation && !gameOver)
 				{
 					mGameStarted = true;
 					mAudioManager->PlaySFX("whoosh1.wav");
@@ -422,7 +525,7 @@ void PlayScreen::Render()
 
 			for (std::shared_ptr<Enemy> enemy : mEnemies)
 			{
-				enemy->CustomRender();
+				enemy.get()->CustomRender();
 			}
 
 		}

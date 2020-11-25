@@ -36,8 +36,6 @@ void FaceAwayPlayerTask::DoAction()
 
 	goalAngle = (atan2(board->GetMoveDirection().y, board->GetMoveDirection().x) * RAD_TO_DEG) + 90.0f;
 
-	printf("\nGOAL ANGLE FOR FACING AWAY FROM PLAYER: %f\n", goalAngle);
-
 	board->GetEnemy()->SetAngle(goalAngle);
 
 	board->GetEnemy()->SetBulletDirection(board->GetMoveDirection());

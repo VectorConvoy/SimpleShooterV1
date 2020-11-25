@@ -1,3 +1,9 @@
+/*
+* A decorator class for a task that
+* adds the condition of whether or not the player
+* is close to the enemy and if close enough, execute the task
+*/
+
 #include "CloseToPlayerDecorator.h"
 #include "MathHelper.h"
 #include "Blackboard.h"

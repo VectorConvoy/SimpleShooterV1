@@ -81,6 +81,16 @@ bool StartScreen::GetAnimationDone()
 	return mAnimationDone;
 }
 
+/// <summary>
+/// Function to reset title screen animation
+/// 
+/// Unsure if needed
+/// </summary>
+void StartScreen::ResetAnimation()
+{
+	mBottomBar->SetPosition(Vector2(Graphics::Instance()->SCREEN_WIDTH * 0.5f, Graphics::Instance()->SCREEN_HEIGHT * 0.9f));
+}
+
 void StartScreen::Update()
 {
 	if (!mAnimationDone)

@@ -12,8 +12,8 @@ SniperBehavior::SniperBehavior()
 
 SniperBehavior::SniperBehavior(Blackboard* board)
 {
-	priorityValue = 0;
-	
+	SetPriorityID(0);
+
 	fleeDistance = DEFAULT_FLEE_DIST;
 	chaseDistance = DEFAULT_CHASE_DIST;
 

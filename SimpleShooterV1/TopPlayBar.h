@@ -14,7 +14,7 @@ public:
 	const std::string HealthBar = "HealthBars/VIDA";
 	const std::string BACKGROUND_TOP_BAR = "TopPlayBarBackground.png";
 	const int MAXIMUM_HEALTH = 10;
-	static const int DEFAULT_LIVES = 3;
+	static const int DEFAULT_LIVES = 1;
 
 	const int FRAME_HEIGHT = 32;
 	const int FRAME_WIDTH = 32;
@@ -28,6 +28,7 @@ public:
 	void InitializeTopBar();
 	void SetTopBarEntities();
 	void InitializeLives();
+	void ResetLives();
 	void UpdateHealthBar();
 	void SetPlayer(Player* player);
 

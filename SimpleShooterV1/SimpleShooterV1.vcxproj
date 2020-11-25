@@ -161,6 +161,7 @@
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyShootTask.cpp" />
+    <ClCompile Include="EnemyType.cpp" />
     <ClCompile Include="FaceAwayPlayer.cpp" />
     <ClCompile Include="FacePlayerTask.cpp" />
     <ClCompile Include="FarFromPlayerDecorator.cpp" />
@@ -220,6 +221,7 @@
     <ClInclude Include="Collider.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyShootTask.h" />
+    <ClInclude Include="EnemyType.h" />
     <ClInclude Include="FaceAwayPlayerTask.h" />
     <ClInclude Include="FacePlayerTask.h" />
     <ClInclude Include="FarFromPlayerDecorator.h" />
@@ -263,7 +265,20 @@
     <ClInclude Include="timer.h" />
     <ClInclude Include="TopPlayBar.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Xml Include="TestBehaviorInputs.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
+    <Import Project="..\packages\pugixml.1.10.0\build\native\pugixml.targets" Condition="Exists('..\packages\pugixml.1.10.0\build\native\pugixml.targets')" />
   </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\pugixml.1.10.0\build\native\pugixml.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\pugixml.1.10.0\build\native\pugixml.targets'))" />
+  </Target>
 </Project>

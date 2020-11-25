@@ -12,7 +12,7 @@ class Ship : public PhysicEntity
 {
 public:
 	static const int FRAME_RATE = 60;
-	const static int PLAYER_HEALTH = 2;
+	const static int PLAYER_HEALTH = 1;
 
 	Ship();
 	~Ship();

@@ -1,3 +1,10 @@
+/*
+* A class that uses the Tasks class as a base
+* 
+* An extension of the Tasks class that allows for
+* child tasks
+*/
+
 #include "ParentTask.h"
 #include <sstream>
 
@@ -28,8 +35,6 @@ TaskController* ParentTask::GetControl()
 {
 	return controller;
 }
-
-
 
 bool ParentTask::CheckConditions()
 {
@@ -124,3 +129,16 @@ void ParentTask::End()
 	this->sLogger->Log(oss.str());
 	//Log task ending
 }
+
+void ParentTask::SetBoardForAllSubtasks(Blackboard* newBoard)
+{
+	if (controller->subtasks.size() > 0)
+	{
+		for (Tasks* temp : controller->subtasks)
+		{
+			temp->SetBoard(newBoard);
+		}
+	}
+
+}
+

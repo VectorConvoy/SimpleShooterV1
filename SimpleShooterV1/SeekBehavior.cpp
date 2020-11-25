@@ -1,3 +1,11 @@
+/*
+* A class to represent a seek behavior
+* for the AI
+* 
+* Behavior that seeks out the player and chase them until
+* a specific distance or indefinitely
+*/
+
 #include "SeekBehavior.h"
 #include "Sequence.h"
 #include "GetPlayerTask.h"
@@ -8,57 +16,37 @@
 
 SeekBehavior::SeekBehavior()
 {
+	SetName(DEFAULT_NAME);
+	
 }
 
 SeekBehavior::SeekBehavior(Blackboard* board)
 {
-	priorityValue = 0;
+	SetPriorityID(0);
 	pursuitDist = 0.0f;
-
-	behaviorSequence = new Sequence(board, "Chase Sequence");
-	//behaviorSequence = new FarFromPlayerDecorator(board, behaviorSequence, SEEK_DISTANCE, "Chase Decorator");
-
-	//((ParentTaskController*)behaviorSequence->GetControl())->AddTask(new GetPlayerTask(board, "Get Player Task"));
-	((ParentTaskController*)behaviorSequence->GetControl())->AddTask(new ChaseDestinationTask(board, "Get Chase Destination Task"));
-	((ParentTaskController*)behaviorSequence->GetControl())->AddTask(new FacePlayerTask(board, "Face Player Task"));
-	((ParentTaskController*)behaviorSequence->GetControl())->AddTask(new MoveToTask(board, "Move Enemy Tasks"));
+	SetValue(0.0f);
 
 }
 
 SeekBehavior::SeekBehavior(Blackboard* board, float seekDist)
 {
-	priorityValue = 0;
+	SetPriorityID(0);
 	pursuitDist = seekDist;
+	SetValue(seekDist);
 
-	behaviorSequence = new Sequence(board, "Chase Sequence");
-	//behaviorSequence = new FarFromPlayerDecorator(board, behaviorSequence, seekDist, "Chase Decorator");
-
-	//((ParentTaskController*)behaviorSequence->GetControl())->AddTask(new GetPlayerTask(board, "Get Player Task"));
-	((ParentTaskController*)behaviorSequence->GetControl())->AddTask(new ChaseDestinationTask(board, "Get Chase Destination Task"));
-	((ParentTaskController*)behaviorSequence->GetControl())->AddTask(new FacePlayerTask(board, "Face Player Task"));
-	((ParentTaskController*)behaviorSequence->GetControl())->AddTask(new MoveToTask(board, "Move Enemy Tasks"));
 }
 
 SeekBehavior::SeekBehavior(Blackboard* board, float seekDist, TaskDecorator customDeco)
 {
-	priorityValue = 0;
+	SetPriorityID(0);
 	pursuitDist = seekDist;
+	SetValue(seekDist);
 
-	behaviorSequence = new Sequence(board, "Chase Sequence");
-	//behaviorSequence = new FarFromPlayerDecorator(board, behaviorSequence, seekDist, "Chase Decorator");
-
-	//((ParentTaskController*)behaviorSequence->GetControl())->AddTask(new GetPlayerTask(board, "Get Player Task"));
-	((ParentTaskController*)behaviorSequence->GetControl())->AddTask(new ChaseDestinationTask(board, "Get Chase Destination Task"));
-	((ParentTaskController*)behaviorSequence->GetControl())->AddTask(new FacePlayerTask(board, "Face Player Task"));
-	((ParentTaskController*)behaviorSequence->GetControl())->AddTask(new MoveToTask(board, "Move Enemy Tasks"));
 }
-
-
 
 SeekBehavior::~SeekBehavior()
 {
-	delete chaseSequence;
-	chaseSequence = nullptr;
+
 }
 
 void SeekBehavior::SetSeekDist(float dist)
@@ -69,4 +57,15 @@ void SeekBehavior::SetSeekDist(float dist)
 float SeekBehavior::GetSeekDist()
 {
 	return pursuitDist;
+}
+
+void SeekBehavior::ConstructBehavior()
+{
+	behaviorSequence = new Sequence(GetBoard(), "Chase Sequence");
+	//behaviorSequence = new FarFromPlayerDecorator(board, behaviorSequence, seekDist, "Chase Decorator");
+
+	//((ParentTaskController*)behaviorSequence->GetControl())->AddTask(new GetPlayerTask(board, "Get Player Task"));
+	((ParentTaskController*)behaviorSequence->GetControl())->AddTask(new ChaseDestinationTask(GetBoard(), "Get Chase Destination Task"));
+	((ParentTaskController*)behaviorSequence->GetControl())->AddTask(new FacePlayerTask(GetBoard(), "Face Player Task"));
+	((ParentTaskController*)behaviorSequence->GetControl())->AddTask(new MoveToTask(GetBoard(), "Move Enemy Tasks"));
 }

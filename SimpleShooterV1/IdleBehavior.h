@@ -13,4 +13,9 @@ public:
 	IdleBehavior(Blackboard* board);
 	~IdleBehavior();
 
+	void ConstructBehavior();
+
+private:
+	const std::string DEFAULT_NAME = "idle";
+
 };

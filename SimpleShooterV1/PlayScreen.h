@@ -31,6 +31,9 @@ public:
 	void SetRoundStarted(bool started);
 	bool GetRoundStarted();
 
+	void SetGameOver(bool over);
+	bool GetGameOver();
+	
 	Player* GetPlayer();
 	//Enemy* GetEnemy();
 
@@ -43,6 +46,7 @@ public:
 
 	void PlayerDeath();
 	void ResetPlayer();
+	void ResetEnemy();
 
 	void Update();
 	void Render();
@@ -76,6 +80,7 @@ private:
 	bool mRoundStarted;
 	bool mRoundAnimation;
 	int currentRound;
+	bool gameOver;
 
 	std::vector<std::shared_ptr<Enemy>> mEnemies;
 

@@ -1,3 +1,10 @@
+/*
+* A decorator class to wrap around a task
+* 
+* Adds a conditional that checks if the player is within
+* a specific distance from the player
+*/
+
 #include "PanicDecorator.h"
 #include "MathHelper.h"
 #include "Blackboard.h"

@@ -1,3 +1,11 @@
+/*
+* A decorator class that wraps around a task
+* 
+* Adds a condition that triggers the task
+* at specific intervals
+* 
+* So far not in use as of 11/17/20
+*/
 #include "RegulatorDecorator.h"
 
 RegulatorDecorator::RegulatorDecorator()

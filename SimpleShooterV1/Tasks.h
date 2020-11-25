@@ -18,6 +18,7 @@ public:
 	~Tasks();
 
 	std::string GetName();
+	void SetBoard(Blackboard* newBoard);
 
 	virtual bool CheckConditions() { return false; };
 	virtual void Start() {};

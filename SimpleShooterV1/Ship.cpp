@@ -218,7 +218,7 @@ void Ship::SetDestVector(Vector2 destination)
 	if (destination == VEC2_ZERO)
 	{
 		//printf("\n VECTOR IS ZERO \n");
-		//goalAngle = spriteAngle;
+		goalAngle = spriteAngle;
 		
 	}
 	else
@@ -234,19 +234,19 @@ void Ship::SetDestVector(Vector2 destination)
 		//	mAnimating = false;
 		//}
 
-		if (goalAngle >= 360)
-		{
-			futureRotations++;
-			goalAngle = fmodf(goalAngle, 360.0f);
-		}
-		else if (goalAngle == 0.0f && spriteAngle == 270.0f)
-		{
-			futureRotations++;
-		}
-		else if ((goalAngle == 270.0f && spriteAngle == 0.0f) || (fmodf(spriteAngle, 360.0f) > goalAngle))
-		{
-			futureRotations--;
-		}
+		//if (goalAngle >= 360)
+		//{
+		//	futureRotations++;
+		//	goalAngle = fmodf(goalAngle, 360.0f);
+		//}
+		//else if (goalAngle == 0.0f && spriteAngle == 270.0f)
+		//{
+		//	futureRotations++;
+		//}
+		//else if ((goalAngle == 270.0f && spriteAngle == 0.0f) || (fmodf(spriteAngle, 360.0f) > goalAngle))
+		//{
+		//	futureRotations--;
+		//}
 
 	}
 

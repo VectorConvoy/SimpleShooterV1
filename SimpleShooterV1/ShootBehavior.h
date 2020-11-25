@@ -19,8 +19,11 @@ public:
 	void SetShootChance(int chance);
 	int GetShootChance();
 
+	void ConstructBehavior();
 
 private:
+	const std::string DEFAULT_NAME = "shoot";
+
 	int shootChance;
 	
 };

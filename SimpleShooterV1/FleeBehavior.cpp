@@ -1,3 +1,8 @@
+/*
+* A class to represent a flee-type behavior
+* for the AI where the AI flees given a 
+* panic distance
+*/
 #include "FleeBehavior.h"
 #include "PanicDecorator.h"
 #include "FaceAwayPlayerTask.h"
@@ -7,34 +12,26 @@
 
 FleeBehavior::FleeBehavior()
 {
-	priorityValue = -1;
+	SetName(DEFAULT_NAME);
 	panicDistance = PANIC_DISTANCE;
 }
 
 FleeBehavior::FleeBehavior(Blackboard* board)
 {
-	priorityValue = 0;
+	SetName(DEFAULT_NAME);
 	panicDistance = PANIC_DISTANCE;
 
-	behaviorSequence = new Sequence(board, "Flee Sequence");
-	behaviorSequence = new PanicDecorator(board, behaviorSequence, PANIC_DISTANCE, "Panic Decorator");
-	
-	((ParentTaskController*)behaviorSequence->GetControl())->AddTask(new FaceAwayPlayerTask(board, "Face Away from Player Task"));
-	((ParentTaskController*)behaviorSequence->GetControl())->AddTask(new FleeDestinationTask(board, "Get Flee Destination Task"));
-	((ParentTaskController*)behaviorSequence->GetControl())->AddTask(new MoveToTask(board, "Move Enemy Tasks"));
+	SetBoard(board);
+	SetValue(PANIC_DISTANCE);
 }
 
 FleeBehavior::FleeBehavior(Blackboard* board, float fleeDist)
 {
-	priorityValue = 0;
+	SetName(DEFAULT_NAME);
 	panicDistance = fleeDist;
 
-	behaviorSequence = new Sequence(board, "Flee Sequence");
-	behaviorSequence = new PanicDecorator(board, behaviorSequence, fleeDist, "Panic Decorator");
-
-	((ParentTaskController*)behaviorSequence->GetControl())->AddTask(new FaceAwayPlayerTask(board, "Face Away from Player Task"));
-	((ParentTaskController*)behaviorSequence->GetControl())->AddTask(new FleeDestinationTask(board, "Get Flee Destination Task"));
-	((ParentTaskController*)behaviorSequence->GetControl())->AddTask(new MoveToTask(board, "Move Enemy Tasks"));
+	SetBoard(board);
+	SetValue(fleeDist);
 }
 
 FleeBehavior::~FleeBehavior()
@@ -45,9 +42,22 @@ FleeBehavior::~FleeBehavior()
 void FleeBehavior::SetPanicDist(float dist)
 {
 	panicDistance = dist;
+
+	SetValue(dist);
 }
 
 float FleeBehavior::GetPanicDist()
 {
 	return panicDistance;
 }
+
+void FleeBehavior::ConstructBehavior()
+{
+	behaviorSequence = new Sequence(GetBoard(), "Flee Sequence");
+
+	((ParentTaskController*)behaviorSequence->GetControl())->AddTask(new FaceAwayPlayerTask(GetBoard(), "Face Away from Player Task"));
+	((ParentTaskController*)behaviorSequence->GetControl())->AddTask(new FleeDestinationTask(GetBoard(), "Get Flee Destination Task"));
+	((ParentTaskController*)behaviorSequence->GetControl())->AddTask(new MoveToTask(GetBoard(), "Move Enemy Tasks"));
+}
+
+

@@ -42,6 +42,7 @@ void ScreenManager::Update()
             //mStartScreen->ResetAnimation();
             mPlayScreen->StartNewGame();
             mPlayScreen->SetGameStarted(true);
+            mPlayScreen->SetGameOver(false);
         }
         else
         {
@@ -62,6 +63,12 @@ void ScreenManager::Update()
             mPlayScreen->StartNewGame();
             mPlayScreen->SetGameStarted(true);
 
+        }
+        else if (mInputManager->KeyPressed(SDL_SCANCODE_RETURN) && mPlayScreen->GetGameOver())
+        {
+            mCurrentScreen = SCREENS::start;
+            mPlayScreen->ResetEnemy();
+            mPlayScreen->SetGameStarted(false);
         }
         break;
 

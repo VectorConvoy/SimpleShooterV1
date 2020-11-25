@@ -13,6 +13,8 @@ public:
 
 	bool GetAnimationDone();
 
+	void ResetAnimation();
+
 	void Update();
 	void Render();
 

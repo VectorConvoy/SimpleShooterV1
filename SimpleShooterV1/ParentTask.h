@@ -29,6 +29,9 @@ public:
 	void Start();
 	void End();
 
+	void SetBoardForAllSubtasks(Blackboard* newBoard);
+
+
 
 private:
 	//ParentTaskController* controller;

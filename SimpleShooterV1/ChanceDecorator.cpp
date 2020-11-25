@@ -1,3 +1,8 @@
+/*
+* A decorator class to wrap a task class
+* This adds a condition that is determined
+* by RNG
+*/
 #include "ChanceDecorator.h"
 #include <cstdlib>
 

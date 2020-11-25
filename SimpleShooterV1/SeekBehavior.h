@@ -10,7 +10,7 @@ public:
 
 	typedef Behavior super;
 
-	CloseToPlayerDecorator* chaseSequence;
+	//CloseToPlayerDecorator* chaseSequence;
 
 	SeekBehavior();
 	SeekBehavior(Blackboard* board);
@@ -21,7 +21,10 @@ public:
 	void SetSeekDist(float dist);
 	float GetSeekDist();
 
+	void ConstructBehavior();
+
 private:
+	const std::string DEFAULT_NAME = "seek";
 	const float SEEK_DISTANCE = 100; //Distance of how close the AI should be before it stops chasing or how far away the AI should be beforr it starts chasing
 
 	float pursuitDist;

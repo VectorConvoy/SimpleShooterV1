@@ -1,3 +1,11 @@
+/*
+* A decorator class that wraps around a task
+* 
+* Adds a reset condition to the task
+* 
+* Currently unused 11/17/20
+*/
+
 #include "ResetDecorator.h"
 
 ResetDecorator::ResetDecorator()

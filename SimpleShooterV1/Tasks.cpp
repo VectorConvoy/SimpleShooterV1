@@ -1,3 +1,8 @@
+/*
+* A class that acts as a base for simple tasks
+* 
+* Main component for the behavior tree
+*/
 #include "Tasks.h"
 
 Tasks::Tasks()
@@ -24,4 +29,9 @@ Tasks::~Tasks()
 std::string Tasks::GetName()
 {
 	return name;
+}
+
+void Tasks::SetBoard(Blackboard* newBoard)
+{
+	board = newBoard;
 }

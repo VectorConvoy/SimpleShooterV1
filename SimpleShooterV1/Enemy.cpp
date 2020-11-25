@@ -10,52 +10,48 @@ void Enemy::CustomUpdate()
 {
 	if (this->mActive)
 	{
-		if (decisionTree->CheckFinished())
+		if (enemyType->GetDecisionTree()->CheckFinished())
 		{
 			sLoggerInstance->LogDebugText("DECISION TREE FINISHED");
-			if (decisionTree->CheckFinishWithSuccess())
+			if (enemyType->GetDecisionTree()->CheckFinishWithSuccess())
 			{
 				sLoggerInstance->LogDebugText("TREE FINISHED SUCCESS");
 				//this->Update();
 				EnemyMove();
 				CheckBoundaries();
 
-				decisionTree->StopBehavior();
+				enemyType->GetDecisionTree()->StopBehavior();
 
 				if (!this->mAnimating)
 				{				
 					//Restart behavior
 					sLoggerInstance->LogDebugText("TREE RESET");
-					decisionTree->ResetBehavior();
-					decisionTree->StartBehavior();
+					enemyType->GetDecisionTree()->ResetBehavior();
+					enemyType->GetDecisionTree()->StartBehavior();
 				}
 
 			}
 
 		}
-		else if (!decisionTree->CheckStarted())
+		else if (!enemyType->GetDecisionTree()->CheckStarted())
 		{
 			sLoggerInstance->LogDebugText("DECISION TREE STARTED");
-			decisionTree->StartBehavior();
+			enemyType->GetDecisionTree()->StartBehavior();
 		}
 
-		while (!decisionTree->CheckFinished() && decisionTree->GetActive())
+		while (!enemyType->GetDecisionTree()->CheckFinished() && enemyType->GetDecisionTree()->GetActive())
 		{
-			decisionTree->DoBehavior();
+			enemyType->GetDecisionTree()->DoBehavior();
 		}
 	}
-	//else if (this->mAnimating)
-	//{
-	//	this->Update();
-	//}
 
 	this->Update();
 
-	for (int i = 0; i < MAX_BULLETS; i++)
+	for (Bullet* aBullet : mBullets)
 	{
-		if (mBullets[i]->GetActive())
+		if (aBullet->GetActive())
 		{
-			mBullets[i]->Update();
+			aBullet->Update();
 		}
 	}
 }
@@ -63,9 +59,10 @@ void Enemy::CustomUpdate()
 void Enemy::CustomRender()
 {
 	this->Render();
-	for (int i = 0; i < MAX_BULLETS; i++)
+
+	for (Bullet* aBullet : mBullets)
 	{
-		mBullets[i]->Render();
+		aBullet->Render();
 	}
 }
 
@@ -87,7 +84,7 @@ void Enemy::RespawnEnemy()
 void Enemy::SetEnemyDestVector(Vector2 goalVector)
 {
 
-	destVector = goalVector * SPEED_MULTIPLIER;
+	destVector = goalVector * mMoveSpeed * sTimerInstance->DeltaTime();
 
 	SetDestVector(destVector);
 }
@@ -112,24 +109,24 @@ void Enemy::SetAngle(float newAngle)
 
 void Enemy::EnemyMove()
 {
-
 	SetPosition(GetPosition() + destVector);
 }
 
 void Enemy::CreateBehaviorTree()
 {
-	this->sLoggerInstance->Log("CREATING BEHAVIOR TREE FOR ENEMY");
+	enemyType->ConstructBehaviorTree();
+}
 
-	if (decisionTree != NULL)
-	{
-		delete decisionTree;
-		decisionTree = NULL;
-	}
+void Enemy::SetEnemyType(EnemyType* typeToSet)
+{
+	enemyType = typeToSet;
 
-	decisionTree = new BehaviorTree(this);
+	
+}
 
-	//debug
-	decisionTree->CreateBehaviorTree(BehaviorTree::BEHAVIOR_TYPES::sniper);
+EnemyType* Enemy::GetEnemyType()
+{
+	return enemyType;
 }
 
 Enemy::Enemy()
@@ -165,50 +162,103 @@ Enemy::Enemy()
 
 	spriteAngle = 180.0f;
 	goalAngle = 180.0f;
+
+}
+
+Enemy::Enemy(EnemyType* type)
+{
+	enemyType = type;
+	type->SetEnemyOwner(this);
+	sTimerInstance = Timer::Instance();
+
+	mVisible = false;
+	mAnimating = false;
+	mWasHit = false;
+	isPlayer = false;
+	mActive = true;
+	currentDirection = UP;
+	destinationDirection = UP;
+	spriteAngle = 0;
+	Health = type->GetHealth();
+
+	mMoveSpeed = type->GetSpeed();
+	mMoveBounds = Vector2(Graphics::SCREEN_WIDTH, Graphics::SCREEN_HEIGHT);
+
+	mDeathAnimation = new AnimatedTexture(type->GetDeathAnimationName(), 0, 0, 64, 64, 4, 0.5f, AnimatedTexture::ANIMATED_DIRECTION::vertical);
+	mDeathAnimation->SetParent(this); //Unsure if it will work
+	//mDeathAnimation->SetPosition(VEC2_ZERO);
+	mDeathAnimation->WrapMode(AnimatedTexture::WRAP_MODE::once);
+
+	LoadTextureFromFile(type->GetShipFile());
+
+	PhysicEntity::AddCollider(new BoxCollider(shipTexture->ScaledDimensions()));
+	InitializeBullets();
+
+	mId = PhysicsManager::Instance()->RegisterEntity(this, PhysicsManager::CollisionLayers::Enemy);
+
+	mActive = false;
+
+	spriteAngle = 180.0f;
+	goalAngle = 180.0f;
+	SetPosition(Vector2(Graphics::SCREEN_WIDTH / 2, Graphics::SCREEN_HEIGHT / 4));
+
+	enemyType->ConstructBehaviorTree();
+
 }
 
 Enemy::~Enemy()
 {
+	for (Bullet* aBullet : mBullets)
+	{
+		delete aBullet;
+		aBullet = nullptr;
+	}
 
+	mBullets.clear();
 }
 
 void Enemy::InitializeBullets()
 {
-	for (int i = 0; i < MAX_BULLETS; i++)
+	Bullet* temp;
+	for (int i = 0; i < enemyType->GetMaxBullets(); i++)
 	{
-		mBullets[i] = new Bullet();
-		mBullets[i]->SetBulletSpeed(500.0f);
-		mBullets[i]->RegisterEnemyBullets();
+		temp = new Bullet();
+		temp->SetBulletSpeed(enemyType->GetBulletSpeed());
+		temp->RegisterEnemyBullets();
+
+		mBullets.push_back(temp);
+		
 	}
 }
 
 void Enemy::SetBulletDirection(Vector2 direction)
 {
-	for (int i = 0; i < MAX_BULLETS; i++)
+	for (Bullet* aBullet : mBullets)
 	{
-		if (!mBullets[i]->GetActive())
+		if (!aBullet->GetActive())
 		{
-			mBullets[i]->SetBulletDirection(direction);
+			aBullet->SetBulletDirection(direction);
 		}
-		mBullets[i]->SetShipDirection(direction);
+		aBullet->SetShipDirection(direction);
 	}
 }
 
 bool Enemy::FireBullet()
 {
 	bool successfulFire = false;
-	for (int i = 0; i < MAX_BULLETS; i++)
+
+	for (Bullet* aBullet : mBullets)
 	{
-		if (!mBullets[i]->GetActive())
+		if (!aBullet->GetActive())
 		{
 			sLoggerInstance->Log("ENEMY SHOOT");
-			mBullets[i]->Fire(GetPosition());
+			aBullet->Fire(GetPosition());
 			//Play audio here
 			successfulFire = true;
 			break;
-
 		}
 	}
+
 	return successfulFire;
 }
 

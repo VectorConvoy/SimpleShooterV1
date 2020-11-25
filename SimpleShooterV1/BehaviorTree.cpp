@@ -1,3 +1,10 @@
+/*
+* A class to reprent a behavior tree
+* 
+* Mainly handles the AI's logic and 
+* determines what it should do
+*/
+
 #include "BehaviorTree.h"
 #include "ChanceDecorator.h"
 #include "FleeBehavior.h"
@@ -12,6 +19,11 @@ BehaviorTree::BehaviorTree()
 {
 	AIBoard = new Blackboard();
 	AISelector = new Selector(AIBoard, "DEFAULT BEHAVIOR TREE");
+
+	sAIEngineInstance = AIEngine::Instance();
+	
+	SetBoardForBehaviors();
+
 	CreateBehaviorTree();
 }
 
@@ -21,6 +33,9 @@ BehaviorTree::BehaviorTree(Enemy* owner)
 	AIBoard->SetEnemy(owner);
 	GetPlayer = new GetPlayerTask(AIBoard, "Get Player Task");
 	AISelector = new Selector(AIBoard, "AI Selector");
+	sAIEngineInstance = AIEngine::Instance();
+	
+	SetBoardForBehaviors();
 
 }
 
@@ -31,6 +46,20 @@ BehaviorTree::~BehaviorTree()
 
 	delete AISelector;
 	AISelector = nullptr;
+}
+
+/*
+* BUG - FIX ISSUE WHERE THE BOARD IS ONLY BEING SET ON THE SURFACE
+* MUST ASSIGN BOARD TO EVERY SINGLE TASK
+*/
+
+void BehaviorTree::SetBoardForBehaviors()
+{
+	for (std::shared_ptr<Behavior> aBehavior : sAIEngineInstance->GetAllBehaviors())
+	{
+		aBehavior.get()->SetBoard(AIBoard);
+		//((ParentTask*)aBehavior.get()->behaviorSequence)->SetBoardForAllSubtasks(AIBoard);
+	}
 }
 
 void BehaviorTree::CreateBehaviorTree(BEHAVIOR_TYPES behavior)
@@ -85,6 +114,115 @@ void BehaviorTree::CreateBehaviorTree(BEHAVIOR_TYPES behavior)
 	AddBehaviorToBehaviorTree(new IdleBehavior(AIBoard));
 }
 
+void BehaviorTree::ConstructTree(std::string xmlFile)
+{
+	LoadXML(xmlFile);
+}
+
+void BehaviorTree::LoadXML(std::string xmlFile)
+{
+	pugi::xml_parse_result parseResults = behaviorDoc.load_file(xmlFile.c_str());
+
+	if (parseResults)
+	{
+		//Success
+		//ParseRoot();
+	}
+	else
+	{
+		//Failure
+		this->sLoggerInstance->Log("FAILED TO LOAD BEHAVIOR XML\n");
+	}
+}
+
+void BehaviorTree::ParseRoot(pugi::xml_node root)
+{
+	for (pugi::xml_node xmlNode : root.children("Behavior"))
+	{
+		for (pugi::xml_node traitNode : xmlNode.children("Trait"))
+		{
+			ParseBehaviorXML(traitNode);
+		}
+	}
+}
+
+void BehaviorTree::ParseBehaviorXML(pugi::xml_node traitNode)
+{
+	Behavior* unalteredBehavior;
+	std::string name;
+	int priorityVal;
+	float value;
+
+	name = traitNode.child_value("Name");
+	priorityVal = atoi(traitNode.child_value("Priority"));
+	value = (float) atof(traitNode.child_value("Value"));
+
+	unalteredBehavior = sAIEngineInstance->GetSpecificBehavior(name);
+
+	if (unalteredBehavior != nullptr)
+	{
+		unalteredBehavior->SetPriorityID(priorityVal);
+		unalteredBehavior->SetValue(value);
+
+		CreateDecorator(unalteredBehavior, traitNode.child("Condition"));
+	}
+
+	
+}
+
+void BehaviorTree::CreateDecorator(Behavior* behavior, pugi::xml_node conditionNode)
+{
+	std::string name;
+	float value;
+	std::string decoName;
+	Tasks* customBehaviorSeq;
+	
+
+	decoName = conditionNode.child_value("Decorator");
+	name = conditionNode.child_value("Name");
+	value = atof(conditionNode.child_value("Value"));
+
+	if (decoName == "CloseToPlayer")
+	{
+		customBehaviorSeq = new CloseToPlayerDecorator(AIBoard, behavior->behaviorSequence, value, name);
+	}
+	else if(decoName == "Chance")
+	{
+		customBehaviorSeq = new ChanceDecorator(AIBoard, behavior->behaviorSequence, name, value);
+	}
+	else
+	{
+		customBehaviorSeq = behavior->behaviorSequence;
+	}
+
+	((ParentTaskController*)AISelector->GetControl())->AddTask(customBehaviorSeq);
+
+}
+
+void BehaviorTree::AddBehavior(std::string nameOfBehavior, int priority)
+{
+	if (nameOfBehavior == "flee")
+	{
+		
+	}
+	else if (nameOfBehavior == "seek")
+	{
+
+	}
+	else if (nameOfBehavior == "shoot")
+	{
+
+	}
+	else if (nameOfBehavior == "idle")
+	{
+
+	}
+	else
+	{
+		//Ignore as behavior DNE or is invalid
+	}
+}
+
 void BehaviorTree::AddToBehaviorTree(Sequence* seq)
 {
 	((ParentTaskController*)AISelector->GetControl())->AddTask(seq);
@@ -97,11 +235,30 @@ void BehaviorTree::AddTaskToBehaviorTree(Tasks* task)
 
 void BehaviorTree::AddBehaviorToBehaviorTree(Behavior* behaviorSeq)
 {
-	((ParentTaskController*)AISelector->GetControl())->AddTask(behaviorSeq->behaviorSequence);
+	Tasks* behaviorSequence;
+
+	if (behaviorSeq->GetConditionType() == "distance")
+	{
+		behaviorSequence = new CloseToPlayerDecorator(AIBoard, behaviorSeq->behaviorSequence, behaviorSeq->GetValue(), "Close To Player Decorator Sequence");
+	}
+	else if (behaviorSeq->GetConditionType() == "chance")
+	{
+		behaviorSequence = new ChanceDecorator(AIBoard, behaviorSeq->behaviorSequence,  "Chance Decorator Sequence", behaviorSeq->GetValue());
+	}
+	else
+	{
+		behaviorSequence = behaviorSeq->behaviorSequence;
+	}
+
+	
+	((ParentTaskController*)AISelector->GetControl())->AddTask(behaviorSequence);
+
 }
 
 
-
+/// <summary>
+/// Function to start traversing down the behavior tree
+/// </summary>
 void BehaviorTree::StartBehavior()
 {
 	//this->sLoggerInstance->Log("STARTING BEHAVIOR");
@@ -124,6 +281,9 @@ void BehaviorTree::StopBehavior()
 
 }
 
+/// <summary>
+/// Function to reset the behavior tree to the root
+/// </summary>
 void BehaviorTree::ResetBehavior()
 {
 	((ParentTaskController*)AISelector->GetControl())->Reset();
@@ -131,6 +291,9 @@ void BehaviorTree::ResetBehavior()
 	Active = false;
 }
 
+/// <summary>
+/// Function to perform the task in the current node
+/// </summary>
 void BehaviorTree::DoBehavior()
 {
 	if (Active)

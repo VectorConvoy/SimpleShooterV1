@@ -1,3 +1,11 @@
+/*
+* A class that acts as a controller for a task
+* 
+* Mainly used as part of the behavior tree to keep track
+* of the attached task
+* 
+*/
+
 #include "TaskController.h"
 #include "Tasks.h"
 #include <stdio.h>

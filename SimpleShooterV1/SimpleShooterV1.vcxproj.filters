@@ -16,23 +16,14 @@
     <Filter Include="Header Files\Entities">
       <UniqueIdentifier>{52a41906-1d35-4937-8f82-c6901d9eadc3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Entities">
-      <UniqueIdentifier>{ff0ca0b8-7098-403a-8a52-68b6f1932f09}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Physics">
       <UniqueIdentifier>{8d99071f-eaca-40eb-9feb-948d9865ede8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Physics">
-      <UniqueIdentifier>{6f5590e8-e928-49e2-81d0-40e02850395b}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Behavior Tree">
       <UniqueIdentifier>{e002b2ea-2b14-498a-a55a-c280a71ee155}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Behavior Tree\Decorators">
       <UniqueIdentifier>{a580a6d0-a391-471d-a5f4-2d2461305204}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Managers">
-      <UniqueIdentifier>{7464c4af-6bb5-4e0b-be17-adc9432f5cf5}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Screens">
       <UniqueIdentifier>{2e1e57c5-6e51-4836-a45a-e25e5f6efed1}</UniqueIdentifier>
@@ -61,6 +52,18 @@
     <Filter Include="Source Files\Behavior">
       <UniqueIdentifier>{81543779-b7eb-4c4e-89a7-2d36197e9aaa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Engine">
+      <UniqueIdentifier>{3596e23b-dd01-4e77-a5cf-c45186641860}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Physics">
+      <UniqueIdentifier>{6f5590e8-e928-49e2-81d0-40e02850395b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Managers">
+      <UniqueIdentifier>{7464c4af-6bb5-4e0b-be17-adc9432f5cf5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Entities">
+      <UniqueIdentifier>{ff0ca0b8-7098-403a-8a52-68b6f1932f09}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="graphics.cpp">
@@ -73,58 +76,58 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GameEntity.cpp">
-      <Filter>Source Files\Entities</Filter>
+      <Filter>Source Files\Engine\Entities</Filter>
     </ClCompile>
     <ClCompile Include="texture.cpp">
-      <Filter>Source Files\Entities</Filter>
+      <Filter>Source Files\Engine\Entities</Filter>
     </ClCompile>
     <ClCompile Include="AnimatedTexture.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Bullet.cpp">
-      <Filter>Source Files\Entities</Filter>
+      <Filter>Source Files\Engine\Entities</Filter>
     </ClCompile>
     <ClCompile Include="Enemy.cpp">
-      <Filter>Source Files\Entities</Filter>
+      <Filter>Source Files\Engine\Entities</Filter>
     </ClCompile>
     <ClCompile Include="Collider.cpp">
-      <Filter>Source Files\Physics</Filter>
+      <Filter>Source Files\Engine\Physics</Filter>
     </ClCompile>
     <ClCompile Include="PhysicEntity.cpp">
-      <Filter>Source Files\Physics</Filter>
+      <Filter>Source Files\Engine\Physics</Filter>
     </ClCompile>
     <ClCompile Include="BoxCollider.cpp">
-      <Filter>Source Files\Physics</Filter>
+      <Filter>Source Files\Engine\Physics</Filter>
     </ClCompile>
     <ClCompile Include="PhysicsManager.cpp">
-      <Filter>Source Files\Physics</Filter>
+      <Filter>Source Files\Engine\Physics</Filter>
     </ClCompile>
     <ClCompile Include="CircleCollider.cpp">
-      <Filter>Source Files\Physics</Filter>
+      <Filter>Source Files\Engine\Physics</Filter>
     </ClCompile>
     <ClCompile Include="AIEngine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="AssetManager.cpp">
-      <Filter>Source Files\Managers</Filter>
+      <Filter>Source Files\Engine\Managers</Filter>
     </ClCompile>
     <ClCompile Include="AudioManager.cpp">
-      <Filter>Source Files\Managers</Filter>
+      <Filter>Source Files\Engine\Managers</Filter>
     </ClCompile>
     <ClCompile Include="gameManager.cpp">
-      <Filter>Source Files\Managers</Filter>
+      <Filter>Source Files\Engine\Managers</Filter>
     </ClCompile>
     <ClCompile Include="InputManager.cpp">
-      <Filter>Source Files\Managers</Filter>
+      <Filter>Source Files\Engine\Managers</Filter>
     </ClCompile>
     <ClCompile Include="ScreenManager.cpp">
-      <Filter>Source Files\Managers</Filter>
+      <Filter>Source Files\Engine\Managers</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
-      <Filter>Source Files\Entities</Filter>
+      <Filter>Source Files\Engine\Entities</Filter>
     </ClCompile>
     <ClCompile Include="Ship.cpp">
-      <Filter>Source Files\Entities</Filter>
+      <Filter>Source Files\Engine\Entities</Filter>
     </ClCompile>
     <ClCompile Include="StartScreen.cpp">
       <Filter>Source Files\Screens</Filter>
@@ -232,6 +235,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="FaceAwayPlayer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyType.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -410,5 +416,16 @@
     <ClInclude Include="FaceAwayPlayerTask.h">
       <Filter>Header Files\Behavior Tree\Modular Tasks</Filter>
     </ClInclude>
+    <ClInclude Include="EnemyType.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="TestBehaviorInputs.xml">
+      <Filter>Resource Files</Filter>
+    </Xml>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>

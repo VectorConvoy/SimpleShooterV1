@@ -21,6 +21,8 @@ public:
 
 	TaskController* GetControl();
 
+	Tasks* RemoveDecorator(TaskDecorator* deco);
+
 private:
 	void InitiateTask(Tasks* taskToInit);
 };

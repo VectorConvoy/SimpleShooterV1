@@ -2,6 +2,7 @@
 #define _ENEMY_H
 
 #include "Ship.h"
+#include "EnemyType.h"
 
 class Blackboard;
 class BehaviorTree;
@@ -15,6 +16,7 @@ public:
 	const int SPEED_MULTIPLIER = 1;
 
 	Enemy();
+	Enemy(EnemyType* type);
 	~Enemy();
 
 	void InitializeBullets();
@@ -33,11 +35,16 @@ public:
 	void EnemyMove();
 
 	void CreateBehaviorTree();
+
+	void SetEnemyType(EnemyType* typeToSet);
+	EnemyType* GetEnemyType();
 		
 private:
-	Bullet* mBullets[MAX_BULLETS];
+	//Bullet* mBullets[MAX_BULLETS];
 
-	BehaviorTree* decisionTree;
+	std::vector<Bullet*> mBullets;
+
+	EnemyType* enemyType;
 
 	int debug_behavior;
 		

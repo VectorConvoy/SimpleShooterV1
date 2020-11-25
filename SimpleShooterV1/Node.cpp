@@ -1,3 +1,11 @@
+/*
+* A class that represents a node within a behavior tree
+* 
+* 
+* A main component of the behavior tree that represents the objects 
+* that contain tasks
+*/
+
 #include "Node.h"
 
 Node::Node()

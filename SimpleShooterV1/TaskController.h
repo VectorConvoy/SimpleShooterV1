@@ -1,3 +1,10 @@
+/*
+* A component for the behavior tree
+* 
+* Acts as a controller for the tasks to keep track
+* of it
+*/
+
 #pragma once
 #define _TASKCONTROLLER_H
 
