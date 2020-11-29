@@ -4,7 +4,6 @@
 * panic distance
 */
 #include "FleeBehavior.h"
-#include "PanicDecorator.h"
 #include "FaceAwayPlayerTask.h"
 #include "FleeDestinationTask.h"
 #include "MoveToTask.h"

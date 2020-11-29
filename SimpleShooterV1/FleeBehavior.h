@@ -2,7 +2,6 @@
 #define _FLEEBEHAVIOR_H
 
 #include "Behavior.h"
-#include "PanicDecorator.h"
 
 class FleeBehavior : public Behavior
 {

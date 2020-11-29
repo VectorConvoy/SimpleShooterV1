@@ -162,15 +162,13 @@
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyShootTask.cpp" />
     <ClCompile Include="EnemyType.cpp" />
-    <ClCompile Include="FaceAwayPlayer.cpp" />
+    <ClCompile Include="FaceAwayPlayerTask.cpp" />
     <ClCompile Include="FacePlayerTask.cpp" />
-    <ClCompile Include="FarFromPlayerDecorator.cpp" />
     <ClCompile Include="FleeBehavior.cpp" />
     <ClCompile Include="FleeDestinationTask.cpp" />
     <ClCompile Include="IdleBehavior.cpp" />
     <ClCompile Include="IdleTask.cpp" />
     <ClCompile Include="Logger.cpp" />
-    <ClCompile Include="PanicDecorator.cpp" />
     <ClCompile Include="GameEntity.cpp" />
     <ClCompile Include="gameManager.cpp" />
     <ClCompile Include="GetPlayerTask.cpp" />
@@ -181,21 +179,16 @@
     <ClCompile Include="Node.cpp" />
     <ClCompile Include="ParentTask.cpp" />
     <ClCompile Include="ParentTaskController.cpp" />
-    <ClCompile Include="PatrolBehavior.cpp" />
     <ClCompile Include="PhysicEntity.cpp" />
     <ClCompile Include="PhysicsManager.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayScreen.cpp" />
-    <ClCompile Include="Regulator.cpp" />
-    <ClCompile Include="RegulatorDecorator.cpp" />
-    <ClCompile Include="ResetDecorator.cpp" />
     <ClCompile Include="ScreenManager.cpp" />
     <ClCompile Include="SeekBehavior.cpp" />
     <ClCompile Include="Selector.cpp" />
     <ClCompile Include="Sequence.cpp" />
     <ClCompile Include="Ship.cpp" />
     <ClCompile Include="ShootBehavior.cpp" />
-    <ClCompile Include="SniperBehavior.cpp" />
     <ClCompile Include="StartScreen.cpp" />
     <ClCompile Include="TaskController.cpp" />
     <ClCompile Include="TaskDecorator.cpp" />
@@ -224,13 +217,11 @@
     <ClInclude Include="EnemyType.h" />
     <ClInclude Include="FaceAwayPlayerTask.h" />
     <ClInclude Include="FacePlayerTask.h" />
-    <ClInclude Include="FarFromPlayerDecorator.h" />
     <ClInclude Include="FleeBehavior.h" />
     <ClInclude Include="FleeDestinationTask.h" />
     <ClInclude Include="IdleBehavior.h" />
     <ClInclude Include="IdleTask.h" />
     <ClInclude Include="Logger.h" />
-    <ClInclude Include="PanicDecorator.h" />
     <ClInclude Include="GameEntity.h" />
     <ClInclude Include="gameManager.h" />
     <ClInclude Include="GetPlayerTask.h" />
@@ -241,22 +232,17 @@
     <ClInclude Include="Node.h" />
     <ClInclude Include="ParentTask.h" />
     <ClInclude Include="ParentTaskController.h" />
-    <ClInclude Include="PatrolBehavior.h" />
     <ClInclude Include="PhysicEntity.h" />
     <ClInclude Include="PhysicsHelper.h" />
     <ClInclude Include="PhysicsManager.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayScreen.h" />
-    <ClInclude Include="Regulator.h" />
-    <ClInclude Include="RegulatorDecorator.h" />
-    <ClInclude Include="ResetDecorator.h" />
     <ClInclude Include="ScreenManager.h" />
     <ClInclude Include="SeekBehavior.h" />
     <ClInclude Include="Selector.h" />
     <ClInclude Include="Sequence.h" />
     <ClInclude Include="Ship.h" />
     <ClInclude Include="ShootBehavior.h" />
-    <ClInclude Include="SniperBehavior.h" />
     <ClInclude Include="StartScreen.h" />
     <ClInclude Include="TaskController.h" />
     <ClInclude Include="TaskDecorator.h" />
@@ -266,9 +252,11 @@
     <ClInclude Include="TopPlayBar.h" />
   </ItemGroup>
   <ItemGroup>
+    <Xml Include="SeekEnemy.xml" />
     <Xml Include="TestBehaviorInputs.xml" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ClassDiagram.cd" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

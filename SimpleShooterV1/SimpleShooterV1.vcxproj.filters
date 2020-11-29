@@ -13,12 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Header Files\Entities">
-      <UniqueIdentifier>{52a41906-1d35-4937-8f82-c6901d9eadc3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Physics">
-      <UniqueIdentifier>{8d99071f-eaca-40eb-9feb-948d9865ede8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Behavior Tree">
       <UniqueIdentifier>{e002b2ea-2b14-498a-a55a-c280a71ee155}</UniqueIdentifier>
     </Filter>
@@ -58,21 +52,24 @@
     <Filter Include="Source Files\Engine\Physics">
       <UniqueIdentifier>{6f5590e8-e928-49e2-81d0-40e02850395b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Engine\Managers">
-      <UniqueIdentifier>{7464c4af-6bb5-4e0b-be17-adc9432f5cf5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Engine\Entities">
       <UniqueIdentifier>{ff0ca0b8-7098-403a-8a52-68b6f1932f09}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Managers">
+      <UniqueIdentifier>{7464c4af-6bb5-4e0b-be17-adc9432f5cf5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine">
+      <UniqueIdentifier>{870ebeb6-ecfb-4f2f-bc0e-e5c663e7f28d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Physics">
+      <UniqueIdentifier>{8d99071f-eaca-40eb-9feb-948d9865ede8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Entities">
+      <UniqueIdentifier>{52a41906-1d35-4937-8f82-c6901d9eadc3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="graphics.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="timer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GameEntity.cpp">
@@ -80,9 +77,6 @@
     </ClCompile>
     <ClCompile Include="texture.cpp">
       <Filter>Source Files\Engine\Entities</Filter>
-    </ClCompile>
-    <ClCompile Include="AnimatedTexture.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Bullet.cpp">
       <Filter>Source Files\Engine\Entities</Filter>
@@ -109,19 +103,19 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="AssetManager.cpp">
-      <Filter>Source Files\Engine\Managers</Filter>
+      <Filter>Source Files\Managers</Filter>
     </ClCompile>
     <ClCompile Include="AudioManager.cpp">
-      <Filter>Source Files\Engine\Managers</Filter>
+      <Filter>Source Files\Managers</Filter>
     </ClCompile>
     <ClCompile Include="gameManager.cpp">
-      <Filter>Source Files\Engine\Managers</Filter>
+      <Filter>Source Files\Managers</Filter>
     </ClCompile>
     <ClCompile Include="InputManager.cpp">
-      <Filter>Source Files\Engine\Managers</Filter>
+      <Filter>Source Files\Managers</Filter>
     </ClCompile>
     <ClCompile Include="ScreenManager.cpp">
-      <Filter>Source Files\Engine\Managers</Filter>
+      <Filter>Source Files\Managers</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>Source Files\Engine\Entities</Filter>
@@ -165,19 +159,10 @@
     <ClCompile Include="ParentTask.cpp">
       <Filter>Source Files\BehaviorTree\Task</Filter>
     </ClCompile>
-    <ClCompile Include="ResetDecorator.cpp">
-      <Filter>Source Files\BehaviorTree\Decorator</Filter>
-    </ClCompile>
     <ClCompile Include="BehaviorTree.cpp">
       <Filter>Source Files\BehaviorTree</Filter>
     </ClCompile>
-    <ClCompile Include="RegulatorDecorator.cpp">
-      <Filter>Source Files\BehaviorTree\Decorator</Filter>
-    </ClCompile>
     <ClCompile Include="ChanceDecorator.cpp">
-      <Filter>Source Files\BehaviorTree\Decorator</Filter>
-    </ClCompile>
-    <ClCompile Include="PanicDecorator.cpp">
       <Filter>Source Files\BehaviorTree\Decorator</Filter>
     </ClCompile>
     <ClCompile Include="Blackboard.cpp">
@@ -213,76 +198,61 @@
     <ClCompile Include="SeekBehavior.cpp">
       <Filter>Source Files\Behavior</Filter>
     </ClCompile>
-    <ClCompile Include="PatrolBehavior.cpp">
-      <Filter>Source Files\Behavior</Filter>
-    </ClCompile>
-    <ClCompile Include="TopPlayBar.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="FacePlayerTask.cpp">
       <Filter>Source Files\BehaviorTree\Task</Filter>
     </ClCompile>
     <ClCompile Include="IdleBehavior.cpp">
       <Filter>Source Files\Behavior</Filter>
     </ClCompile>
-    <ClCompile Include="Regulator.cpp">
-      <Filter>Source Files\BehaviorTree</Filter>
-    </ClCompile>
-    <ClCompile Include="SniperBehavior.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="FarFromPlayerDecorator.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="FaceAwayPlayer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="EnemyType.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="FaceAwayPlayerTask.cpp">
+      <Filter>Source Files\BehaviorTree\Task</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimatedTexture.cpp">
+      <Filter>Source Files\Engine\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics.cpp">
+      <Filter>Source Files\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="timer.cpp">
+      <Filter>Source Files\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="TopPlayBar.cpp">
+      <Filter>Source Files\Screens</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="graphics.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="timer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="MathHelper.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="GameEntity.h">
-      <Filter>Header Files\Entities</Filter>
+      <Filter>Header Files\Engine\Entities</Filter>
     </ClInclude>
     <ClInclude Include="texture.h">
-      <Filter>Header Files\Entities</Filter>
-    </ClInclude>
-    <ClInclude Include="AnimatedTexture.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Engine\Entities</Filter>
     </ClInclude>
     <ClInclude Include="Bullet.h">
-      <Filter>Header Files\Entities</Filter>
+      <Filter>Header Files\Engine\Entities</Filter>
     </ClInclude>
     <ClInclude Include="Collider.h">
-      <Filter>Header Files\Physics</Filter>
+      <Filter>Header Files\Engine\Physics</Filter>
     </ClInclude>
     <ClInclude Include="PhysicEntity.h">
-      <Filter>Header Files\Physics</Filter>
+      <Filter>Header Files\Engine\Physics</Filter>
     </ClInclude>
     <ClInclude Include="BoxCollider.h">
-      <Filter>Header Files\Physics</Filter>
+      <Filter>Header Files\Engine\Physics</Filter>
     </ClInclude>
     <ClInclude Include="Enemy.h">
-      <Filter>Header Files\Entities</Filter>
+      <Filter>Header Files\Engine\Entities</Filter>
     </ClInclude>
     <ClInclude Include="PhysicsManager.h">
-      <Filter>Header Files\Physics</Filter>
+      <Filter>Header Files\Engine\Physics</Filter>
     </ClInclude>
     <ClInclude Include="PhysicsHelper.h">
-      <Filter>Header Files\Physics</Filter>
+      <Filter>Header Files\Engine\Physics</Filter>
     </ClInclude>
     <ClInclude Include="CircleCollider.h">
-      <Filter>Header Files\Physics</Filter>
+      <Filter>Header Files\Engine\Physics</Filter>
     </ClInclude>
     <ClInclude Include="AudioManager.h">
       <Filter>Header Files\Managers</Filter>
@@ -312,10 +282,10 @@
       <Filter>Header Files\Behavior Tree</Filter>
     </ClInclude>
     <ClInclude Include="Ship.h">
-      <Filter>Header Files\Entities</Filter>
+      <Filter>Header Files\Engine\Entities</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
-      <Filter>Header Files\Entities</Filter>
+      <Filter>Header Files\Engine\Entities</Filter>
     </ClInclude>
     <ClInclude Include="PlayScreen.h">
       <Filter>Header Files\Screens</Filter>
@@ -333,9 +303,6 @@
       <Filter>Header Files\Behaviors</Filter>
     </ClInclude>
     <ClInclude Include="ShootBehavior.h">
-      <Filter>Header Files\Behaviors</Filter>
-    </ClInclude>
-    <ClInclude Include="PatrolBehavior.h">
       <Filter>Header Files\Behaviors</Filter>
     </ClInclude>
     <ClInclude Include="Tasks.h">
@@ -362,19 +329,10 @@
     <ClInclude Include="TaskDecorator.h">
       <Filter>Header Files\Behavior Tree\Decorators</Filter>
     </ClInclude>
-    <ClInclude Include="ResetDecorator.h">
-      <Filter>Header Files\Behavior Tree\Decorators</Filter>
-    </ClInclude>
     <ClInclude Include="BehaviorTree.h">
       <Filter>Header Files\Behavior Tree</Filter>
     </ClInclude>
-    <ClInclude Include="RegulatorDecorator.h">
-      <Filter>Header Files\Behavior Tree\Decorators</Filter>
-    </ClInclude>
     <ClInclude Include="ChanceDecorator.h">
-      <Filter>Header Files\Behavior Tree\Decorators</Filter>
-    </ClInclude>
-    <ClInclude Include="PanicDecorator.h">
       <Filter>Header Files\Behavior Tree\Decorators</Filter>
     </ClInclude>
     <ClInclude Include="FleeDestinationTask.h">
@@ -401,31 +359,38 @@
     <ClInclude Include="FacePlayerTask.h">
       <Filter>Header Files\Behavior Tree\Modular Tasks</Filter>
     </ClInclude>
-    <ClInclude Include="TopPlayBar.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Regulator.h">
-      <Filter>Header Files\Behavior Tree</Filter>
-    </ClInclude>
-    <ClInclude Include="SniperBehavior.h">
-      <Filter>Header Files\Behaviors</Filter>
-    </ClInclude>
-    <ClInclude Include="FarFromPlayerDecorator.h">
-      <Filter>Header Files\Behavior Tree\Decorators</Filter>
-    </ClInclude>
     <ClInclude Include="FaceAwayPlayerTask.h">
       <Filter>Header Files\Behavior Tree\Modular Tasks</Filter>
     </ClInclude>
     <ClInclude Include="EnemyType.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="AnimatedTexture.h">
+      <Filter>Header Files\Engine\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="TopPlayBar.h">
+      <Filter>Header Files\Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics.h">
+      <Filter>Header Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="MathHelper.h">
+      <Filter>Header Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="timer.h">
+      <Filter>Header Files\Engine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="TestBehaviorInputs.xml">
       <Filter>Resource Files</Filter>
     </Xml>
+    <Xml Include="SeekEnemy.xml">
+      <Filter>Resource Files</Filter>
+    </Xml>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>

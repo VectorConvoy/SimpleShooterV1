@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Enemy>
+  <Speed>100.0</Speed>
+  <BulletSpeed>500.0</BulletSpeed>
+  <ShipFile>enemyship1.png</ShipFile>
+  <MaxBullets>3</MaxBullets>
+  <Behavior>
+    <Trait>
+      <Name>seek</Name>
+      <Priority>0</Priority>
+      <Value>250.0</Value>
+      <Condition>
+        <Name>Seek Close To Player Decorator</Name>
+        <Decorator>CloseToPlayer</Decorator>
+        <Value>500.0</Value>
+      </Condition>
+    </Trait>
+    <Trait>
+      <Name>idle</Name>
+      <Priority>1</Priority>
+      <Value>250.0</Value>
+    </Trait>
+  </Behavior>
+</Enemy>
+

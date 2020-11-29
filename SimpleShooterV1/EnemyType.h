@@ -16,6 +16,8 @@ class EnemyType
 {
 public:
 
+	const std::string PossibleTypes = {"SeekEnemy.xml", "TestBehaviorInputs.xml"};
+
 	EnemyType();
 	~EnemyType();
 

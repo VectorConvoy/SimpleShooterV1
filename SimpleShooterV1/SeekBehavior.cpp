@@ -11,7 +11,6 @@
 #include "GetPlayerTask.h"
 #include "MoveToTask.h"
 #include "ChaseDestinationTask.h"
-#include "FarFromPlayerDecorator.h"
 #include "FacePlayerTask.h"
 
 SeekBehavior::SeekBehavior()
@@ -62,7 +61,6 @@ float SeekBehavior::GetSeekDist()
 void SeekBehavior::ConstructBehavior()
 {
 	behaviorSequence = new Sequence(GetBoard(), "Chase Sequence");
-	//behaviorSequence = new FarFromPlayerDecorator(board, behaviorSequence, seekDist, "Chase Decorator");
 
 	//((ParentTaskController*)behaviorSequence->GetControl())->AddTask(new GetPlayerTask(board, "Get Player Task"));
 	((ParentTaskController*)behaviorSequence->GetControl())->AddTask(new ChaseDestinationTask(GetBoard(), "Get Chase Destination Task"));
