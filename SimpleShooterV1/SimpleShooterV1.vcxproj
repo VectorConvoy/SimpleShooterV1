@@ -252,8 +252,10 @@
     <ClInclude Include="TopPlayBar.h" />
   </ItemGroup>
   <ItemGroup>
+    <Xml Include="FleeEnemy.xml" />
     <Xml Include="SeekEnemy.xml" />
-    <Xml Include="TestBehaviorInputs.xml" />
+    <Xml Include="SeekFleeShootEnemy.xml" />
+    <Xml Include="SeekShootEnemy.xml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />

@@ -196,15 +196,6 @@ bool Ship::GetHit()
 	return mWasHit;
 }
 
-void Ship::SetIsMoving(bool moving)
-{
-}
-
-bool Ship::GetIsMoving()
-{
-	return false;
-}
-
 void Ship::SetShipFileName(std::string filename)
 {
 	shipTextureFileName = filename;
@@ -224,36 +215,7 @@ void Ship::SetDestVector(Vector2 destination)
 	else
 	{
 		goalAngle = destinationDirection * 90.0f; //4 Directions which means 360/4 which equals 90 degrees
-
-		//if (spriteAngle != goalAngle && mActive)
-		//{
-		//	mAnimating = true;
-		//}
-		//else
-		//{
-		//	mAnimating = false;
-		//}
-
-		//if (goalAngle >= 360)
-		//{
-		//	futureRotations++;
-		//	goalAngle = fmodf(goalAngle, 360.0f);
-		//}
-		//else if (goalAngle == 0.0f && spriteAngle == 270.0f)
-		//{
-		//	futureRotations++;
-		//}
-		//else if ((goalAngle == 270.0f && spriteAngle == 0.0f) || (fmodf(spriteAngle, 360.0f) > goalAngle))
-		//{
-		//	futureRotations--;
-		//}
-
 	}
-
-	//printf("STATUS: %x\n", mAnimating);
-	//printf("SPRITE ANGLE: %f\n", spriteAngle);
-
-
 }
 
 void Ship::SetHealth(int health)
@@ -306,11 +268,6 @@ void Ship::SetRotationSpeed(float newRotationSpeed)
 	angleDelta = newRotationSpeed;
 }
 
-void Ship::SetRotationSpeed()
-{
-	//int frameRate = (animationTimer / sTimerInstance->DeltaTime() / 1000.0f);
-}
-
 void Ship::Hit(PhysicEntity* otherEntity)
 {
 	if (otherEntity->GetActive())
@@ -334,12 +291,9 @@ void Ship::Hit(PhysicEntity* otherEntity)
 					mAnimating = true;		
 
 					//Play Death Audio
-					sAudioManagerInstance->PlaySFX("8bit_bomb_explosion.wav");
+					sAudioManagerInstance->PlaySFX("8bit_bomb_explosion.wav");	
 
-					if (isPlayer)
-					{
-						sScreenManagerInstance->GetPlayScreen()->PlayerDeath();
-					}
+
 				}
 				else
 				{
@@ -406,8 +360,12 @@ void Ship::Update()
 			if (!isPlayer)
 			{
 				//AI is dead
-				sScreenManagerInstance->GetPlayScreen()->StartNextRound(); //Set round started to false to prepare for next round
 				sScreenManagerInstance->GetPlayScreen()->CheckEnemyStatus(); //Make sure to delete enemy from list
+			}
+			
+			if(!sScreenManagerInstance->GetPlayScreen()->GetPlayer()->GetActive())
+			{
+				sScreenManagerInstance->GetPlayScreen()->PlayerDeath();
 			}
 		}
 		else

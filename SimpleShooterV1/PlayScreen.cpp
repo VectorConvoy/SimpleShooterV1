@@ -365,6 +365,11 @@ void PlayScreen::CheckEnemyStatus()
 		}
 	}
 
+
+	if (mEnemies.size() < 1)
+	{
+		StartNextRound();
+	}
 }
 
 /*
@@ -378,7 +383,7 @@ void PlayScreen::PlayerDeath()
 
 	if (topBar->GetLives() <= 0)
 	{
-		//Game Over logic here
+		//Game Over logic 
 
 		mGameStarted = false;
 		currentRound = -1;

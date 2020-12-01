@@ -2,15 +2,15 @@
 <Enemy>
   <Speed>100.0</Speed>
   <BulletSpeed>500.0</BulletSpeed>
-  <ShipFile>enemyship2.png</ShipFile>
+  <ShipFile>enemyship1.png</ShipFile>
   <MaxBullets>3</MaxBullets>
   <Behavior>
     <Trait>
-      <Name>seek</Name>
+      <Name>flee</Name>
       <Priority>0</Priority>
       <Value>250.0</Value>
       <Condition>
-        <Name>Seek Close To Player Decorator</Name>
+        <Name>Flee Close To Player Decorator</Name>
         <Decorator>CloseToPlayer</Decorator>
         <Value>500.0</Value>
       </Condition>
@@ -22,4 +22,3 @@
     </Trait>
   </Behavior>
 </Enemy>
-

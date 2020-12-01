@@ -82,6 +82,7 @@ private:
 	int currentRound;
 	bool gameOver;
 
+
 	std::vector<std::shared_ptr<Enemy>> mEnemies;
 
 	bool mPlayerHit;

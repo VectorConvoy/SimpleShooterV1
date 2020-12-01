@@ -6,6 +6,7 @@
 #define _ENEMYTYPE_H
 
 #include <string>
+#include <vector>
 #include <pugixml.hpp>
 #include "Logger.h"
 
@@ -16,8 +17,8 @@ class EnemyType
 {
 public:
 
-	const std::string PossibleTypes = {"SeekEnemy.xml", "TestBehaviorInputs.xml"};
-
+	const std::vector<std::string> PossibleTypes = {"FleeEnemy.xml", "SeekEnemy.xml", "SeekFleeShootEnemy.xml", "SeekShootEnemy.xml" };
+	
 	EnemyType();
 	~EnemyType();
 
@@ -54,7 +55,7 @@ private:
 	const int DEFAULT_HEALTH = 1;
 	const int DEFAULT_NUM_BULLETS = 3;
 	const float DEFAULT_BULLET_SPEED = 500.0f;
-	const std::string SHIP_NAME = "enemyship1.png";
+	const std::string DEFAULT_SHIP_FILE = "enemyship1.png";
 	const std::string DEATH_ANIMATION = "ship_explosion.png";
 
 	float speed;
@@ -76,5 +77,6 @@ private:
 	std::string DeathAnimationName;
 
 	pugi::xml_document xmlDoc;
+
 
 };

@@ -9,11 +9,13 @@ EnemyType::EnemyType()
 	maxBullets = DEFAULT_NUM_BULLETS;
 	bulletSpeed = DEFAULT_BULLET_SPEED;
 
-	ShipFileName = SHIP_NAME;
+	ShipFileName = DEFAULT_SHIP_FILE;
 	DeathAnimationName = DEATH_ANIMATION;
 
 	sLoggerInstance = Logger::Instance();
 	XMLDocumentName = "TestBehaviorInputs.xml";
+	
+	XMLDocumentName = PossibleTypes.at(rand() % PossibleTypes.size());
 
 	LoadXML();
 
@@ -145,3 +147,4 @@ void EnemyType::LoadXML()
 	}
 
 }
+

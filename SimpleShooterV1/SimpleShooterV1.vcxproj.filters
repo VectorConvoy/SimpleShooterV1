@@ -382,10 +382,16 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Xml Include="TestBehaviorInputs.xml">
+    <Xml Include="SeekEnemy.xml">
       <Filter>Resource Files</Filter>
     </Xml>
-    <Xml Include="SeekEnemy.xml">
+    <Xml Include="FleeEnemy.xml">
+      <Filter>Resource Files</Filter>
+    </Xml>
+    <Xml Include="SeekFleeShootEnemy.xml">
+      <Filter>Resource Files</Filter>
+    </Xml>
+    <Xml Include="SeekShootEnemy.xml">
       <Filter>Resource Files</Filter>
     </Xml>
   </ItemGroup>
