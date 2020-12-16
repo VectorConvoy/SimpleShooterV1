@@ -69,7 +69,7 @@ void PlayScreen::StartNewGame()
 	mGameStarted = false;
 	mRoundStarted = false;
 
-	mAudioManager->PlayMusic("Start_Sounds_003.wav", 0);
+	//mAudioManager->PlayMusic("Start_Sounds_003.wav", 0);
 
 	InitializePlayer();
 	topBar->SetPlayer(mPlayer);
@@ -92,6 +92,8 @@ void PlayScreen::StartNextRound()
 	currentRound++;
 	mRoundStartTimer = 0.0f;
 	mRoundStarted = false;
+
+	mPlayer->SetPosition(Vector2(Graphics::SCREEN_WIDTH / 2, Graphics::SCREEN_HEIGHT * 0.75));
 
 	DestroyStartLabel();
 	SetupStartLabel();
@@ -239,7 +241,7 @@ void PlayScreen::checkKeyPress()
 			mRoundStarted = true;
 			SpawnEnemy((int)AIEngine::BEHAVIOR::flee);
 
-			mAudioManager->PlayMusic("bgm.wav");
+			//mAudioManager->PlayMusic("bgm.wav");
 			//Begin round animation
 		}
 		else if (!mPlayer->GetActive() && topBar->GetLives() > 0)

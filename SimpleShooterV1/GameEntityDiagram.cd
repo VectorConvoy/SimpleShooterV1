@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="PlayScreen" Collapsed="true">
+    <Position X="14.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAz4EIAKECAoAAEUABmIVEgIwAAIAAIABRAAgAIYAIA=</HashCode>
+      <FileName>PlayScreen.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StartScreen" Collapsed="true">
+    <Position X="8.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACwAAAAAYCBBACDAAAAAgAAAgAAAAAIAABABAAAAYAE=</HashCode>
+      <FileName>StartScreen.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TopPlayBar" Collapsed="true">
+    <Position X="10.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAQQCCCRCAjAAAEDQAEwAgAAAIFAABhACEACAAAA=</HashCode>
+      <FileName>TopPlayBar.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BoxCollider" Collapsed="true">
+    <Position X="7.25" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgAAAAACAAACAgAAAAAAAQAAE=</HashCode>
+      <FileName>BoxCollider.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CircleCollider" Collapsed="true">
+    <Position X="5.5" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAACAAAgAAAACAAAAAAAAAgAAAE=</HashCode>
+      <FileName>CircleCollider.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Collider" Collapsed="true">
+    <Position X="6.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAACAAAAAAAAABgAAAAAAAEwABAAAAQAAAE=</HashCode>
+      <FileName>Collider.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PhysicEntity" Collapsed="true">
+    <Position X="12.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAACAAAAAAAAAAIAgAAAAAAAAACAARAAAAIAAEA=</HashCode>
+      <FileName>PhysicEntity.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AnimatedTexture" Collapsed="true">
+    <Position X="16.5" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAwAAAAAAABAAAAAAgAACACCgBBAMAEAAAAAADAAIAA=</HashCode>
+      <FileName>AnimatedTexture.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Bullet" Collapsed="true">
+    <Position X="13" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAQQAIAQAAAIAAJAgAAAAAAAgAAEAAAUCBAAAAAQCAA=</HashCode>
+      <FileName>Bullet.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Enemy" Collapsed="true">
+    <Position X="12.25" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAEgwAEwAAAAABBggAAARAAEEAABQAAAAQgAgAACAA=</HashCode>
+      <FileName>Enemy.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameEntity" Collapsed="true">
+    <Position X="10" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAABGCAAAAAAAAAAEAAEAAACghAIFAMAoQAAgA=</HashCode>
+      <FileName>GameEntity.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Player" Collapsed="true">
+    <Position X="10" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAgAAAAAARggIQAQAgEEAoAQAAAAAAEQIIiFA=</HashCode>
+      <FileName>Player.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ship" Collapsed="true">
+    <Position X="11.25" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABQECCACtaZIESAEEEI0A2BABwqEISQwIJSJAqAWAAI=</HashCode>
+      <FileName>Ship.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Texture" Collapsed="true">
+    <Position X="16.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAAAEBjCBBAAAAAAAAAAAAAAAABBYoAAAAAAI=</HashCode>
+      <FileName>texture.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

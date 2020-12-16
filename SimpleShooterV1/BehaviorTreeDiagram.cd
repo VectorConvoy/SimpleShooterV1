@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
+  <Class Name="Node" Collapsed="true">
+    <Position X="12.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQAAAAAEBAAAAACAAAAAAAAAAAAAAAAEAAAA=</HashCode>
+      <FileName>Node.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ParentTask" Collapsed="true">
+    <Position X="10.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAYAQAAAQCAAAAEFAAQAAAAAAABIAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ParentTask.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Selector" Collapsed="true">
+    <Position X="9.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAQAAAAAAAAAAAAAQAAECAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Selector.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sequence" Collapsed="true">
+    <Position X="11.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQBAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAEAAAA=</HashCode>
+      <FileName>Sequence.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Tasks" Collapsed="true">
+    <Position X="13.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAQCAIAAAAAAQAAAAAAABMAAAAIAIIAAAABAA=</HashCode>
+      <FileName>Tasks.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ChanceDecorator" Collapsed="true">
+    <Position X="14.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQAAIAAAAAEAAABIAAAIJAAAAAAAAAA=</HashCode>
+      <FileName>ChanceDecorator.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CloseToPlayerDecorator" Collapsed="true">
+    <Position X="16.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAAAAAAAAAAAAACAAAAABIAAAAAAACAAAAAAA=</HashCode>
+      <FileName>CloseToPlayerDecorator.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TaskDecorator" Collapsed="true">
+    <Position X="15.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAQiAEAAAAAAAAAAAAAgBAAAAAACAAAABAAAA=</HashCode>
+      <FileName>TaskDecorator.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ChaseDestinationTask" Collapsed="true">
+    <Position X="21.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIgAAAAACAAAAAAAAAAAAAAAABIAAAAAAAAgAAAAAA=</HashCode>
+      <FileName>ChaseDestinationTask.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EnemyShootTask" Collapsed="true">
+    <Position X="9" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABIAAAAgACAAAAAAAAAAAAAAAABIAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>EnemyShootTask.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FaceAwayPlayerTask" Collapsed="true">
+    <Position X="10.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAIACAAAACAAAAAAAAAAAAAAAABIAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>FaceAwayPlayerTask.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FacePlayerTask" Collapsed="true">
+    <Position X="12.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAACAAAAAAAAAAAAAAAABJQAAAAAAAAAAAAAA=</HashCode>
+      <FileName>FacePlayerTask.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FleeDestinationTask" Collapsed="true">
+    <Position X="14.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAACAAAAAIAAAAAAAAAABYAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>FleeDestinationTask.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IdleTask" Collapsed="true">
+    <Position X="16" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAASAAAAAAAAAAAAAAAABIAAAAAAAAAQAAAAA=</HashCode>
+      <FileName>IdleTask.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GetPlayerTask" Collapsed="true">
+    <Position X="17.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIIAAAAACAAAAAAAAAAAAAAAABYAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GetPlayerTask.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MoveToTask" Collapsed="true">
+    <Position X="19.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACIAAAAIACAAAAAAAAAAAAAAAABIAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MoveToTask.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

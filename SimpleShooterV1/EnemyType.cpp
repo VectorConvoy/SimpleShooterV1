@@ -15,7 +15,12 @@ EnemyType::EnemyType()
 	sLoggerInstance = Logger::Instance();
 	XMLDocumentName = "TestBehaviorInputs.xml";
 	
-	XMLDocumentName = PossibleTypes.at(rand() % PossibleTypes.size());
+	srand(time(NULL));
+
+	int randomType = rand() % PossibleTypes.size();
+
+
+	XMLDocumentName = PossibleTypes.at(randomType);
 
 	LoadXML();
 
