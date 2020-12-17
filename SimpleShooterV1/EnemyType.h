@@ -18,7 +18,8 @@ class EnemyType
 public:
 
 	const std::vector<std::string> PossibleTypes = {"FleeEnemy.xml", "SeekEnemy.xml", "SeekFleeShootEnemy.xml", "SeekShootEnemy.xml" };
-	
+	//const std::vector<std::string> PossibleTypes = { "FleeEnemy.xml", "SeekEnemy.xml", "SeekFleeShootEnemy.xml"};
+
 	EnemyType();
 	~EnemyType();
 

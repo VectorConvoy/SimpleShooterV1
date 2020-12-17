@@ -1,6 +1,7 @@
 #include "EnemyType.h"
 #include "BehaviorTree.h"
 #include "Enemy.h"
+#include <time.h>
 
 EnemyType::EnemyType()
 {
@@ -19,8 +20,9 @@ EnemyType::EnemyType()
 
 	int randomType = rand() % PossibleTypes.size();
 
-
 	XMLDocumentName = PossibleTypes.at(randomType);
+
+	printf("\nTYPE: %s\n", XMLDocumentName.c_str());
 
 	LoadXML();
 
